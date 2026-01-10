@@ -16,7 +16,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #d9d9d9;
     --background-image-url: url("/images/noisy-texture-dark.png");
   }
 }
@@ -35,6 +35,10 @@ body {
     font-size: 1.2rem;
     color: #F88A36;
   }
+
+  img{
+    @apply rounded;
+  }
 }
 
 @layer components{
@@ -43,7 +47,7 @@ body {
   }
 
   .box-subcontainer {
-    @apply border border-foreground rounded h-full;
+    @apply h-full;
   }
 
   .circle{

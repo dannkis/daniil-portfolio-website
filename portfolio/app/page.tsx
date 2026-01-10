@@ -1,9 +1,9 @@
-type IconItem = {
+type MediaItem = {
   name: string;
   img_url: string;
 };
 
-const iconItems: IconItem[] = [
+const iconItems: MediaItem[] = [
   { name: "Alpha", img_url: "https://picsum.photos/seed/alpha/400" },
   { name: "Bravo", img_url: "https://picsum.photos/seed/bravo/400" },
   { name: "Charlie", img_url: "https://picsum.photos/seed/charlie/400" },
@@ -22,16 +22,31 @@ const iconItems: IconItem[] = [
   { name: "Papa", img_url: "https://picsum.photos/seed/papa/400" },
 ];
 
+const projects: MediaItem[] = [
+  { name: "SimplyDone", img_url: "/images/projects/simplydone.png" },
+  { name: "IBM SkillFindr", img_url: "/images/projects/ibm-skillfindr.png" },
+  { name: "RotaMaker 4", img_url: "/images/projects/rotamaker.png" },
+  { name: "RotaMaker 4", img_url: "/images/projects/rotamaker.png" },
+  { name: "SimplyDone", img_url: "/images/projects/simplydone.png" },
+  { name: "IBM SkillFindr", img_url: "/images/projects/ibm-skillfindr.png" },
+];
+
 export default function Home() {
   return (
     <main className="min-h-200 h-screen p-4">
-      <div className="grid grid-cols-4 grid-rows-5 gap-4 h-full">
+      <div className="lg:grid grid-cols-4 grid-rows-5 gap-4 h-full">
         <div
           className="box-container row-span-2 col-span-2 grid grid-cols-2 gap-12"
           id="contacts"
         >
           <div className="box-subcontainer flex items-center justify-center">
-            <div className="h-full aspect-square border border-white bg-amber-400"></div>
+            <div className="h-full aspect-square flex">
+              <img
+                className="object-contain"
+                src="/images/profile.png"
+                alt="Profile picture of me facing to the side, with a nice background in the nature."
+              />
+            </div>
           </div>
           <div className="box-subcontainer flex items-center relative">
             <h1 className="text-5xl">
@@ -45,8 +60,25 @@ export default function Home() {
           </div>
         </div>
         <div className="box-container row-span-3 col-span-2" id="projects">
-          <div className="box-subcontainer">
-            <h1>Projects</h1>
+          <div className="box-subcontainer flex flex-col">
+            <h1 className="mb-6">Projects</h1>
+            <div className="h-full grid grid-cols-3 items-center gap-x-6 gap-y-10 overflow-scroll">
+              {projects.map((item) => (
+                <div
+                  key={projects.indexOf(item)}
+                  className="flex flex-col items-center "
+                >
+                  <div>
+                    <img
+                      src={item.img_url}
+                      alt="image"
+                      className="object-contain"
+                    />
+                  </div>
+                  <p className="subheading">{item.name}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <div className="box-container row-span-3" id="education">
@@ -102,13 +134,13 @@ export default function Home() {
         <div className="box-container row-span-3" id="skills">
           <div className="box-subcontainer flex flex-col">
             <h1 className="mb-4">Skills</h1>
-            <div className="grid grid-rows-4 grid-cols-4 h-full gap-8 items-center">
+            <div className="grid grid-rows-4 grid-cols-4 h-full gap-6 items-center">
               {iconItems.map((item) => (
                 <div
                   key={iconItems.indexOf(item)}
                   className="flex flex-col items-center"
                 >
-                  <div className="bg-white w-full aspect-square">
+                  <div className="w-full aspect-square">
                     <img
                       src={item.img_url}
                       alt="image"
@@ -122,8 +154,9 @@ export default function Home() {
           </div>
         </div>
         <div className="box-container row-span-2 col-span-2" id="about">
-          <div className="box-subcontainer">
+          <div className="box-subcontainer flex flex-col">
             <h1>About</h1>
+            <p className="text-sm h-full flex items-center"></p>
           </div>
         </div>
       </div>
