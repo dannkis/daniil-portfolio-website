@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #fff;
   --foreground: #171717;
 }
 
@@ -37,9 +37,11 @@ body {
   .box-container {
     @apply border border-white rounded py-8 px-8;
   }
+
   .box-subcontainer {
     @apply border border-white rounded h-full;
   }
+
   .circle{
     @apply aspect-square rounded-full relative;
   }
