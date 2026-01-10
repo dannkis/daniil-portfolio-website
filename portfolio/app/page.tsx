@@ -104,7 +104,10 @@ export default function Home() {
             <h1 className="mb-4">Skills</h1>
             <div className="grid grid-rows-4 grid-cols-4 h-full gap-8 items-center">
               {iconItems.map((item) => (
-                <div className="flex flex-col items-center">
+                <div
+                  key={iconItems.indexOf(item)}
+                  className="flex flex-col items-center"
+                >
                   <div className="bg-white w-full aspect-square">
                     <img
                       src={item.img_url}
