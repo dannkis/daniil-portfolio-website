@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fff;
+  --background: #707070;
   --foreground: #171717;
+  --background-image-url: url("./media/noisy-texture-light.png");
 }
 
 @theme inline {
@@ -16,11 +17,14 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --background-image-url: url("./media/noisy-texture-dark.png");
   }
 }
 
 body {
   background: var(--background);
+  background-image: var(--background-image-url);
+  background-repeat: repeat;
   color: var(--foreground);
   font-family: var(--font-inter), sans-serif;
   font-weight: 600;
@@ -35,11 +39,11 @@ body {
 
 @layer components{
   .box-container {
-    @apply border border-white rounded py-8 px-8;
+    @apply border border-foreground rounded py-8 px-8;
   }
 
   .box-subcontainer {
-    @apply border border-white rounded h-full;
+    @apply border border-foreground rounded h-full;
   }
 
   .circle{
@@ -50,5 +54,9 @@ body {
 @layer utilities {
   .subheading {
     font-size: 0.76rem;
+  }
+
+  .border-foreground{
+    border-color: var(--foreground);
   }
 }
