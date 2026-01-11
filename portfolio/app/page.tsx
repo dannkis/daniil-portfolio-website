@@ -1,3 +1,6 @@
+import { aboutText } from "@/data/about";
+import { projects } from "@/data/projects";
+
 type MediaItem = {
   name: string;
   img_url: string;
@@ -22,25 +25,16 @@ const iconItems: MediaItem[] = [
   { name: "Papa", img_url: "https://picsum.photos/seed/papa/400" },
 ];
 
-const projects: MediaItem[] = [
-  { name: "SimplyDone", img_url: "/images/projects/simplydone.png" },
-  { name: "IBM SkillFindr", img_url: "/images/projects/ibm-skillfindr.png" },
-  { name: "RotaMaker 4", img_url: "/images/projects/rotamaker.png" },
-  { name: "RotaMaker 4", img_url: "/images/projects/rotamaker.png" },
-  { name: "SimplyDone", img_url: "/images/projects/simplydone.png" },
-  { name: "IBM SkillFindr", img_url: "/images/projects/ibm-skillfindr.png" },
-];
-
 export default function Home() {
   return (
-    <main className="min-h-200 h-screen p-4">
-      <div className="lg:grid grid-cols-4 grid-rows-5 gap-4 h-full">
+    <main className="h-screen min-h-200 p-4">
+      <div className="h-full grid-cols-4 grid-rows-5 gap-4 lg:grid">
         <div
-          className="box-container row-span-2 col-span-2 grid grid-cols-2 gap-12"
+          className="box-container col-span-2 row-span-2 grid grid-cols-2 gap-12"
           id="contacts"
         >
           <div className="box-subcontainer flex items-center justify-center">
-            <div className="h-full aspect-square flex">
+            <div className="flex aspect-square h-full">
               <img
                 className="object-contain"
                 src="/images/profile.png"
@@ -48,34 +42,52 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className="box-subcontainer flex items-center relative">
+          <div className="box-subcontainer relative flex items-center">
             <h1 className="text-5xl">
               Daniil <br /> Zhelyazkov
             </h1>
-            <div className="w-full bg-amber-100 h-10 absolute bottom-0 grid grid-cols-3 items-center text-black">
-              <p>LinkedIn</p>
-              <p>GitHub</p>
-              <p>Email</p>
+            <div className="absolute bottom-0 flex h-10 w-full items-center">
+              <div className="me-3 flex items-center">
+                <img
+                  src="/images/icons/linkedin.svg"
+                  alt="The original icon of the LinkedIn website."
+                  className="me-1 h-6"
+                />
+                <p className="text-sm">LinkedIn</p>
+              </div>
+              <div className="me-3 flex items-center">
+                <img
+                  src="/images/icons/github.svg"
+                  alt="The original icon of the LinkedIn website."
+                  className="me-1 h-6"
+                />
+                <p className="text-sm">GitHub</p>
+              </div>
+              <div className="flex items-center">
+                <img
+                  src="/images/icons/email.svg"
+                  alt="The original icon of the LinkedIn website."
+                  className="me-1 h-5"
+                />
+                <p className="text-sm">Email</p>
+              </div>
             </div>
           </div>
         </div>
-        <div className="box-container row-span-3 col-span-2" id="projects">
+        <div className="box-container col-span-2 row-span-3" id="projects">
           <div className="box-subcontainer flex flex-col">
             <h1 className="mb-6">Projects</h1>
-            <div className="h-full grid grid-cols-3 items-center gap-x-6 gap-y-10 overflow-scroll">
-              {projects.map((item) => (
-                <div
-                  key={projects.indexOf(item)}
-                  className="flex flex-col items-center "
-                >
+            <div className="grid h-full grid-cols-3 items-center gap-x-6 gap-y-10 overflow-scroll">
+              {projects.map((project) => (
+                <div key={project.id} className="flex flex-col items-center">
                   <div>
                     <img
-                      src={item.img_url}
-                      alt="image"
+                      src={project.image.src}
+                      alt={project.image.alt}
                       className="object-contain"
                     />
                   </div>
-                  <p className="subheading">{item.name}</p>
+                  <p className="subheading">{project.name}</p>
                 </div>
               ))}
             </div>
@@ -84,20 +96,20 @@ export default function Home() {
         <div className="box-container row-span-3" id="education">
           <div className="box-subcontainer flex flex-col">
             <h1 className="mb-4">Education</h1>
-            <div className="h-full flex">
+            <div className="flex h-full">
               <div
                 id="timeline"
-                className="h-full w-6 grid grid-cols-1 grid-rows-4 items-center relative"
+                className="relative grid h-full w-6 grid-cols-1 grid-rows-4 items-center"
               >
-                <div className="absolute top-[12.5%] bottom-[12.5%] border w-0 left-0 right-0 m-auto"></div>
-                <div className="bg-red-500 circle" />
-                <div className="bg-orange-500 circle" />
-                <div className="bg-yellow-500 circle" />
-                <div className="bg-green-500 circle" />
+                <div className="absolute top-[12.5%] right-0 bottom-[12.5%] left-0 m-auto w-0 border"></div>
+                <div className="circle bg-red-500" />
+                <div className="circle bg-orange-500" />
+                <div className="circle bg-yellow-500" />
+                <div className="circle bg-green-500" />
               </div>
               <div
                 id="education-info"
-                className="h-full w-full grid grid-rows-4 grid-cols-1 items-center ms-4"
+                className="ms-4 grid h-full w-full grid-cols-1 grid-rows-4 items-center"
               >
                 <div className="flex flex-col">
                   <p className="subheading text-gray-300">2022 - 2025</p>
@@ -134,13 +146,13 @@ export default function Home() {
         <div className="box-container row-span-3" id="skills">
           <div className="box-subcontainer flex flex-col">
             <h1 className="mb-4">Skills</h1>
-            <div className="grid grid-rows-4 grid-cols-4 h-full gap-6 items-center">
+            <div className="grid h-full grid-cols-4 grid-rows-4 items-center gap-6">
               {iconItems.map((item) => (
                 <div
                   key={iconItems.indexOf(item)}
                   className="flex flex-col items-center"
                 >
-                  <div className="w-full aspect-square">
+                  <div className="aspect-square w-full">
                     <img
                       src={item.img_url}
                       alt="image"
@@ -153,10 +165,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="box-container row-span-2 col-span-2" id="about">
+        <div className="box-container col-span-2 row-span-2" id="about">
           <div className="box-subcontainer flex flex-col">
             <h1>About</h1>
-            <p className="text-sm h-full flex items-center"></p>
+            <p className="flex h-full items-center text-sm">{aboutText}</p>
           </div>
         </div>
       </div>
