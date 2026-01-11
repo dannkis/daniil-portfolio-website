@@ -1,5 +1,6 @@
 import { aboutText } from "@/data/about";
 import { projects } from "@/data/projects";
+import { skills } from "@/data/skills";
 
 type MediaItem = {
   name: string;
@@ -146,20 +147,18 @@ export default function Home() {
         <div className="box-container row-span-3" id="skills">
           <div className="box-subcontainer flex flex-col">
             <h1 className="mb-4">Skills</h1>
-            <div className="grid h-full grid-cols-4 grid-rows-4 items-center gap-6">
-              {iconItems.map((item) => (
+            <div className="grid h-full grid-cols-4 grid-rows-4 items-center gap-x-7">
+              {skills.map((skill) => (
                 <div
-                  key={iconItems.indexOf(item)}
-                  className="flex flex-col items-center"
+                  key={skill.id}
+                  className="flex flex-col items-center justify-center"
                 >
-                  <div className="aspect-square w-full">
-                    <img
-                      src={item.img_url}
-                      alt="image"
-                      className="object-contain"
-                    />
-                  </div>
-                  <p className="subheading">{item.name}</p>
+                  <img
+                    className="w-full"
+                    src={skill.image.src}
+                    alt={skill.image.alt}
+                  />
+                  <p className="subheading mt-1">{skill.name}</p>
                 </div>
               ))}
             </div>
