@@ -43,7 +43,7 @@ body {
 
 @layer components{
   .box-container {
-    @apply border border-foreground rounded py-8 px-8;
+    @apply border border-foreground/25 rounded py-8 px-8;
   }
 
   .box-subcontainer {

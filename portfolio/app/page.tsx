@@ -1,30 +1,6 @@
 import { aboutText } from "@/data/about";
-import { projects } from "@/data/projects";
 import { skills } from "@/data/skills";
-
-type MediaItem = {
-  name: string;
-  img_url: string;
-};
-
-const iconItems: MediaItem[] = [
-  { name: "Alpha", img_url: "https://picsum.photos/seed/alpha/400" },
-  { name: "Bravo", img_url: "https://picsum.photos/seed/bravo/400" },
-  { name: "Charlie", img_url: "https://picsum.photos/seed/charlie/400" },
-  { name: "Delta", img_url: "https://picsum.photos/seed/delta/400" },
-  { name: "Echo", img_url: "https://picsum.photos/seed/echo/400" },
-  { name: "Foxtrot", img_url: "https://picsum.photos/seed/foxtrot/400" },
-  { name: "Golf", img_url: "https://picsum.photos/seed/golf/400" },
-  { name: "Hotel", img_url: "https://picsum.photos/seed/hotel/400" },
-  { name: "India", img_url: "https://picsum.photos/seed/india/400" },
-  { name: "Juliet", img_url: "https://picsum.photos/seed/juliet/400" },
-  { name: "Kilo", img_url: "https://picsum.photos/seed/kilo/400" },
-  { name: "Lima", img_url: "https://picsum.photos/seed/lima/400" },
-  { name: "Mike", img_url: "https://picsum.photos/seed/mike/400" },
-  { name: "November", img_url: "https://picsum.photos/seed/november/400" },
-  { name: "Oscar", img_url: "https://picsum.photos/seed/oscar/400" },
-  { name: "Papa", img_url: "https://picsum.photos/seed/papa/400" },
-];
+import ProjectsSection from "@/components/sections/ProjectsSection";
 
 export default function Home() {
   return (
@@ -75,25 +51,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="box-container col-span-2 row-span-3" id="projects">
-          <div className="box-subcontainer flex flex-col">
-            <h1 className="mb-6">Projects</h1>
-            <div className="grid h-full grid-cols-3 items-center gap-x-6 gap-y-10 overflow-scroll">
-              {projects.map((project) => (
-                <div key={project.id} className="flex flex-col items-center">
-                  <div>
-                    <img
-                      src={project.image.src}
-                      alt={project.image.alt}
-                      className="object-contain"
-                    />
-                  </div>
-                  <p className="subheading">{project.name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <ProjectsSection />
         <div className="box-container row-span-3" id="education">
           <div className="box-subcontainer flex flex-col">
             <h1 className="mb-4">Education</h1>
@@ -151,14 +109,16 @@ export default function Home() {
               {skills.map((skill) => (
                 <div
                   key={skill.id}
-                  className="flex flex-col items-center justify-center"
+                  className="relative flex flex-col items-center justify-center"
                 >
                   <img
                     className="w-full"
                     src={skill.image.src}
                     alt={skill.image.alt}
                   />
-                  <p className="subheading mt-1">{skill.name}</p>
+                  <p className="subheading absolute -bottom-6 mt-1">
+                    {skill.name}
+                  </p>
                 </div>
               ))}
             </div>
