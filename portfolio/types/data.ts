@@ -16,5 +16,7 @@ export type Project = {
 export type Skill = {
   id: string;
   name: string;
+  description?: string;
   image: ImageRef;
+  certificateImage?: ImageRef;
 };
