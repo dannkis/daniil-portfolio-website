@@ -35,7 +35,7 @@ export default function AboutSection({ project, education }: Props) {
         {title}
       </motion.h1>
       <div className="relative flex h-full items-center overflow-hidden">
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="popLayout">
           <motion.p
             key={contentKey}
             className="text-sm leading-relaxed"
