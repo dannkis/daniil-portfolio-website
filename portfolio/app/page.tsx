@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { aboutText } from "@/data/about";
 import { skills } from "@/data/skills";
 import ProjectsSection from "@/components/sections/ProjectsSection";
@@ -121,20 +122,36 @@ export default function Home() {
           <div className="box-subcontainer flex flex-col">
             <h1 className="mb-4">Skills</h1>
             <div className="grid h-full grid-cols-4 grid-rows-4 items-center gap-x-4 gap-y-6">
-              {skills.map((skill) => (
-                <div
+              {skills.map((skill, i) => (
+                <motion.div
                   key={skill.id}
                   className="flex flex-col items-center justify-center gap-2"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: i * 0.05,
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 24,
+                  }}
+                  whileTap={{ scale: 0.97 }}
                 >
-                  <img
+                  <motion.img
                     className="w-[clamp(1.5rem,3vw,3rem)] object-contain"
                     src={skill.image.src}
                     alt={skill.image.alt}
+                    draggable={false}
+                    whileHover={{ scale: 1.04 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 24,
+                    }}
                   />
                   <p className="subheading text-center leading-none">
                     {skill.name}
                   </p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
