@@ -53,17 +53,17 @@ export default function EducationSection({
       </div>
 
       <motion.div
-        className="flex min-h-0 flex-1 overflow-hidden"
+        className="relative flex min-h-0 flex-1 overflow-hidden"
         initial={false}
         animate={{
           flexDirection: selectedEducation && !isLargeScreen ? "column" : "row",
-          gap: selectedEducation ? (isLargeScreen ? "2rem" : "1rem") : "0rem",
+          gap: selectedEducation ? (isLargeScreen ? "3rem" : "1rem") : "0rem",
         }}
         transition={{ type: "spring", stiffness: 240, damping: 28 }}
       >
         <div
           className={`flex min-h-0 min-w-0 overflow-visible ${
-            selectedEducation && isLargeScreen ? "basis-[46%]" : "basis-full"
+            selectedEducation && isLargeScreen ? "basis-1/2" : "basis-full"
           }`}
         >
           <div
@@ -90,7 +90,10 @@ export default function EducationSection({
                   }}
                   whileHover={{ scale: isSelected ? 1.25 : 1.12 }}
                   whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                  transition={{
+                    scale: { type: "spring", stiffness: 300, damping: 24 },
+                    boxShadow: { duration: isSelected ? 0.18 : 0.08 },
+                  }}
                 />
               );
             })}
@@ -99,7 +102,7 @@ export default function EducationSection({
             id="education-info"
             className="ms-4 grid min-h-0 flex-1 grid-cols-1 grid-rows-4 items-center"
           >
-            {education.map((entry, i) => {
+            {education.map((entry) => {
               const isSelected = selectedEducation?.id === entry.id;
 
               return (
@@ -108,17 +111,15 @@ export default function EducationSection({
                   type="button"
                   className="min-w-0 text-left hover:cursor-pointer"
                   onClick={() => onEducationSelect(entry.id)}
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={false}
                   animate={{
                     opacity: selectedEducation && !isSelected ? 0.34 : 1,
-                    y: 0,
                     scale: selectedEducation && isSelected ? 1.02 : 1,
                   }}
                   transition={{
-                    delay: i * 0.04,
                     type: "spring",
-                    stiffness: 260,
-                    damping: 24,
+                    stiffness: 300,
+                    damping: 28,
                   }}
                 >
                   <p className="subheading text-gray-300">{entry.period}</p>
@@ -135,20 +136,20 @@ export default function EducationSection({
         <AnimatePresence mode="wait">
           {selectedEducation && (
             <motion.div
-              className="min-h-0 min-w-0 overflow-hidden"
+              className="h-48 min-h-0 min-w-0 overflow-hidden lg:absolute lg:inset-y-0 lg:right-0 lg:left-[calc(50%+1.5rem)] lg:h-auto"
               initial={{
                 opacity: 0,
-                flexBasis: isLargeScreen ? "0%" : "0rem",
+                x: isLargeScreen ? 18 : 0,
                 scaleY: isLargeScreen ? 1 : 0,
               }}
               animate={{
                 opacity: 1,
-                flexBasis: isLargeScreen ? "54%" : "12rem",
+                x: 0,
                 scaleY: 1,
               }}
               exit={{
                 opacity: 0,
-                flexBasis: isLargeScreen ? "0%" : "0rem",
+                x: isLargeScreen ? 18 : 0,
                 scaleY: isLargeScreen ? 1 : 0,
               }}
               style={{ originY: 0 }}
