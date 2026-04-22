@@ -5,11 +5,12 @@ import ContactsSection from "@/components/sections/ContactsSection";
 import EducationSection from "@/components/sections/EducationSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import SkillsSection from "@/components/sections/SkillsSection";
-import { education, projects } from "@/lib/content";
+import { education, projects, skills } from "@/lib/content";
 import { type FocusedWindows, getFocusWindowProps } from "@/lib/focusWindow";
 
 type ProjectID = (typeof projects)[number]["id"];
 type EducationID = (typeof education)[number]["id"];
+type SkillID = (typeof skills)[number]["id"];
 
 export default function Home() {
   const [focusedWindows, setFocusedWindows] = useState<FocusedWindows | null>(
@@ -20,6 +21,7 @@ export default function Home() {
   );
   const [selectedEducationID, setSelectedEducationID] =
     useState<EducationID | null>(null);
+  const [selectedSkillID, setSelectedSkillID] = useState<SkillID | null>(null);
   const selectedProject = projects.find(
     (project) => project.id === selectedProjectID,
   );
@@ -30,29 +32,58 @@ export default function Home() {
   function focusProject(projectID: ProjectID) {
     setSelectedProjectID(projectID);
     setSelectedEducationID(null);
+    setSelectedSkillID(null);
     setFocusedWindows(["projects", "skills", "about"]);
-  }
-
-  function clearProjectFocus() {
-    setSelectedProjectID(null);
-    setFocusedWindows(null);
   }
 
   function focusEducation(educationID: EducationID) {
     setSelectedEducationID(educationID);
     setSelectedProjectID(null);
+    setSelectedSkillID(null);
     setFocusedWindows(["education", "about"]);
   }
 
-  function clearEducationFocus() {
+  function selectSkill(skillID: SkillID, focused: boolean) {
+    setSelectedSkillID(skillID);
+
+    if (focused) {
+      setSelectedEducationID(null);
+      setSelectedProjectID(null);
+      setFocusedWindows(["skills"]);
+    }
+  }
+
+  function closeSkill(focused: boolean) {
+    setSelectedSkillID(null);
+
+    if (focused) {
+      setFocusedWindows(null);
+    }
+  }
+
+  function clearFocus() {
     setSelectedEducationID(null);
+    setSelectedProjectID(null);
+    setSelectedSkillID(null);
     setFocusedWindows(null);
   }
 
-  function setSkillsFocus(focused: boolean) {
-    setSelectedEducationID(null);
-    setSelectedProjectID(null);
-    setFocusedWindows(focused ? ["skills"] : null);
+  function handlePointerDown(event: React.PointerEvent<HTMLElement>) {
+    if (!focusedWindows) {
+      return;
+    }
+
+    const target = event.target;
+
+    if (!(target instanceof Element)) {
+      return;
+    }
+
+    if (target.closest(".focus-window-active")) {
+      return;
+    }
+
+    clearFocus();
   }
 
   return (
@@ -60,6 +91,7 @@ export default function Home() {
       className={`min-h-screen p-3 transition-all duration-500 sm:p-4 lg:h-screen lg:min-h-200 ${
         focusedWindows ? "focus-window-open" : ""
       }`}
+      onPointerDown={handlePointerDown}
     >
       <div className="grid auto-rows-auto grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:h-full lg:grid-cols-4 lg:grid-rows-5">
         <div
@@ -85,7 +117,7 @@ export default function Home() {
             <ProjectsSection
               selectedProject={selectedProject}
               onProjectSelect={focusProject}
-              onProjectClose={clearProjectFocus}
+              onProjectClose={clearFocus}
             />
           </div>
         </div>
@@ -104,7 +136,7 @@ export default function Home() {
             <EducationSection
               selectedEducation={selectedEducation}
               onEducationSelect={focusEducation}
-              onEducationClose={clearEducationFocus}
+              onEducationClose={clearFocus}
             />
           </div>
         </div>
@@ -120,8 +152,10 @@ export default function Home() {
           >
             <div className="box-subcontainer flex flex-col">
               <SkillsSection
+                selectedSkillID={selectedSkillID}
                 stackSkillIDs={selectedProject?.skills}
-                onFocusChange={setSkillsFocus}
+                onSkillSelect={selectSkill}
+                onSkillClose={closeSkill}
               />
             </div>
           </div>

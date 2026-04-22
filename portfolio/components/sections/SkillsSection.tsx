@@ -1,34 +1,33 @@
 "use client";
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { skills } from "@/lib/content";
 
 type SkillID = (typeof skills)[number]["id"];
 
 interface Props {
+  selectedSkillID?: SkillID | null;
   stackSkillIDs?: readonly string[];
-  onFocusChange?: (focused: boolean) => void;
+  onSkillSelect: (id: SkillID, focused: boolean) => void;
+  onSkillClose: (focused: boolean) => void;
 }
 
-export default function SkillsSection({ stackSkillIDs, onFocusChange }: Props) {
-  const [expandedSkillID, setExpandedSkillID] = useState<SkillID | null>(null);
-  const expandedSkill = skills.find((skill) => skill.id === expandedSkillID);
+export default function SkillsSection({
+  selectedSkillID,
+  stackSkillIDs,
+  onSkillSelect,
+  onSkillClose,
+}: Props) {
+  const expandedSkill = skills.find((skill) => skill.id === selectedSkillID);
   const stackSkillIDSet = new Set(stackSkillIDs);
   const isStackMode = stackSkillIDs !== undefined;
   const activeExpandedSkill = expandedSkill;
 
   function expand(id: SkillID) {
-    setExpandedSkillID(id);
-    if (!isStackMode) {
-      onFocusChange?.(true);
-    }
+    onSkillSelect(id, !isStackMode);
   }
 
   function collapse() {
-    setExpandedSkillID(null);
-    if (!isStackMode) {
-      onFocusChange?.(false);
-    }
+    onSkillClose(!isStackMode);
   }
 
   return (
@@ -104,7 +103,7 @@ export default function SkillsSection({ stackSkillIDs, onFocusChange }: Props) {
             </motion.div>
           ) : (
             <>
-              {skills.map((skill, i) => {
+              {skills.map((skill) => {
                 const isHighlighted =
                   !isStackMode || stackSkillIDSet.has(skill.id);
                 const isClickable = !isStackMode || isHighlighted;
@@ -144,7 +143,6 @@ export default function SkillsSection({ stackSkillIDs, onFocusChange }: Props) {
                   },
                   exit: { opacity: 0, y: 12 },
                   transition: {
-                    delay: i * 0.035,
                     type: "spring" as const,
                     stiffness: 260,
                     damping: 24,

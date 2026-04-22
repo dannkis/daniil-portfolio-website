@@ -68,8 +68,8 @@ body {
     top: 0;
     left: 0;
     z-index: 9999;
-    width: 1.75rem;
-    height: 1.75rem;
+    width: 1rem;
+    height: 1rem;
     pointer-events: none;
     opacity: 0;
     border: 1px solid var(--cursor-color);
@@ -109,13 +109,13 @@ body {
   }
 
   .custom-cursor[data-near-interactive="true"] {
-    width: 2.15rem;
-    height: 2.15rem;
+    width: 1.25rem;
+    height: 1.25rem;
     border-color: var(--cursor-accent);
     background:
       radial-gradient(
         circle,
-        rgb(from var(--cursor-accent) r g b / 0.48) 0 16%,
+        rgb(from var(--cursor-accent) r g b / 1) 0 16%,
         transparent 17% 100%
       ),
       rgb(from var(--cursor-color) r g b / 0.12);
@@ -154,7 +154,4 @@ body {
   filter: none;
   pointer-events: auto;
   border-color: #fb923c;
-  box-shadow:
-    0 0 0 1px #fb923c,
-    0 0 24px 2px rgba(251, 146, 60, 0.25);
 }
