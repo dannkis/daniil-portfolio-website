@@ -1,10 +1,18 @@
+"use client";
+import { useState } from "react";
 import { aboutText } from "@/data/about";
 import { skills } from "@/data/skills";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 
 export default function Home() {
+  const [projectFocused, setProjectFocused] = useState(false);
+
   return (
-    <main className="h-screen min-h-200 p-4">
+    <main
+      className={`h-screen min-h-200 p-4 transition-all duration-500 ${
+        projectFocused ? "projects-focused" : ""
+      }`}
+    >
       <div className="h-full grid-cols-4 grid-rows-5 gap-4 lg:grid">
         <div
           className="box-container col-span-2 row-span-2 grid grid-cols-2 gap-12"
@@ -35,7 +43,7 @@ export default function Home() {
               <div className="me-3 flex items-center">
                 <img
                   src="/images/icons/github.svg"
-                  alt="The original icon of the LinkedIn website."
+                  alt="The original icon of the GitHub website."
                   className="me-1 h-6"
                 />
                 <p className="text-sm">GitHub</p>
@@ -43,7 +51,7 @@ export default function Home() {
               <div className="flex items-center">
                 <img
                   src="/images/icons/email.svg"
-                  alt="The original icon of the LinkedIn website."
+                  alt="An email icon."
                   className="me-1 h-5"
                 />
                 <p className="text-sm">Email</p>
@@ -51,7 +59,13 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <ProjectsSection />
+
+        <div className="box-container col-span-2 row-span-3" id="projects">
+          <div className="box-subcontainer flex flex-col">
+            <ProjectsSection onFocusChange={setProjectFocused} />
+          </div>
+        </div>
+
         <div className="box-container row-span-3" id="education">
           <div className="box-subcontainer flex flex-col">
             <h1 className="mb-4">Education</h1>
@@ -102,21 +116,22 @@ export default function Home() {
             </div>
           </div>
         </div>
+
         <div className="box-container row-span-3" id="skills">
           <div className="box-subcontainer flex flex-col">
             <h1 className="mb-4">Skills</h1>
-            <div className="grid h-full grid-cols-4 grid-rows-4 items-center gap-x-7">
+            <div className="grid h-full grid-cols-4 grid-rows-4 items-center gap-x-4 gap-y-6">
               {skills.map((skill) => (
                 <div
                   key={skill.id}
-                  className="relative flex flex-col items-center justify-center"
+                  className="flex flex-col items-center justify-center gap-2"
                 >
                   <img
-                    className="w-full"
+                    className="w-[clamp(1.5rem,3vw,3rem)] object-contain"
                     src={skill.image.src}
                     alt={skill.image.alt}
                   />
-                  <p className="subheading absolute -bottom-6 mt-1">
+                  <p className="subheading text-center leading-none">
                     {skill.name}
                   </p>
                 </div>
@@ -124,6 +139,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+
         <div className="box-container col-span-2 row-span-2" id="about">
           <div className="box-subcontainer flex flex-col">
             <h1>About</h1>
