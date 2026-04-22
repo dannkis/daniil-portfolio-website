@@ -1,16 +1,26 @@
-import { about, type Project } from "@/lib/content";
+import { about, type Education, type Project } from "@/lib/content";
 
 interface Props {
   project?: Project;
+  education?: Education;
 }
 
-export default function AboutSection({ project }: Props) {
+export default function AboutSection({ project, education }: Props) {
+  const title = project
+    ? "About Project"
+    : education
+      ? "About Education"
+      : "About";
+  const text = project
+    ? project.description
+    : education
+      ? education.description
+      : about.text;
+
   return (
     <>
-      <h1>{project ? "About Project" : "About"}</h1>
-      <p className="flex h-full items-center text-sm leading-relaxed">
-        {project ? project.description : about.text}
-      </p>
+      <h1>{title}</h1>
+      <p className="flex h-full items-center text-sm leading-relaxed">{text}</p>
     </>
   );
 }

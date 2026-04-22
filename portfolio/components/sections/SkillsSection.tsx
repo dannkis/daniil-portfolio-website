@@ -62,7 +62,7 @@ export default function SkillsSection({ stackSkillIDs, onFocusChange }: Props) {
         </AnimatePresence>
       </div>
 
-      <div className="grid h-full grid-cols-4 grid-rows-4 items-center gap-x-3 gap-y-4 overflow-hidden">
+      <div className="grid h-full grid-cols-3 items-center gap-x-3 gap-y-4 overflow-hidden sm:grid-cols-4 lg:grid-rows-4">
         <AnimatePresence mode="wait">
           {activeExpandedSkill ? (
             <motion.div

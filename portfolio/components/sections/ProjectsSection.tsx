@@ -45,7 +45,7 @@ export default function ProjectsSection({
       <LayoutGroup id="projects-section">
         <div className="relative h-full overflow-hidden">
           <div
-            className={`grid h-full grid-cols-3 items-center gap-x-6 gap-y-10 transition-opacity duration-150 ${
+            className={`grid h-full grid-cols-1 items-center gap-6 transition-opacity duration-150 sm:grid-cols-3 lg:gap-x-6 lg:gap-y-10 ${
               selectedProject ? "pointer-events-none opacity-0" : "opacity-100"
             }`}
           >
@@ -67,8 +67,9 @@ export default function ProjectsSection({
                 whileTap={{ scale: 0.97 }}
               >
                 {selectedProject?.id === project.id ? (
-                  <div className="overflow-hidden rounded-md opacity-0">
+                  <div className="w-full overflow-hidden rounded-md opacity-0">
                     <img
+                      className="w-full object-contain"
                       src={project.image.src}
                       alt={project.image.alt}
                       draggable={false}
@@ -76,7 +77,7 @@ export default function ProjectsSection({
                   </div>
                 ) : (
                   <motion.div
-                    className="overflow-hidden rounded-md"
+                    className="w-full overflow-hidden rounded-md"
                     layoutId={`project-frame-${project.id}`}
                     transition={{
                       type: "spring",
@@ -85,6 +86,7 @@ export default function ProjectsSection({
                     }}
                   >
                     <motion.img
+                      className="w-full object-contain"
                       src={project.image.src}
                       alt={project.image.alt}
                       draggable={false}

@@ -25,6 +25,15 @@ export type Project = ContentItem & {
   links?: ProjectLinks;
 };
 
+export type Education = ContentItem & {
+  period: string;
+  qualification: string;
+  summary: string;
+  description: string;
+  color: string;
+  certificateImage?: ImageRef;
+};
+
 export type Skill = ContentItem & {
   description?: string;
   image: ImageRef;

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "qmul-computer-science",
+    "name": "Queen Mary University of London",
+    "period": "2022 - 2025",
+    "qualification": "BSc in Computer Science (First Class)",
+    "summary": "Degree-level computer science covering software engineering, algorithms, databases, web development, and applied problem solving.",
+    "description": "This qualification developed a strong foundation in programming, algorithms, data structures, databases, software engineering, web technologies, and problem-solving. It also built experience in planning, implementing, testing, and presenting technical work through individual and group projects.",
+    "color": "#ef4444"
+  },
+  {
+    "id": "exeter-college-a-levels",
+    "name": "Exeter College",
+    "period": "2020 - 2022",
+    "qualification": "A-Levels in Computer Science, Mathematics, English Language",
+    "summary": "A-Level study combining technical programming, mathematical reasoning, and written communication.",
+    "description": "This education strengthened computational thinking, programming fundamentals, mathematical reasoning, analytical writing, and communication. It provided preparation for degree-level computer science through both technical and academic work.",
+    "color": "#f97316"
+  },
+  {
+    "id": "south-devon-computing",
+    "name": "South Devon College",
+    "period": "2019 - 2020",
+    "qualification": "BTEC Level 2 in Computing",
+    "summary": "Computing qualification focused on practical IT, programming basics, and digital systems.",
+    "description": "This qualification introduced practical computing concepts including digital systems, basic programming, IT workflows, and applied technical problem-solving. It helped establish the practical foundation for later software and computer science study.",
+    "color": "#eab308"
+  },
+  {
+    "id": "romain-rolland-secondary",
+    "name": "Romain Rolland Secondary School",
+    "period": "2017 - 2019",
+    "qualification": "General Secondary Education",
+    "summary": "General secondary education covering core academic subjects and foundational study skills.",
+    "description": "This stage built the academic foundations for later technical education, including structured learning, problem-solving habits, communication, and broader subject knowledge.",
+    "color": "#22c55e"
+  }
+]

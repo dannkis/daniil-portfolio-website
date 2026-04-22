@@ -2,7 +2,7 @@ export default function ContactsSection() {
   return (
     <>
       <div className="box-subcontainer flex items-center justify-center">
-        <div className="flex aspect-square h-full">
+        <div className="flex aspect-square h-40 sm:h-full sm:max-h-full">
           <img
             className="object-contain"
             src="/images/profile.png"
@@ -10,11 +10,11 @@ export default function ContactsSection() {
           />
         </div>
       </div>
-      <div className="box-subcontainer relative flex items-center">
-        <h1 className="text-5xl">
+      <div className="box-subcontainer relative flex min-h-44 items-center pb-12 sm:min-h-0">
+        <h1 className="text-[clamp(2.4rem,9vw,3rem)] leading-none sm:text-5xl">
           Daniil <br /> Zhelyazkov
         </h1>
-        <div className="absolute bottom-0 flex h-10 w-full items-center">
+        <div className="absolute bottom-0 flex min-h-10 w-full flex-wrap items-center gap-x-3 gap-y-2">
           <div className="me-3 flex items-center">
             <img
               src="/images/icons/linkedin.svg"

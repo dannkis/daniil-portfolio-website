@@ -1,6 +1,12 @@
-import type { AboutContent, ImageRef, Project, Skill } from "@/types/content";
+import type {
+  AboutContent,
+  Education,
+  ImageRef,
+  Project,
+  Skill,
+} from "@/types/content";
 
-type ContentKind = "about" | "projects" | "skills";
+type ContentKind = "about" | "projects" | "skills" | "education";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -89,6 +95,24 @@ function assertProject(value: unknown): asserts value is Project {
   }
 }
 
+function assertEducation(value: unknown): asserts value is Education {
+  if (!isRecord(value)) {
+    throw new Error("Invalid education content: entry must be an object.");
+  }
+
+  assertString(value.id, "id", "education");
+  assertString(value.name, "name", "education");
+  assertString(value.period, "period", "education");
+  assertString(value.qualification, "qualification", "education");
+  assertString(value.summary, "summary", "education");
+  assertString(value.description, "description", "education");
+  assertString(value.color, "color", "education");
+
+  if (value.certificateImage !== undefined) {
+    assertImageRef(value.certificateImage, "certificateImage", "education");
+  }
+}
+
 function assertSkill(value: unknown): asserts value is Skill {
   if (!isRecord(value)) {
     throw new Error("Invalid skills content: skill must be an object.");
@@ -125,6 +149,17 @@ export function defineProjectsContent(value: unknown): readonly Project[] {
   assertUniqueIDs(value, "projects");
 
   return value as Project[];
+}
+
+export function defineEducationContent(value: unknown): readonly Education[] {
+  if (!Array.isArray(value)) {
+    throw new Error("Invalid education content: content must be an array.");
+  }
+
+  value.forEach(assertEducation);
+  assertUniqueIDs(value, "education");
+
+  return value as Education[];
 }
 
 export function assertProjectSkillReferences(

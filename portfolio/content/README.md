@@ -3,6 +3,7 @@
 Edit portfolio copy and collection data in this folder:
 
 - `about.json` controls the About section text.
+- `education.json` controls education entries, descriptions, and certificate previews.
 - `projects.json` controls project cards and expanded project data.
 - `skills.json` controls skill cards and expanded skill data.
 
@@ -12,6 +13,7 @@ Rules:
 - Image `src` values should point to files under `public`, starting with `/`.
 - Project `skills` values must match skill IDs from `skills.json`.
 - Optional fields can be omitted instead of set to an empty string.
+- Education certificates can be added with `certificateImage`.
 - Skill certificates can be added with `certificateImage`.
 
 Example skill with a certificate:
