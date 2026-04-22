@@ -4,6 +4,8 @@
   --background: #707070;
   --foreground: #171717;
   --background-image-url: url("/images/noisy-texture-light.png");
+  --cursor-color: var(--foreground);
+  --cursor-accent: #f88a36;
 }
 
 @theme inline {
@@ -30,6 +32,13 @@ body {
   font-weight: 600;
 }
 
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .custom-cursor-enabled,
+  .custom-cursor-enabled * {
+    cursor: none !important;
+  }
+}
+
 @layer base {
   h1 {
     font-size: 1.2rem;
@@ -52,6 +61,74 @@ body {
 
   .circle {
     @apply relative aspect-square rounded-full;
+  }
+
+  .custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 1.75rem;
+    height: 1.75rem;
+    pointer-events: none;
+    opacity: 0;
+    border: 1px solid var(--cursor-color);
+    border-radius: 9999px;
+    background:
+      radial-gradient(
+        circle,
+        rgb(from var(--cursor-accent) r g b / 0.36) 0 18%,
+        transparent 19% 100%
+      ),
+      rgb(from var(--cursor-color) r g b / 0.08);
+    mix-blend-mode: difference;
+    backdrop-filter: contrast(1.55) saturate(1.2);
+    transition:
+      width 0.18s ease,
+      height 0.18s ease,
+      opacity 0.18s ease,
+      border-color 0.18s ease,
+      background-color 0.18s ease;
+    will-change: transform, width, height, opacity;
+  }
+
+  .custom-cursor::after {
+    position: absolute;
+    inset: 0.38rem;
+    content: "";
+    border-radius: inherit;
+    border: 1px solid rgb(from var(--cursor-accent) r g b / 0.7);
+    opacity: 0;
+    transition:
+      inset 0.18s ease,
+      opacity 0.18s ease;
+  }
+
+  .custom-cursor[data-visible="true"] {
+    opacity: 1;
+  }
+
+  .custom-cursor[data-near-interactive="true"] {
+    width: 2.15rem;
+    height: 2.15rem;
+    border-color: var(--cursor-accent);
+    background:
+      radial-gradient(
+        circle,
+        rgb(from var(--cursor-accent) r g b / 0.48) 0 16%,
+        transparent 17% 100%
+      ),
+      rgb(from var(--cursor-color) r g b / 0.12);
+  }
+
+  .custom-cursor[data-near-interactive="true"]::after {
+    inset: 0.24rem;
+    opacity: 1;
+  }
+
+  .custom-cursor[data-pressed="true"] {
+    width: 1.55rem;
+    height: 1.55rem;
   }
 }
 
