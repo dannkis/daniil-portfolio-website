@@ -2,11 +2,12 @@
   {
     "id": "simplydone",
     "name": "SimplyDone App",
-    "description": "description",
+    "description": "A productivity-focused task management app concept with mobile-first layouts, simple interaction patterns, and a clean visual hierarchy.",
     "image": {
       "src": "/images/projects/simplydone.png",
       "alt": "An image showing three different = mobile views of the SimplyDone application."
     },
+    "skills": ["react", "typescript", "figma", "tailwind"],
     "links": {
       "website": "",
       "repository": "",
@@ -16,11 +17,12 @@
   {
     "id": "skillfindr",
     "name": "IBM SkillFindr",
-    "description": "description",
+    "description": "A skill discovery and matching concept built around making technical strengths easier to search, compare, and present.",
     "image": {
       "src": "/images/projects/skillfindr.png",
       "alt": ""
     },
+    "skills": ["next", "react", "typescript", "node", "figma"],
     "links": {
       "website": "",
       "repository": "",
@@ -30,11 +32,12 @@
   {
     "id": "rotamaker",
     "name": "RotaMaker 4",
-    "description": "description",
+    "description": "A rota planning tool focused on clearer scheduling flows, structured data handling, and practical automation for recurring staff planning tasks.",
     "image": {
       "src": "/images/projects/rotamaker.png",
       "alt": ""
     },
+    "skills": ["c-sharp", "access", "visual-studio", "bootstrap"],
     "links": {
       "website": "",
       "repository": "",

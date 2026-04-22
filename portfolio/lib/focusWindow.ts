@@ -5,19 +5,19 @@ export type FocusWindowID =
   | "skills"
   | "about";
 
-export type FocusedWindow = FocusWindowID;
+export type FocusedWindows = readonly FocusWindowID[];
 
 export const focusWindowClassName = "box-container focus-window";
 
 export function getFocusWindowClassName(
   className: string,
   windowID: FocusWindowID,
-  focusedWindow: FocusedWindow | null,
+  focusedWindows: FocusedWindows | null,
 ) {
   return [
     focusWindowClassName,
     className,
-    focusedWindow === windowID ? "focus-window-active" : "",
+    focusedWindows?.includes(windowID) ? "focus-window-active" : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -26,12 +26,13 @@ export function getFocusWindowClassName(
 export function getFocusWindowProps(
   className: string,
   windowID: FocusWindowID,
-  focusedWindow: FocusedWindow | null,
+  focusedWindows: FocusedWindows | null,
 ) {
-  const disabled = focusedWindow !== null && focusedWindow !== windowID;
+  const disabled =
+    focusedWindows !== null && !focusedWindows.includes(windowID);
 
   return {
-    className: getFocusWindowClassName(className, windowID, focusedWindow),
+    className: getFocusWindowClassName(className, windowID, focusedWindows),
     inert: disabled ? true : undefined,
     "aria-hidden": disabled ? true : undefined,
   };

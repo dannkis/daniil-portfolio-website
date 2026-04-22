@@ -5,17 +5,40 @@ import ContactsSection from "@/components/sections/ContactsSection";
 import EducationSection from "@/components/sections/EducationSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import SkillsSection from "@/components/sections/SkillsSection";
-import { type FocusedWindow, getFocusWindowProps } from "@/lib/focusWindow";
+import { projects } from "@/lib/content";
+import { type FocusedWindows, getFocusWindowProps } from "@/lib/focusWindow";
+
+type ProjectID = (typeof projects)[number]["id"];
 
 export default function Home() {
-  const [focusedWindow, setFocusedWindow] = useState<FocusedWindow | null>(
+  const [focusedWindows, setFocusedWindows] = useState<FocusedWindows | null>(
     null,
   );
+  const [selectedProjectID, setSelectedProjectID] = useState<ProjectID | null>(
+    null,
+  );
+  const selectedProject = projects.find(
+    (project) => project.id === selectedProjectID,
+  );
+
+  function focusProject(projectID: ProjectID) {
+    setSelectedProjectID(projectID);
+    setFocusedWindows(["projects", "skills", "about"]);
+  }
+
+  function clearProjectFocus() {
+    setSelectedProjectID(null);
+    setFocusedWindows(null);
+  }
+
+  function setSkillsFocus(focused: boolean) {
+    setFocusedWindows(focused ? ["skills"] : null);
+  }
 
   return (
     <main
       className={`h-screen min-h-200 p-4 transition-all duration-500 ${
-        focusedWindow ? "focus-window-open" : ""
+        focusedWindows ? "focus-window-open" : ""
       }`}
     >
       <div className="h-full grid-cols-4 grid-rows-5 gap-4 lg:grid">
@@ -23,7 +46,7 @@ export default function Home() {
           {...getFocusWindowProps(
             "col-span-2 row-span-2 grid grid-cols-2 gap-12",
             "contacts",
-            focusedWindow,
+            focusedWindows,
           )}
           id="contacts"
         >
@@ -34,21 +57,21 @@ export default function Home() {
           {...getFocusWindowProps(
             "col-span-2 row-span-3",
             "projects",
-            focusedWindow,
+            focusedWindows,
           )}
           id="projects"
         >
           <div className="box-subcontainer flex flex-col">
             <ProjectsSection
-              onFocusChange={(focused) =>
-                setFocusedWindow(focused ? "projects" : null)
-              }
+              selectedProject={selectedProject}
+              onProjectSelect={focusProject}
+              onProjectClose={clearProjectFocus}
             />
           </div>
         </div>
 
         <div
-          {...getFocusWindowProps("row-span-3", "education", focusedWindow)}
+          {...getFocusWindowProps("row-span-3", "education", focusedWindows)}
           id="education"
         >
           <div className="box-subcontainer flex flex-col">
@@ -57,14 +80,13 @@ export default function Home() {
         </div>
 
         <div
-          {...getFocusWindowProps("row-span-3", "skills", focusedWindow)}
+          {...getFocusWindowProps("row-span-3", "skills", focusedWindows)}
           id="skills"
         >
           <div className="box-subcontainer flex flex-col">
             <SkillsSection
-              onFocusChange={(focused) =>
-                setFocusedWindow(focused ? "skills" : null)
-              }
+              stackSkillIDs={selectedProject?.skills}
+              onFocusChange={setSkillsFocus}
             />
           </div>
         </div>
@@ -73,12 +95,12 @@ export default function Home() {
           {...getFocusWindowProps(
             "col-span-2 row-span-2",
             "about",
-            focusedWindow,
+            focusedWindows,
           )}
           id="about"
         >
           <div className="box-subcontainer flex flex-col">
-            <AboutSection />
+            <AboutSection project={selectedProject} />
           </div>
         </div>
       </div>

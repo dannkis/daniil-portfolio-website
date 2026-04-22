@@ -26,6 +26,18 @@ function assertOptionalString(
   }
 }
 
+function assertStringArray(
+  value: unknown,
+  field: string,
+  kind: ContentKind,
+): asserts value is string[] {
+  if (!Array.isArray(value) || value.some((item) => typeof item !== "string")) {
+    throw new Error(
+      `Invalid ${kind} content: ${field} must be a string array.`,
+    );
+  }
+}
+
 function assertImageRef(
   value: unknown,
   field: string,
@@ -60,6 +72,7 @@ function assertProject(value: unknown): asserts value is Project {
   assertString(value.name, "name", "projects");
   assertString(value.description, "description", "projects");
   assertImageRef(value.image, "image", "projects");
+  assertStringArray(value.skills, "skills", "projects");
 
   if (value.links !== undefined) {
     if (!isRecord(value.links)) {
@@ -112,6 +125,23 @@ export function defineProjectsContent(value: unknown): readonly Project[] {
   assertUniqueIDs(value, "projects");
 
   return value as Project[];
+}
+
+export function assertProjectSkillReferences(
+  projects: readonly Project[],
+  skills: readonly Skill[],
+) {
+  const skillIDs = new Set(skills.map((skill) => skill.id));
+
+  for (const project of projects) {
+    for (const skillID of project.skills) {
+      if (!skillIDs.has(skillID)) {
+        throw new Error(
+          `Invalid projects content: project "${project.id}" references unknown skill "${skillID}".`,
+        );
+      }
+    }
+  }
 }
 
 export function defineSkillsContent(value: unknown): readonly Skill[] {
