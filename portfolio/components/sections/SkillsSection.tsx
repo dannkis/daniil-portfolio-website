@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { skills } from "@/data/skills";
+import { skills } from "@/lib/content";
 
 type SkillID = (typeof skills)[number]["id"];
 
@@ -72,7 +72,7 @@ export default function SkillsSection({ onFocusChange }: Props) {
               />
               <p className="text-sm leading-relaxed">
                 {expandedSkill.description ??
-                  "Add a description for this skill in data/skills.ts."}
+                  "Add a description for this skill in content/skills.json."}
               </p>
               {expandedSkill.certificateImage ? (
                 <motion.img

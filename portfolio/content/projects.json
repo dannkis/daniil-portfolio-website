@@ -1,0 +1,44 @@
+[
+  {
+    "id": "simplydone",
+    "name": "SimplyDone App",
+    "description": "description",
+    "image": {
+      "src": "/images/projects/simplydone.png",
+      "alt": "An image showing three different = mobile views of the SimplyDone application."
+    },
+    "links": {
+      "website": "",
+      "repository": "",
+      "release": ""
+    }
+  },
+  {
+    "id": "skillfindr",
+    "name": "IBM SkillFindr",
+    "description": "description",
+    "image": {
+      "src": "/images/projects/skillfindr.png",
+      "alt": ""
+    },
+    "links": {
+      "website": "",
+      "repository": "",
+      "release": ""
+    }
+  },
+  {
+    "id": "rotamaker",
+    "name": "RotaMaker 4",
+    "description": "description",
+    "image": {
+      "src": "/images/projects/rotamaker.png",
+      "alt": ""
+    },
+    "links": {
+      "website": "",
+      "repository": "",
+      "release": ""
+    }
+  }
+]
