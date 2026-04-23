@@ -53,7 +53,7 @@ export default function EducationSection({
       </div>
 
       <motion.div
-        className="relative flex min-h-0 flex-1 overflow-hidden"
+        className="relative flex min-h-0 flex-1 overflow-visible"
         initial={false}
         animate={{
           flexDirection: selectedEducation && !isLargeScreen ? "column" : "row",
@@ -68,7 +68,7 @@ export default function EducationSection({
         >
           <div
             id="timeline"
-            className="relative grid min-h-0 w-12 shrink-0 grid-cols-1 grid-rows-4 items-center justify-items-center overflow-visible px-3"
+            className="relative grid min-h-0 w-4 shrink-0 grid-cols-1 grid-rows-4 items-center justify-items-center overflow-visible"
           >
             <div className="absolute top-[12.5%] bottom-[12.5%] left-1/2 w-0 -translate-x-1/2 border"></div>
             {education.map((entry) => {
@@ -100,7 +100,7 @@ export default function EducationSection({
           </div>
           <div
             id="education-info"
-            className="ms-4 grid min-h-0 flex-1 grid-cols-1 grid-rows-4 items-center"
+            className="ms-6 grid min-h-0 flex-1 grid-cols-1 grid-rows-4 items-center"
           >
             {education.map((entry) => {
               const isSelected = selectedEducation?.id === entry.id;

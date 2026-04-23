@@ -5,6 +5,7 @@ import ContactsSection from "@/components/sections/ContactsSection";
 import EducationSection from "@/components/sections/EducationSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import SkillsSection from "@/components/sections/SkillsSection";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { education, projects, skills } from "@/lib/content";
 import { type FocusedWindows, getFocusWindowProps } from "@/lib/focusWindow";
 
@@ -13,6 +14,7 @@ type EducationID = (typeof education)[number]["id"];
 type SkillID = (typeof skills)[number]["id"];
 
 export default function Home() {
+  const isDesktopLayout = useMediaQuery("(min-width: 64rem)");
   const [focusedWindows, setFocusedWindows] = useState<FocusedWindows | null>(
     null,
   );
@@ -25,9 +27,13 @@ export default function Home() {
   const selectedProject = projects.find(
     (project) => project.id === selectedProjectID,
   );
-  const selectedEducation = education.find(
-    (entry) => entry.id === selectedEducationID,
-  );
+  const selectedEducation = isDesktopLayout
+    ? education.find((entry) => entry.id === selectedEducationID)
+    : undefined;
+  const activeFocusedWindows =
+    !isDesktopLayout && focusedWindows?.includes("education")
+      ? null
+      : focusedWindows;
 
   function focusProject(projectID: ProjectID) {
     setSelectedProjectID(projectID);
@@ -37,6 +43,10 @@ export default function Home() {
   }
 
   function focusEducation(educationID: EducationID) {
+    if (!isDesktopLayout) {
+      return;
+    }
+
     setSelectedEducationID(educationID);
     setSelectedProjectID(null);
     setSelectedSkillID(null);
@@ -69,7 +79,7 @@ export default function Home() {
   }
 
   function handlePointerDown(event: React.PointerEvent<HTMLElement>) {
-    if (!focusedWindows) {
+    if (!activeFocusedWindows) {
       return;
     }
 
@@ -88,17 +98,17 @@ export default function Home() {
 
   return (
     <main
-      className={`min-h-screen p-3 transition-all duration-500 sm:p-4 lg:h-screen lg:min-h-200 ${
-        focusedWindows ? "focus-window-open" : ""
+      className={`box-border min-h-screen px-3 py-3 transition-all duration-500 sm:px-4 sm:py-5 md:px-4 md:py-7 lg:h-screen lg:min-h-200 lg:px-10 lg:py-8 xl:px-16 xl:py-10 2xl:px-24 2xl:py-12 ${
+        activeFocusedWindows ? "focus-window-open" : ""
       }`}
       onPointerDown={handlePointerDown}
     >
-      <div className="grid auto-rows-auto grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:h-full lg:grid-cols-4 lg:grid-rows-5">
+      <div className="mx-auto grid h-full max-w-[112rem] auto-rows-auto grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4 lg:grid-rows-5">
         <div
           {...getFocusWindowProps(
             "min-h-80 sm:col-span-2 lg:col-span-2 lg:row-span-2 lg:min-h-0 grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-12",
             "contacts",
-            focusedWindows,
+            activeFocusedWindows,
           )}
           id="contacts"
         >
@@ -109,7 +119,7 @@ export default function Home() {
           {...getFocusWindowProps(
             "min-h-96 sm:col-span-2 lg:col-span-2 lg:row-span-3 lg:min-h-0",
             "projects",
-            focusedWindows,
+            activeFocusedWindows,
           )}
           id="projects"
         >
@@ -125,10 +135,10 @@ export default function Home() {
         <div
           {...getFocusWindowProps(
             selectedEducation
-              ? "min-h-[30rem] sm:col-span-2 lg:col-span-2 lg:row-span-3 lg:min-h-0"
-              : "min-h-[30rem] lg:row-span-3 lg:min-h-0",
+              ? "hidden min-h-[30rem] sm:col-span-2 lg:col-span-2 lg:row-span-3 lg:block lg:min-h-0"
+              : "hidden min-h-[30rem] lg:row-span-3 lg:block lg:min-h-0",
             "education",
-            focusedWindows,
+            activeFocusedWindows,
           )}
           id="education"
         >
@@ -144,9 +154,9 @@ export default function Home() {
         {!selectedEducation && (
           <div
             {...getFocusWindowProps(
-              "min-h-[32rem] sm:min-h-[28rem] lg:row-span-3 lg:min-h-0",
+              "min-h-[36rem] !px-3 !py-4 sm:col-span-2 sm:min-h-[34rem] sm:!px-4 sm:!py-5 md:min-h-[36rem] md:!px-5 lg:col-span-1 lg:row-span-3 lg:min-h-0 lg:!px-8 lg:!py-8",
               "skills",
-              focusedWindows,
+              activeFocusedWindows,
             )}
             id="skills"
           >
@@ -165,7 +175,7 @@ export default function Home() {
           {...getFocusWindowProps(
             "min-h-72 sm:col-span-2 lg:col-span-2 lg:row-span-2 lg:min-h-0",
             "about",
-            focusedWindows,
+            activeFocusedWindows,
           )}
           id="about"
         >
