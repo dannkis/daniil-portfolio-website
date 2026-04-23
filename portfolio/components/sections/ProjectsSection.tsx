@@ -28,7 +28,7 @@ export default function ProjectsSection({
         <AnimatePresence>
           {selectedProject && (
             <motion.button
-              className="text-orange-400 hover:cursor-pointer"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-sm text-orange-400 hover:cursor-pointer"
               type="button"
               onClick={onProjectClose}
               initial={{ opacity: 0, scale: 0.8 }}

@@ -13,6 +13,10 @@ const INTERACTIVE_SELECTOR = [
 ].join(",");
 
 const PROXIMITY_RADIUS = 96;
+const BASE_CURSOR_SIZE = 16;
+const OUTLINE_PADDING = 8;
+const MAX_OUTLINE_RADIUS = 18;
+const CIRCLE_RADIUS = BASE_CURSOR_SIZE / 2;
 
 function getDistanceToRect(x: number, y: number, rect: DOMRect) {
   const dx = Math.max(rect.left - x, 0, x - rect.right);
@@ -26,16 +30,25 @@ function isInteractiveElement(element: Element) {
     return false;
   }
 
-  if (
-    element instanceof HTMLButtonElement ||
-    element instanceof HTMLInputElement ||
-    element instanceof HTMLSelectElement ||
-    element instanceof HTMLTextAreaElement
-  ) {
-    return !element.disabled;
+  if (element.closest("[aria-disabled='true']")) {
+    return false;
   }
 
-  return true;
+  const disabledControl = element.closest(
+    "button:disabled,input:disabled,select:disabled,textarea:disabled",
+  );
+
+  return disabledControl === null;
+}
+
+function getInteractiveTarget(element: Element | null) {
+  const target = element?.closest(INTERACTIVE_SELECTOR);
+
+  if (!target || !isInteractiveElement(target)) {
+    return null;
+  }
+
+  return target;
 }
 
 export default function CustomCursor() {
@@ -64,9 +77,29 @@ export default function CustomCursor() {
     let cursorY = pointerY;
     let scale = 1;
     let targetScale = 1;
+    let cursorWidth = BASE_CURSOR_SIZE;
+    let cursorHeight = BASE_CURSOR_SIZE;
+    let cursorRadius = CIRCLE_RADIUS;
+    let targetWidth = BASE_CURSOR_SIZE;
+    let targetHeight = BASE_CURSOR_SIZE;
+    let targetRadius = CIRCLE_RADIUS;
+    let activeTarget: Element | null = null;
     let animationFrame = 0;
 
     function updateInteractiveState() {
+      activeTarget = getInteractiveTarget(
+        document.elementFromPoint(pointerX, pointerY),
+      );
+
+      if (activeTarget) {
+        cursor.dataset.overInteractive = "true";
+        cursor.dataset.nearInteractive = "true";
+        targetScale = 1;
+        return;
+      }
+
+      cursor.dataset.overInteractive = "false";
+
       const interactiveElements = Array.from(
         document.querySelectorAll(INTERACTIVE_SELECTOR),
       ).filter(isInteractiveElement);
@@ -92,10 +125,43 @@ export default function CustomCursor() {
     }
 
     function animate() {
-      cursorX += (pointerX - cursorX) * 0.24;
-      cursorY += (pointerY - cursorY) * 0.24;
-      scale += (targetScale - scale) * 0.18;
+      const activeRect = activeTarget?.getBoundingClientRect();
+      const isOutliningTarget =
+        activeRect !== undefined &&
+        activeRect.width > 0 &&
+        activeRect.height > 0;
 
+      const targetX = isOutliningTarget
+        ? activeRect.left +
+          activeRect.width / 2 +
+          (pointerX - activeRect.left - activeRect.width / 2) * 0.08
+        : pointerX;
+      const targetY = isOutliningTarget
+        ? activeRect.top +
+          activeRect.height / 2 +
+          (pointerY - activeRect.top - activeRect.height / 2) * 0.08
+        : pointerY;
+
+      targetWidth = isOutliningTarget
+        ? activeRect.width + OUTLINE_PADDING * 2
+        : BASE_CURSOR_SIZE;
+      targetHeight = isOutliningTarget
+        ? activeRect.height + OUTLINE_PADDING * 2
+        : BASE_CURSOR_SIZE;
+      targetRadius = isOutliningTarget
+        ? Math.min(MAX_OUTLINE_RADIUS, targetHeight / 2)
+        : CIRCLE_RADIUS;
+
+      cursorX += (targetX - cursorX) * (isOutliningTarget ? 0.2 : 0.22);
+      cursorY += (targetY - cursorY) * (isOutliningTarget ? 0.2 : 0.22);
+      scale += (targetScale - scale) * 0.14;
+      cursorWidth += (targetWidth - cursorWidth) * 0.18;
+      cursorHeight += (targetHeight - cursorHeight) * 0.18;
+      cursorRadius += (targetRadius - cursorRadius) * 0.18;
+
+      cursor.style.width = `${cursorWidth}px`;
+      cursor.style.height = `${cursorHeight}px`;
+      cursor.style.borderRadius = `${cursorRadius}px`;
       cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%) scale(${scale})`;
       animationFrame = window.requestAnimationFrame(animate);
     }
@@ -141,6 +207,7 @@ export default function CustomCursor() {
       ref={cursorRef}
       className="custom-cursor"
       data-near-interactive="false"
+      data-over-interactive="false"
       data-pressed="false"
       data-visible="false"
       aria-hidden="true"

@@ -47,7 +47,7 @@ export default function SkillsSection({
         <AnimatePresence>
           {activeExpandedSkill && (
             <motion.button
-              className="text-orange-400 hover:cursor-pointer"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-sm text-orange-400 hover:cursor-pointer"
               type="button"
               onClick={collapse}
               initial={{ opacity: 0, scale: 0.8 }}

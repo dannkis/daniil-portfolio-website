@@ -84,12 +84,12 @@ body {
     mix-blend-mode: difference;
     backdrop-filter: contrast(1.55) saturate(1.2);
     transition:
-      width 0.18s ease,
-      height 0.18s ease,
       opacity 0.18s ease,
       border-color 0.18s ease,
-      background-color 0.18s ease;
-    will-change: transform, width, height, opacity;
+      background-color 0.18s ease,
+      box-shadow 0.18s ease,
+      backdrop-filter 0.18s ease;
+    will-change: transform, width, height, opacity, border-radius;
   }
 
   .custom-cursor::after {
@@ -126,9 +126,22 @@ body {
     opacity: 1;
   }
 
+  .custom-cursor[data-over-interactive="true"] {
+    border-color: var(--cursor-accent);
+    background: rgb(from var(--cursor-color) r g b / 0.06);
+    box-shadow:
+      0 0 0 1px rgb(from var(--cursor-accent) r g b / 0.24),
+      0 0 22px rgb(from var(--cursor-accent) r g b / 0.18);
+    backdrop-filter: contrast(1.7) saturate(1.25);
+  }
+
+  .custom-cursor[data-over-interactive="true"]::after {
+    opacity: 0;
+  }
+
   .custom-cursor[data-pressed="true"] {
-    width: 1.55rem;
-    height: 1.55rem;
+    border-color: var(--foreground);
+    background: rgb(from var(--cursor-accent) r g b / 0.14);
   }
 }
 

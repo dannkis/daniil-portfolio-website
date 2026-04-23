@@ -22,23 +22,29 @@ export default function EducationSection({
   return (
     <>
       <div className="flex justify-between">
-        <motion.button
-          className="mb-4 text-left hover:cursor-pointer"
-          type="button"
-          layout
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          onClick={() =>
-            onEducationSelect(selectedEducation?.id ?? defaultEducation.id)
-          }
-        >
-          <h1>
-            {selectedEducation ? selectedEducation.qualification : "Education"}
-          </h1>
-        </motion.button>
+        {selectedEducation ? (
+          <motion.h1
+            className="mb-4"
+            layout
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          >
+            {selectedEducation.qualification}
+          </motion.h1>
+        ) : (
+          <motion.button
+            className="mb-4 text-left hover:cursor-pointer"
+            type="button"
+            layout
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            onClick={() => onEducationSelect(defaultEducation.id)}
+          >
+            <h1>Education</h1>
+          </motion.button>
+        )}
         <AnimatePresence>
           {selectedEducation && (
             <motion.button
-              className="text-orange-400 hover:cursor-pointer"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-sm text-orange-400 hover:cursor-pointer"
               type="button"
               onClick={onEducationClose}
               initial={{ opacity: 0, scale: 0.8 }}
