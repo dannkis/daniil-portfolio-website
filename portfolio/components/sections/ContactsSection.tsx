@@ -11,7 +11,7 @@ export default function ContactsSection() {
         </div>
       </div>
       <div className="box-subcontainer relative flex min-h-44 items-center pb-12 sm:min-h-0">
-        <h1 className="text-[clamp(2.4rem,9vw,3rem)] leading-none sm:text-5xl">
+        <h1 className="text-display">
           Daniil <br /> Zhelyazkov
         </h1>
         <div className="absolute bottom-0 flex min-h-10 w-full flex-wrap items-center gap-x-3 gap-y-2">
@@ -21,7 +21,7 @@ export default function ContactsSection() {
               alt="The original icon of the LinkedIn website."
               className="me-1 h-6"
             />
-            <p className="text-sm">LinkedIn</p>
+            <p className="text-body-compact">LinkedIn</p>
           </div>
           <div className="me-3 flex items-center">
             <img
@@ -29,7 +29,7 @@ export default function ContactsSection() {
               alt="The original icon of the GitHub website."
               className="me-1 h-6"
             />
-            <p className="text-sm">GitHub</p>
+            <p className="text-body-compact">GitHub</p>
           </div>
           <div className="flex items-center">
             <img
@@ -37,7 +37,7 @@ export default function ContactsSection() {
               alt="An email icon."
               className="me-1 h-5"
             />
-            <p className="text-sm">Email</p>
+            <p className="text-body-compact">Email</p>
           </div>
         </div>
       </div>

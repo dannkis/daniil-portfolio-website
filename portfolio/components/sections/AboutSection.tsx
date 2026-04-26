@@ -1,28 +1,60 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { about, type Education, type Project } from "@/lib/content";
+import { about, type Education, type Project, type Skill } from "@/lib/content";
 
 interface Props {
   project?: Project;
   education?: Education;
+  skill?: Skill;
 }
 
-export default function AboutSection({ project, education }: Props) {
+type ProjectLink = {
+  href: string;
+  label: string;
+};
+
+export default function AboutSection({ project, education, skill }: Props) {
+  const projectLinks = project
+    ? [
+        {
+          href: project.links?.repository,
+          label: "GitHub Repo",
+        },
+        {
+          href: project.links?.release,
+          label: "Release",
+        },
+        {
+          href: project.links?.website,
+          label: "Website / App",
+        },
+      ].filter(
+        (link): link is ProjectLink =>
+          typeof link.href === "string" && link.href.length > 0,
+      )
+    : [];
   const contentKey = project
     ? `project-${project.id}`
     : education
       ? `education-${education.id}`
-      : "about";
+      : skill
+        ? `skill-${skill.id}`
+        : "about";
   const title = project
     ? "About Project"
     : education
       ? "About Education"
-      : "About";
+      : skill
+        ? "About Skill"
+        : "About";
   const text = project
     ? project.description
     : education
       ? education.description
-      : about.text;
+      : skill
+        ? (skill.description ??
+          "Add a description for this skill in content/skills.json.")
+        : about.text;
 
   return (
     <>
@@ -36,16 +68,31 @@ export default function AboutSection({ project, education }: Props) {
       </motion.h1>
       <div className="relative flex h-full items-center overflow-hidden">
         <AnimatePresence mode="popLayout">
-          <motion.p
+          <motion.div
             key={contentKey}
-            className="text-sm leading-relaxed"
+            className="flex flex-col gap-4"
             initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, y: -14, filter: "blur(8px)" }}
             transition={{ type: "spring", stiffness: 300, damping: 26 }}
           >
-            {text}
-          </motion.p>
+            <p className="text-body">{text}</p>
+            {projectLinks.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {projectLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    className="text-label inline-flex items-center rounded-md border border-foreground/20 px-3 py-2 text-orange-400 transition-colors hover:border-orange-400/40 hover:text-orange-300"
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            )}
+          </motion.div>
         </AnimatePresence>
       </div>
     </>

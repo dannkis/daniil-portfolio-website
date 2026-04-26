@@ -85,6 +85,14 @@ export default function CustomCursor() {
     let targetRadius = CIRCLE_RADIUS;
     let activeTarget: Element | null = null;
     let animationFrame = 0;
+    let syncFrame = 0;
+
+    function queueInteractiveStateUpdate() {
+      window.cancelAnimationFrame(syncFrame);
+      syncFrame = window.requestAnimationFrame(() => {
+        updateInteractiveState();
+      });
+    }
 
     function updateInteractiveState() {
       activeTarget = getInteractiveTarget(
@@ -179,10 +187,16 @@ export default function CustomCursor() {
 
     function handlePointerDown() {
       cursor.dataset.pressed = "true";
+      queueInteractiveStateUpdate();
     }
 
     function handlePointerUp() {
       cursor.dataset.pressed = "false";
+      queueInteractiveStateUpdate();
+    }
+
+    function handleClick() {
+      queueInteractiveStateUpdate();
     }
 
     document.documentElement.classList.add("custom-cursor-enabled");
@@ -190,6 +204,7 @@ export default function CustomCursor() {
     window.addEventListener("pointerleave", handlePointerLeave);
     window.addEventListener("pointerdown", handlePointerDown);
     window.addEventListener("pointerup", handlePointerUp);
+    window.addEventListener("click", handleClick);
     animationFrame = window.requestAnimationFrame(animate);
 
     return () => {
@@ -198,7 +213,9 @@ export default function CustomCursor() {
       window.removeEventListener("pointerleave", handlePointerLeave);
       window.removeEventListener("pointerdown", handlePointerDown);
       window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("click", handleClick);
       window.cancelAnimationFrame(animationFrame);
+      window.cancelAnimationFrame(syncFrame);
     };
   }, []);
 

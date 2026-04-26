@@ -5,48 +5,33 @@ import { projects, type Project } from "@/lib/content";
 type ProjectID = (typeof projects)[number]["id"];
 
 interface Props {
-  selectedProject?: Project;
-  onProjectSelect: (id: ProjectID) => void;
-  onProjectClose: () => void;
+  activeProject?: Project;
+  expandedProject?: Project;
+  onProjectHover: (id: ProjectID) => void;
+  onProjectExpand: (id: ProjectID) => void;
 }
 
 export default function ProjectsSection({
-  selectedProject,
-  onProjectSelect,
-  onProjectClose,
+  activeProject,
+  expandedProject,
+  onProjectHover,
+  onProjectExpand,
 }: Props) {
   return (
     <>
-      <div className="flex justify-between">
-        <motion.h1
-          className="mb-6"
-          layout
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        >
-          {selectedProject ? selectedProject.name : "Projects"}
-        </motion.h1>
-        <AnimatePresence>
-          {selectedProject && (
-            <motion.button
-              className="inline-flex h-8 w-8 items-center justify-center rounded-sm text-orange-400 hover:cursor-pointer"
-              type="button"
-              onClick={onProjectClose}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.15 }}
-            >
-              ✕
-            </motion.button>
-          )}
-        </AnimatePresence>
-      </div>
+      <motion.h1
+        className="mb-6"
+        layout
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      >
+        {activeProject ? activeProject.name : "Projects"}
+      </motion.h1>
 
       <LayoutGroup id="projects-section">
         <div className="relative h-full overflow-hidden">
           <div
             className={`grid h-full grid-cols-1 items-center gap-6 transition-opacity duration-150 sm:grid-cols-3 lg:gap-x-6 lg:gap-y-10 ${
-              selectedProject ? "pointer-events-none opacity-0" : "opacity-100"
+              expandedProject ? "pointer-events-none opacity-0" : "opacity-100"
             }`}
           >
             {projects.map((project, i) => (
@@ -54,7 +39,8 @@ export default function ProjectsSection({
                 key={project.id}
                 type="button"
                 className="flex flex-col items-center hover:cursor-pointer"
-                onClick={() => onProjectSelect(project.id)}
+                onMouseEnter={() => onProjectHover(project.id)}
+                onClick={() => onProjectExpand(project.id)}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 12 }}
@@ -66,7 +52,7 @@ export default function ProjectsSection({
                 }}
                 whileTap={{ scale: 0.97 }}
               >
-                {selectedProject?.id === project.id ? (
+                {expandedProject?.id === project.id ? (
                   <div className="w-full overflow-hidden rounded-md opacity-0">
                     <img
                       className="w-full object-contain"
@@ -99,17 +85,17 @@ export default function ProjectsSection({
                     />
                   </motion.div>
                 )}
-                <p className="subheading">{project.name}</p>
+                <p className="text-label">{project.name}</p>
               </motion.button>
             ))}
           </div>
 
           <AnimatePresence initial={false}>
-            {selectedProject && (
+            {expandedProject && (
               <motion.div
-                key={selectedProject.id}
+                key={expandedProject.id}
                 className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-md"
-                layoutId={`project-frame-${selectedProject.id}`}
+                layoutId={`project-frame-${expandedProject.id}`}
                 initial={{ opacity: 0.96 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0.96 }}
@@ -117,8 +103,8 @@ export default function ProjectsSection({
               >
                 <motion.img
                   className="max-h-full w-full object-contain"
-                  src={selectedProject.image.src}
-                  alt={selectedProject.image.alt}
+                  src={expandedProject.image.src}
+                  alt={expandedProject.image.alt}
                   draggable={false}
                   transition={{ type: "spring", stiffness: 260, damping: 26 }}
                 />
