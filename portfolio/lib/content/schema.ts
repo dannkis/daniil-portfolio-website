@@ -57,6 +57,20 @@ function assertImageRef(
   assertString(value.alt, `${field}.alt`, kind);
 }
 
+function assertImageRefArray(
+  value: unknown,
+  field: string,
+  kind: ContentKind,
+): asserts value is ImageRef[] {
+  if (!Array.isArray(value)) {
+    throw new Error(`Invalid ${kind} content: ${field} must be an array.`);
+  }
+
+  value.forEach((item, index) => {
+    assertImageRef(item, `${field}[${index}]`, kind);
+  });
+}
+
 function assertUniqueIDs(items: readonly { id: string }[], kind: ContentKind) {
   const seenIDs = new Set<string>();
 
@@ -78,6 +92,9 @@ function assertProject(value: unknown): asserts value is Project {
   assertString(value.name, "name", "projects");
   assertString(value.description, "description", "projects");
   assertImageRef(value.image, "image", "projects");
+  if (value.gallery !== undefined) {
+    assertImageRefArray(value.gallery, "gallery", "projects");
+  }
   assertStringArray(value.skills, "skills", "projects");
 
   if (value.links !== undefined) {

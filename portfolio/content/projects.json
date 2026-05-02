@@ -7,6 +7,20 @@
       "src": "/images/projects/simplydone.png",
       "alt": "An image showing three different = mobile views of the SimplyDone application."
     },
+    "gallery": [
+      {
+        "src": "/images/projects/simplydone.png",
+        "alt": "A gallery preview showing the three core mobile screens of the SimplyDone application."
+      },
+      {
+        "src": "/images/projects/simplydone.png",
+        "alt": "A closer gallery preview of the SimplyDone task list and mobile navigation."
+      },
+      {
+        "src": "/images/projects/simplydone.png",
+        "alt": "A gallery preview focusing on the overall mobile interface layout of the SimplyDone application."
+      }
+    ],
     "skills": ["react", "typescript", "figma", "tailwind"],
     "links": {
       "website": "google.com",

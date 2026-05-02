@@ -70,14 +70,24 @@ export default function SkillsSection({
               </>
             );
 
-            const itemClassName = `flex min-w-0 flex-col items-center justify-center gap-1 rounded-md text-center transition-[filter,color] sm:gap-1.5 lg:gap-2 ${
-              isHighlighted ? "" : "grayscale"
-            }`;
+            const itemClassName =
+              "flex min-w-0 flex-col items-center justify-center gap-1 rounded-md text-center transition-[filter,color] sm:gap-1.5 lg:gap-2";
 
             const motionProps = {
               initial: { opacity: 0, y: 12 },
               animate: {
-                opacity: isHighlighted ? 1 : activeSkill ? 0.24 : 0.28,
+                opacity: isHighlighted
+                  ? 1
+                  : activeSkill
+                    ? isProjectHighlighted
+                      ? 0.58
+                      : 0.24
+                    : 0.28,
+                filter: isHighlighted
+                  ? "grayscale(0%) brightness(1)"
+                  : isProjectHighlighted
+                    ? "grayscale(55%) brightness(0.82)"
+                    : "grayscale(100%) brightness(0.52)",
                 y: 0,
                 scale: activeSkill && isHighlighted ? 1.08 : 1,
               },

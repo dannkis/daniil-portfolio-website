@@ -57,6 +57,10 @@ export default function Home() {
     );
   }
 
+  function collapseExpandedProject() {
+    projectFocus.collapseExpanded();
+  }
+
   function previewEducation(educationID: EducationID) {
     if (!isDesktopLayout) {
       return;
@@ -201,6 +205,7 @@ export default function Home() {
               expandedProject={expandedProject}
               onProjectHover={previewProject}
               onProjectExpand={expandProject}
+              onProjectCollapse={collapseExpandedProject}
             />
           </div>
         </div>

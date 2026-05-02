@@ -21,6 +21,7 @@ export type ProjectLinks = {
 export type Project = ContentItem & {
   description: string;
   image: ImageRef;
+  gallery?: ImageRef[];
   skills: string[];
   links?: ProjectLinks;
 };
