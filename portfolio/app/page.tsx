@@ -271,7 +271,6 @@ export default function Home() {
                     contentKey={activeSkill.id}
                     image={activeSkill.certificateImage}
                     placeholder="Add a certificateImage for this skill in content/skills.json."
-                    title="Preview"
                   />
                 </div>
               </>
@@ -303,6 +302,7 @@ export default function Home() {
                   <PreviewPanel
                     contentKey={selectedEducation.id}
                     image={selectedEducation.certificateImage}
+                    images={selectedEducation.certificateImages}
                     placeholder="no image added"
                   />
                 </div>

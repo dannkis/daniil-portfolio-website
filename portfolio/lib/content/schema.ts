@@ -128,6 +128,14 @@ function assertEducation(value: unknown): asserts value is Education {
   if (value.certificateImage !== undefined) {
     assertImageRef(value.certificateImage, "certificateImage", "education");
   }
+
+  if (value.certificateImages !== undefined) {
+    assertImageRefArray(
+      value.certificateImages,
+      "certificateImages",
+      "education",
+    );
+  }
 }
 
 function assertSkill(value: unknown): asserts value is Skill {

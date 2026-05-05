@@ -13,7 +13,7 @@ Rules:
 - Image `src` values should point to files under `public`, starting with `/`.
 - Project `skills` values must match skill IDs from `skills.json`.
 - Optional fields can be omitted instead of set to an empty string.
-- Education certificates can be added with `certificateImage`.
+- Education certificates can be added with `certificateImage` or `certificateImages`.
 - Skill certificates can be added with `certificateImage`.
 
 Example skill with a certificate:

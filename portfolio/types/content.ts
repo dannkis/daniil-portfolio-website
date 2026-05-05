@@ -38,6 +38,7 @@ export type Education = ContentItem & {
   description: string;
   color: string;
   certificateImage?: ImageRef;
+  certificateImages?: ImageRef[];
 };
 
 export type Skill = ContentItem & {

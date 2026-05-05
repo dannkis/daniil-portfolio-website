@@ -20,10 +20,20 @@
     "summary": "A-Level study combining technical programming, mathematical reasoning, and written communication.",
     "description": "This education strengthened computational thinking, programming fundamentals, mathematical reasoning, analytical writing, and communication. It provided preparation for degree-level computer science through both technical and academic work.",
     "color": "#f97316",
-    "certificateImage": {
-      "src": "/images/certificates/education/exeter-college-a-levels.png",
-      "alt": "A-Level certificate from Exeter College for Computer Science, Mathematics, and English Language."
-    }
+    "certificateImages": [
+      {
+        "src": "/images/certificates/education/exeter-college-computer-science-a-level.webp",
+        "alt": "A-Level certificate in Computer Science from Exeter College."
+      },
+      {
+        "src": "/images/certificates/education/exeter-college-mathematics-a-level.webp",
+        "alt": "A-Level certificate in Mathematics from Exeter College."
+      },
+      {
+        "src": "/images/certificates/education/exeter-college-english-language-a-level.webp",
+        "alt": "A-Level certificate in English Language from Exeter College."
+      }
+    ]
   },
   {
     "id": "south-devon-computing",
@@ -34,7 +44,7 @@
     "description": "This qualification introduced practical computing concepts including digital systems, basic programming, IT workflows, and applied technical problem-solving. It helped establish the practical foundation for later software and computer science study.",
     "color": "#eab308",
     "certificateImage": {
-      "src": "/images/certificates/education/south-devon-btec-computing.png",
+      "src": "/images/certificates/education/south-devon-btec-computing.webp",
       "alt": "BTEC Level 2 in Computing certificate from South Devon College."
     }
   },
@@ -47,7 +57,7 @@
     "description": "This stage built the academic foundations for later technical education, including structured learning, problem-solving habits, communication, and broader subject knowledge.",
     "color": "#22c55e",
     "certificateImage": {
-      "src": "/images/certificates/education/romain-rolland-secondary-certificate.png",
+      "src": "/images/certificates/education/romain-rolland-secondary-certificate.webp",
       "alt": "General secondary education certificate from Romain Rolland Secondary School."
     }
   }
