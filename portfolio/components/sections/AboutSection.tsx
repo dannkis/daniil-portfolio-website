@@ -26,7 +26,7 @@ export default function AboutSection({ project, education, skill }: Props) {
         },
         {
           href: project.links?.website,
-          label: "Website / App",
+          label: "App",
         },
       ].filter(
         (link): link is ProjectLink =>
@@ -40,32 +40,18 @@ export default function AboutSection({ project, education, skill }: Props) {
       : skill
         ? `skill-${skill.id}`
         : "about";
-  const title = project
-    ? "About Project"
-    : education
-      ? "About Education"
-      : skill
-        ? "About Skill"
-        : "About";
   const text = project
     ? project.description
     : education
       ? education.description
       : skill
         ? (skill.description ??
-          "Add a description for this skill in content/skills.json.")
+          "No description for this skill in content/skills.json.")
         : about.text;
 
   return (
     <>
-      <motion.h1
-        key={`${contentKey}-title`}
-        initial={{ opacity: 0, x: -10, filter: "blur(6px)" }}
-        animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-        transition={{ type: "spring", stiffness: 320, damping: 28 }}
-      >
-        {title}
-      </motion.h1>
+      <h1>About</h1>
       <div className="relative flex h-full items-center overflow-hidden">
         <AnimatePresence mode="popLayout">
           <motion.div
@@ -76,7 +62,7 @@ export default function AboutSection({ project, education, skill }: Props) {
             exit={{ opacity: 0, y: -14, filter: "blur(8px)" }}
             transition={{ type: "spring", stiffness: 300, damping: 26 }}
           >
-            <p className="text-body">{text}</p>
+            <p className="text-sm">{text}</p>
             {projectLinks.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {projectLinks.map((link) => (

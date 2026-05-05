@@ -27,11 +27,7 @@ export default function SkillsSection({
           layout
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         >
-          {activeSkill
-            ? activeSkill.name
-            : isStackMode
-              ? "Stack Used"
-              : "Skills"}
+          {isStackMode ? "Stack Used" : "Skills"}
         </motion.h1>
       </div>
 
@@ -59,14 +55,14 @@ export default function SkillsSection({
                           ? 1.12
                           : 1,
                   }}
-                  whileHover={isInteractive ? { scale: 1.04 } : undefined}
+                  whileHover={isInteractive ? { scale: 1.02 } : undefined}
                   transition={{
                     type: "spring",
                     stiffness: 300,
                     damping: 24,
                   }}
                 />
-                <p className="text-label text-center">{skill.name}</p>
+                <p className="text-center text-xs">{skill.name}</p>
               </>
             );
 

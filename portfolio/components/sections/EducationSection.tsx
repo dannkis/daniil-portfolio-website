@@ -15,13 +15,7 @@ export default function EducationSection({
 }: Props) {
   return (
     <>
-      <motion.h1
-        className="mb-4"
-        layout
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      >
-        {selectedEducation ? selectedEducation.qualification : "Education"}
-      </motion.h1>
+      <h1 className="mb-4">Education</h1>
 
       <motion.div
         className="relative flex min-h-0 flex-1 overflow-visible"
@@ -88,11 +82,9 @@ export default function EducationSection({
                     damping: 28,
                   }}
                 >
-                  <p className="subheading text-gray-300">{entry.period}</p>
-                  <p className="text-body-compact">{entry.name}</p>
-                  <p className="subheading text-gray-400">
-                    {entry.qualification}
-                  </p>
+                  <p className="text-xs text-gray-300">{entry.period}</p>
+                  <p className="text-sm">{entry.name}</p>
+                  <p className="text-xs text-gray-400">{entry.qualification}</p>
                 </motion.button>
               );
             })}

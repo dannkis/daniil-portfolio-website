@@ -2,7 +2,7 @@ export default function ContactsSection() {
   return (
     <>
       <div className="box-subcontainer flex items-center justify-center">
-        <div className="flex aspect-square h-40 sm:h-full sm:max-h-full">
+        <div className="flex aspect-square h-40 sm:h-full sm:max-w-full">
           <img
             className="object-contain"
             src="/images/profile.png"
@@ -10,7 +10,7 @@ export default function ContactsSection() {
           />
         </div>
       </div>
-      <div className="box-subcontainer relative flex min-h-44 items-center pb-12 sm:min-h-0">
+      <div className="box-subcontainer @container relative flex min-h-44 min-w-0 items-center pb-12 sm:min-h-0">
         <h1 className="text-display">
           Daniil <br /> Zhelyazkov
         </h1>

@@ -231,14 +231,14 @@ export default function Home() {
                   layout
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 >
-                  {activeSkill.name}
+                  Certificate
                 </motion.h1>
                 <div className="relative min-h-0 flex-1 overflow-visible">
                   <PreviewPanel
                     contentKey={activeSkill.id}
                     image={activeSkill.certificateImage}
                     placeholder="Add a certificateImage for this skill in content/skills.json."
-                    title="Certificate Preview"
+                    title="Preview"
                   />
                 </div>
               </>
@@ -264,14 +264,14 @@ export default function Home() {
                   layout
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 >
-                  {selectedEducation.qualification}
+                  Certificate
                 </motion.h1>
                 <div className="relative min-h-0 flex-1 overflow-visible">
                   <PreviewPanel
                     contentKey={selectedEducation.id}
                     image={selectedEducation.certificateImage}
                     placeholder="Add certificateImage to this education entry in content/education.json."
-                    title="Certificate Preview"
+                    title="Preview"
                   />
                 </div>
               </>

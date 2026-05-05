@@ -139,7 +139,6 @@ body {
     box-shadow:
       0 0 0 1px rgb(from var(--cursor-accent) r g b / 0.24),
       0 0 22px rgb(from var(--cursor-accent) r g b / 0.18);
-    backdrop-filter: contrast(1.7) saturate(1.25);
   }
 
   .custom-cursor[data-over-interactive="true"]::after {
@@ -169,8 +168,8 @@ body {
   }
 
   .text-display {
-    font-size: clamp(2rem, 4vw + 1rem, 3.25rem);
-    line-height: 0.94;
+     font-size: clamp(2rem, 18cqw, 4rem); 
+     line-height: 0.94;
   }
 
   .subheading {

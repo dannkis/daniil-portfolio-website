@@ -145,7 +145,7 @@ export default function ProjectsSection({
                     />
                   </motion.div>
                 )}
-                <p className="text-label">{project.name}</p>
+                <p className="text-xs">{project.name}</p>
               </motion.button>
             ))}
           </div>

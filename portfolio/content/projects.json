@@ -1,7 +1,7 @@
 [
   {
     "id": "simplydone",
-    "name": "SimplyDone App",
+    "name": "Spaces",
     "description": "A productivity-focused task management app concept with mobile-first layouts, simple interaction patterns, and a clean visual hierarchy.",
     "image": {
       "src": "/images/projects/simplydone.png",
@@ -30,7 +30,7 @@
   },
   {
     "id": "skillfindr",
-    "name": "IBM SkillFindr",
+    "name": "SkillFindr (IBM)",
     "description": "A skill discovery and matching concept built around making technical strengths easier to search, compare, and present.",
     "image": {
       "src": "/images/projects/skillfindr.png",
