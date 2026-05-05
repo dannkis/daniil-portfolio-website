@@ -2,129 +2,209 @@
   {
     "id": "c-sharp",
     "name": "C-Sharp",
+    "description": "Experience building desktop and data-driven applications in C-Sharp, with focus on structured logic, UI workflows, and maintainable object-oriented code.",
     "image": {
       "src": "/images/skills/c-sharp.svg",
       "alt": "Icon image of the C-Sharp programming language."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/c-sharp-certificate.webp",
+      "alt": "Certificate for C-Sharp."
     }
   },
   {
     "id": "javascript",
     "name": "JavaScript",
+    "description": "Confident using JavaScript for interactive front-end behaviour, dynamic interfaces, and general web application logic across personal and academic projects.",
     "image": {
       "src": "/images/skills/javascript.svg",
       "alt": "Icon image of the JavaScript programming language."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/javascript-certificate.webp",
+      "alt": "Certificate for JavaScript."
     }
   },
   {
     "id": "swift",
     "name": "Swift",
+    "description": "Built foundational iOS development skills in Swift, including native app structure, interface patterns, and mobile-focused implementation practices.",
     "image": {
       "src": "/images/skills/swift.svg",
       "alt": "Icon image of the Swift programming language."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/swift-certificate.webp",
+      "alt": "Certificate for Swift."
     }
   },
   {
     "id": "python",
     "name": "Python",
+    "description": "Comfortable using Python for problem-solving, scripting, and general programming tasks, with experience applying it in academic and self-directed work.",
     "image": {
       "src": "/images/skills/python.svg",
       "alt": "Icon image of the Python programming language."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/python-certificate.webp",
+      "alt": "Certificate for Python."
     }
   },
   {
     "id": "visual-studio-code",
     "name": "VS Code",
+    "description": "Daily development environment for writing, debugging, and organising code across web, software, and content-driven projects.",
     "image": {
       "src": "/images/skills/visual-studio-code.svg",
       "alt": "Icon image of the Visual Studio Code IDE."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/visual-studio-code-certificate.webp",
+      "alt": "Certificate for Visual Studio Code."
     }
   },
   {
     "id": "react",
     "name": "React",
+    "description": "Experience building component-based interfaces in React with emphasis on reusable UI, state-driven rendering, and clean front-end structure.",
     "image": {
       "src": "/images/skills/react.svg",
       "alt": "Icon image of the React.js framework."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/react-certificate.webp",
+      "alt": "Certificate for React."
     }
   },
   {
     "id": "access",
     "name": "Access",
+    "description": "Used Microsoft Access for structured data handling, form-based workflows, and practical database-backed functionality in desktop software projects.",
     "image": {
       "src": "/images/skills/access.svg",
       "alt": "Icon image of the Microsoft Access Database."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/access-certificate.webp",
+      "alt": "Certificate for Microsoft Access."
     }
   },
   {
     "id": "figma",
     "name": "Figma",
+    "description": "Used Figma to design interfaces, map layouts, and iterate on visual direction before implementation, especially for product and app concepts.",
     "image": {
       "src": "/images/skills/figma.svg",
       "alt": "Icon image of Figma design."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/figma-certificate.webp",
+      "alt": "Certificate for Figma."
     }
   },
   {
     "id": "c-plus-plus",
     "name": "C++",
+    "description": "Developed a solid foundation in C++ through academic programming work, focusing on core language concepts, memory-aware thinking, and algorithmic problem-solving.",
     "image": {
       "src": "/images/skills/c-plus-plus.svg",
       "alt": "Icon image of the C++ programming language."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/c-plus-plus-certificate.webp",
+      "alt": "Certificate for C++."
     }
   },
   {
     "id": "node",
     "name": "Node.js",
+    "description": "Used Node.js to support modern JavaScript project workflows and back-end capable application structures within full-stack development projects.",
     "image": {
       "src": "/images/skills/node.svg",
       "alt": "Icon image of the Node.js framework."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/nodejs-certificate.webp",
+      "alt": "Certificate for Node.js."
     }
   },
   {
     "id": "typescript",
     "name": "TypeScript",
+    "description": "Use TypeScript to add stronger type safety, clearer interfaces, and more reliable structure to front-end and full-stack application code.",
     "image": {
       "src": "/images/skills/typescript.svg",
       "alt": "Icon image of the TypeScript programming language."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/typescript-certificate.webp",
+      "alt": "Certificate for TypeScript."
     }
   },
   {
     "id": "next",
     "name": "Next.js",
+    "description": "Built projects with Next.js using modern app structure, component-driven pages, and production-oriented React patterns for the web.",
     "image": {
       "src": "/images/skills/next.svg",
       "alt": "Icon image of the Next.js framework."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/nextjs-certificate.webp",
+      "alt": "Certificate for Next.js."
     }
   },
   {
     "id": "java",
     "name": "Java",
+    "description": "Experience with Java through structured programming exercises and academic work, covering object-oriented design and general software fundamentals.",
     "image": {
       "src": "/images/skills/java.svg",
       "alt": "Icon image of the Java programming language."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/java-certificate.webp",
+      "alt": "Certificate for Java."
     }
   },
   {
     "id": "bootstrap",
     "name": "Bootstrap",
+    "description": "Used Bootstrap to build responsive layouts and quickly structure interfaces with a consistent component and utility system.",
     "image": {
       "src": "/images/skills/bootstrap.svg",
       "alt": "Icon image of the Bootstrap styling library."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/bootstrap-certificate.webp",
+      "alt": "Certificate for Bootstrap."
     }
   },
   {
     "id": "visual-studio",
     "name": "VS",
+    "description": "Used Visual Studio for desktop and .NET-oriented development, including debugging, project organisation, and Windows application workflows.",
     "image": {
       "src": "/images/skills/visual-studio.svg",
       "alt": "Icon image of Microsoft's Visual Studio IDE."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/visual-studio-certificate.webp",
+      "alt": "Certificate for Visual Studio."
     }
   },
   {
     "id": "tailwind",
     "name": "Tailwind",
+    "description": "Use Tailwind CSS to build responsive interfaces with fast iteration, precise styling control, and reusable utility-based layout patterns.",
     "image": {
       "src": "/images/skills/tailwind.svg",
       "alt": "Icon image of the Bootstrap styling library."
+    },
+    "certificateImage": {
+      "src": "/images/certificates/skills/tailwind-certificate.webp",
+      "alt": "Certificate for Tailwind CSS."
     }
   }
 ]

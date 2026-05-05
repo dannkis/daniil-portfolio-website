@@ -8,6 +8,7 @@ type ProjectID = (typeof projects)[number]["id"];
 interface Props {
   activeProject?: Project;
   expandedProject?: Project;
+  activeSkillID?: string | null;
   isProjectCollapsing?: boolean;
   onProjectHover: (id: ProjectID) => void;
   onProjectExpand: (id: ProjectID) => void;
@@ -17,6 +18,7 @@ interface Props {
 export default function ProjectsSection({
   activeProject,
   expandedProject,
+  activeSkillID,
   isProjectCollapsing = false,
   onProjectHover,
   onProjectExpand,
@@ -39,6 +41,7 @@ export default function ProjectsSection({
         ? [expandedProject.image]
         : [];
   const expandedProjectID = expandedProject?.id ?? null;
+  const isSkillProjectHighlightMode = !activeProject && !!activeSkillID;
   const currentSlide =
     carouselState.projectID === expandedProjectID
       ? Math.min(
@@ -177,7 +180,24 @@ export default function ProjectsSection({
                 onMouseEnter={() => onProjectHover(project.id)}
                 onClick={() => onProjectExpand(project.id)}
                 initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={{
+                  opacity: isSkillProjectHighlightMode
+                    ? project.skills.includes(activeSkillID)
+                      ? 1
+                      : 0.3
+                    : 1,
+                  filter: isSkillProjectHighlightMode
+                    ? project.skills.includes(activeSkillID)
+                      ? "grayscale(0%) brightness(1)"
+                      : "grayscale(100%) brightness(0.45)"
+                    : "grayscale(0%) brightness(1)",
+                  scale: isSkillProjectHighlightMode
+                    ? project.skills.includes(activeSkillID)
+                      ? 1.03
+                      : 0.98
+                    : 1,
+                  y: 0,
+                }}
                 exit={{ opacity: 0, y: 12 }}
                 transition={{
                   delay: i * 0.05,

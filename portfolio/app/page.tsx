@@ -107,8 +107,7 @@ export default function Home() {
     }
 
     skillFocus.preview(skillID);
-    if (activeProject) {
-      collapseExpandedProject();
+    if (projectFocus.expandedID) {
       setFocusedWindows(["projects", "skills", "education", "about"]);
       return;
     }
@@ -116,7 +115,7 @@ export default function Home() {
     educationFocus.clear();
     collapseExpandedProject();
     projectFocus.clearActive();
-    setFocusedWindows(["skills", "education", "about"]);
+    setFocusedWindows(["projects", "skills", "education", "about"]);
   }
 
   function clearFocus() {
@@ -235,6 +234,7 @@ export default function Home() {
             <ProjectsSection
               activeProject={activeProject}
               expandedProject={expandedProject}
+              activeSkillID={!activeProject ? activeSkill?.id : null}
               isProjectCollapsing={isProjectCollapsing}
               onProjectHover={previewProject}
               onProjectExpand={expandProject}
