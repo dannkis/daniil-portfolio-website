@@ -25,11 +25,11 @@ export default function Home() {
   const [focusedWindows, setFocusedWindows] = useState<FocusedWindows | null>(
     null,
   );
-  const [collapsingProjectID, setCollapsingProjectID] = useState<ProjectID | null>(
-    null,
-  );
+  const [collapsingProjectID, setCollapsingProjectID] =
+    useState<ProjectID | null>(null);
   const collapseProjectTimeoutRef = useRef<number | null>(null);
-  const visibleExpandedProjectID = projectFocus.expandedID ?? collapsingProjectID;
+  const visibleExpandedProjectID =
+    projectFocus.expandedID ?? collapsingProjectID;
   const activeProject = projects.find(
     (project) => project.id === projectFocus.activeID,
   );
@@ -303,8 +303,7 @@ export default function Home() {
                   <PreviewPanel
                     contentKey={selectedEducation.id}
                     image={selectedEducation.certificateImage}
-                    placeholder="Add certificateImage to this education entry in content/education.json."
-                    title="Preview"
+                    placeholder="no image added"
                   />
                 </div>
               </>

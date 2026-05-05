@@ -46,7 +46,7 @@ export default function ContactsSection() {
       <div className="box-subcontainer flex items-center justify-center">
         <div className="flex aspect-square h-40 sm:h-full sm:max-w-full">
           <img
-            className="object-contain"
+            className="object-contain select-none"
             src="/images/profile.png"
             alt="Profile picture of me facing to the side, with a nice background in the nature."
           />
