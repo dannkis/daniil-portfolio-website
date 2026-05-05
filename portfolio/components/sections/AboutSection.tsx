@@ -51,7 +51,7 @@ export default function AboutSection({ project, education, skill }: Props) {
 
   return (
     <>
-      <h1>About</h1>
+      <h1 className="section-title">About</h1>
       <div className="relative flex h-full items-center overflow-hidden">
         <AnimatePresence mode="popLayout">
           <motion.div

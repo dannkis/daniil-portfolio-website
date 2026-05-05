@@ -10,6 +10,11 @@ export type ContentItem = {
 
 export type AboutContent = {
   text: string;
+  contacts?: {
+    linkedin?: string;
+    github?: string;
+    email?: string;
+  };
 };
 
 export type ProjectLinks = {

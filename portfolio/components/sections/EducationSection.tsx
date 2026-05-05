@@ -15,7 +15,7 @@ export default function EducationSection({
 }: Props) {
   return (
     <>
-      <h1 className="mb-4">Education</h1>
+      <h1 className="section-title mb-4">Education</h1>
 
       <motion.div
         className="relative flex min-h-0 flex-1 overflow-visible"

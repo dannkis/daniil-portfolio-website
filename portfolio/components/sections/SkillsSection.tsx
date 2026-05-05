@@ -23,7 +23,7 @@ export default function SkillsSection({
     <>
       <div className="mb-2 flex min-h-7 shrink-0 items-center justify-between gap-3 sm:mb-3 lg:mb-4">
         <motion.h1
-          className="leading-none"
+          className="section-title leading-none"
           layout
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         >

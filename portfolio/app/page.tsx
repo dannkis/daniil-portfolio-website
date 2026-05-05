@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import AboutSection from "@/components/sections/AboutSection";
 import ContactsSection from "@/components/sections/ContactsSection";
 import PreviewPanel from "@/components/PreviewPanel";
@@ -15,6 +15,7 @@ import { type FocusedWindows, getFocusWindowProps } from "@/lib/focusWindow";
 type ProjectID = (typeof projects)[number]["id"];
 type EducationID = (typeof education)[number]["id"];
 type SkillID = (typeof skills)[number]["id"];
+const PROJECT_CONTROLS_EXIT_DURATION_MS = 100;
 
 export default function Home() {
   const isDesktopLayout = useMediaQuery("(min-width: 64rem)");
@@ -24,12 +25,18 @@ export default function Home() {
   const [focusedWindows, setFocusedWindows] = useState<FocusedWindows | null>(
     null,
   );
+  const [collapsingProjectID, setCollapsingProjectID] = useState<ProjectID | null>(
+    null,
+  );
+  const collapseProjectTimeoutRef = useRef<number | null>(null);
+  const visibleExpandedProjectID = projectFocus.expandedID ?? collapsingProjectID;
   const activeProject = projects.find(
     (project) => project.id === projectFocus.activeID,
   );
   const expandedProject = projects.find(
-    (project) => project.id === projectFocus.expandedID,
+    (project) => project.id === visibleExpandedProjectID,
   );
+  const isProjectCollapsing = collapsingProjectID !== null;
   const selectedEducation = isDesktopLayout
     ? education.find((entry) => entry.id === educationFocus.activeID)
     : undefined;
@@ -49,6 +56,12 @@ export default function Home() {
   }
 
   function expandProject(projectID: ProjectID) {
+    if (collapseProjectTimeoutRef.current !== null) {
+      window.clearTimeout(collapseProjectTimeoutRef.current);
+      collapseProjectTimeoutRef.current = null;
+    }
+
+    setCollapsingProjectID(null);
     projectFocus.expand(projectID);
     educationFocus.clear();
     skillFocus.clear();
@@ -58,7 +71,22 @@ export default function Home() {
   }
 
   function collapseExpandedProject() {
+    const currentExpandedProjectID = projectFocus.expandedID;
+
+    if (!currentExpandedProjectID) {
+      return;
+    }
+
+    if (collapseProjectTimeoutRef.current !== null) {
+      window.clearTimeout(collapseProjectTimeoutRef.current);
+    }
+
+    setCollapsingProjectID(currentExpandedProjectID);
     projectFocus.collapseExpanded();
+    collapseProjectTimeoutRef.current = window.setTimeout(() => {
+      setCollapsingProjectID(null);
+      collapseProjectTimeoutRef.current = null;
+    }, PROJECT_CONTROLS_EXIT_DURATION_MS);
   }
 
   function previewEducation(educationID: EducationID) {
@@ -67,7 +95,8 @@ export default function Home() {
     }
 
     educationFocus.preview(educationID);
-    projectFocus.clear();
+    collapseExpandedProject();
+    projectFocus.clearActive();
     skillFocus.clear();
     setFocusedWindows(["education", "skills", "about"]);
   }
@@ -79,18 +108,21 @@ export default function Home() {
 
     skillFocus.preview(skillID);
     if (activeProject) {
+      collapseExpandedProject();
       setFocusedWindows(["projects", "skills", "education", "about"]);
       return;
     }
 
     educationFocus.clear();
-    projectFocus.clear();
+    collapseExpandedProject();
+    projectFocus.clearActive();
     setFocusedWindows(["skills", "education", "about"]);
   }
 
   function clearFocus() {
     educationFocus.clear();
-    projectFocus.clear();
+    collapseExpandedProject();
+    projectFocus.clearActive();
     skillFocus.clear();
     setFocusedWindows(null);
   }
@@ -203,6 +235,7 @@ export default function Home() {
             <ProjectsSection
               activeProject={activeProject}
               expandedProject={expandedProject}
+              isProjectCollapsing={isProjectCollapsing}
               onProjectHover={previewProject}
               onProjectExpand={expandProject}
               onProjectCollapse={collapseExpandedProject}
@@ -227,7 +260,7 @@ export default function Home() {
             ) : activeSkill ? (
               <>
                 <motion.h1
-                  className="mb-4"
+                  className="section-title mb-4"
                   layout
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 >
@@ -260,7 +293,7 @@ export default function Home() {
             {selectedEducation ? (
               <>
                 <motion.h1
-                  className="mb-2 leading-none sm:mb-3 lg:mb-4"
+                  className="section-title mb-2 leading-none sm:mb-3 lg:mb-4"
                   layout
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 >

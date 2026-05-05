@@ -152,8 +152,19 @@ export function defineAboutContent(value: unknown): AboutContent {
 
   assertString(value.text, "text", "about");
 
+  if (value.contacts !== undefined) {
+    if (!isRecord(value.contacts)) {
+      throw new Error("Invalid about content: contacts must be an object.");
+    }
+
+    assertOptionalString(value.contacts.linkedin, "contacts.linkedin", "about");
+    assertOptionalString(value.contacts.github, "contacts.github", "about");
+    assertOptionalString(value.contacts.email, "contacts.email", "about");
+  }
+
   return {
     text: value.text,
+    contacts: value.contacts,
   };
 }
 

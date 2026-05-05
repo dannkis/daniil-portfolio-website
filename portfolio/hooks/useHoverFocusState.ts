@@ -18,6 +18,10 @@ export function useHoverFocusState<T>() {
     setExpandedID(null);
   }
 
+  function clearActive() {
+    setActiveID(null);
+  }
+
   function clear() {
     setActiveID(null);
     setExpandedID(null);
@@ -29,6 +33,7 @@ export function useHoverFocusState<T>() {
     preview,
     expand,
     collapseExpanded,
+    clearActive,
     clear,
   };
 }

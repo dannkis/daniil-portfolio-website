@@ -2,7 +2,7 @@
 
 Edit portfolio copy and collection data in this folder:
 
-- `about.json` controls the About section text.
+- `about.json` controls the About section text and optional contact links.
 - `education.json` controls education entries, descriptions, and certificate previews.
 - `projects.json` controls project cards and expanded project data.
 - `skills.json` controls skill cards and expanded skill data.

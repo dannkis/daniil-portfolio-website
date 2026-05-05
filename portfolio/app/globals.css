@@ -42,18 +42,16 @@ body {
 }
 
 @layer base {
-  h1 {
-    font-size: clamp(1.05rem, 0.55vw + 0.95rem, 1.45rem);
-    line-height: 1.05;
-    color: #f88a36;
-  }
-
   p {
     text-wrap: pretty;
   }
 
   img {
     @apply rounded;
+  }
+
+  h1{
+    color: #f88a36;
   }
 }
 
@@ -68,6 +66,11 @@ body {
 
   .circle {
     @apply relative aspect-square rounded-full;
+  }
+
+  .section-title {
+    font-size: clamp(1.05rem, 0.55vw + 0.95rem, 1.45rem);
+    line-height: 1.05;
   }
 
   .custom-cursor {
