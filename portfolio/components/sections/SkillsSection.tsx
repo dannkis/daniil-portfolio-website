@@ -6,18 +6,24 @@ type SkillID = (typeof skills)[number]["id"];
 
 interface Props {
   activeSkillID?: SkillID | null;
+  selectedSkillID?: SkillID | null;
   stackSkillIDs?: readonly string[];
   onSkillHover: (id: SkillID) => void;
+  onSkillSelect: (id: SkillID) => void;
 }
 
 export default function SkillsSection({
   activeSkillID,
+  selectedSkillID,
   stackSkillIDs,
   onSkillHover,
+  onSkillSelect,
 }: Props) {
   const activeSkill = skills.find((skill) => skill.id === activeSkillID);
+  const selectedSkill = skills.find((skill) => skill.id === selectedSkillID);
   const stackSkillIDSet = new Set(stackSkillIDs);
   const isStackMode = stackSkillIDs !== undefined;
+  const isSkillLocked = selectedSkill !== undefined;
 
   return (
     <>
@@ -36,10 +42,14 @@ export default function SkillsSection({
           {skills.map((skill) => {
             const isProjectHighlighted =
               !isStackMode || stackSkillIDSet.has(skill.id);
+            const isSelected = selectedSkill
+              ? skill.id === selectedSkill.id
+              : false;
             const isHighlighted = activeSkill
               ? skill.id === activeSkill.id
               : isProjectHighlighted;
-            const isInteractive = !isStackMode || isProjectHighlighted;
+            const isInteractive =
+              !isSkillLocked && (!isStackMode || isProjectHighlighted);
             const skillContent = (
               <>
                 <motion.img
@@ -48,8 +58,9 @@ export default function SkillsSection({
                   alt={skill.image.alt}
                   draggable={false}
                   animate={{
-                    scale:
-                      activeSkill && isHighlighted
+                    scale: isSelected
+                      ? 1.18
+                      : activeSkill && isHighlighted
                         ? 1.16
                         : isStackMode && isProjectHighlighted
                           ? 1.12
@@ -72,20 +83,32 @@ export default function SkillsSection({
             const motionProps = {
               initial: { opacity: 0, y: 12 },
               animate: {
-                opacity: isHighlighted
+                opacity: isSelected
                   ? 1
-                  : activeSkill
-                    ? isProjectHighlighted
-                      ? 0.58
-                      : 0.24
-                    : 0.28,
-                filter: isHighlighted
+                  : isHighlighted
+                    ? 1
+                    : isSkillLocked
+                      ? 0.18
+                      : activeSkill
+                        ? isProjectHighlighted
+                          ? 0.58
+                          : 0.24
+                        : 0.28,
+                filter: isSelected
                   ? "grayscale(0%) brightness(1)"
-                  : isProjectHighlighted
-                    ? "grayscale(55%) brightness(0.82)"
-                    : "grayscale(100%) brightness(0.52)",
+                  : isHighlighted
+                    ? "grayscale(0%) brightness(1)"
+                    : isSkillLocked
+                      ? "grayscale(100%) brightness(0.48)"
+                      : isProjectHighlighted
+                        ? "grayscale(55%) brightness(0.82)"
+                        : "grayscale(100%) brightness(0.52)",
                 y: 0,
-                scale: activeSkill && isHighlighted ? 1.08 : 1,
+                scale: isSelected
+                  ? 1.08
+                  : activeSkill && isHighlighted
+                    ? 1.08
+                    : 1,
               },
               exit: { opacity: 0, y: 12 },
               transition: {
@@ -108,7 +131,7 @@ export default function SkillsSection({
                   isInteractive ? () => onSkillHover(skill.id) : undefined
                 }
                 onClick={
-                  isInteractive ? () => onSkillHover(skill.id) : undefined
+                  isInteractive ? () => onSkillSelect(skill.id) : undefined
                 }
                 whileTap={isInteractive ? { scale: 0.97 } : undefined}
                 {...motionProps}

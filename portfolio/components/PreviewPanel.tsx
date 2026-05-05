@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { ImageRef } from "@/lib/content";
 
@@ -20,43 +20,63 @@ export default function PreviewPanel({
   const MAGNIFICATION_SCALE = 5;
   const previewImages =
     images && images.length > 0 ? images : image ? [image] : [];
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [carouselState, setCarouselState] = useState<{
+    contentKey: string | null;
+    index: number;
+  }>({
+    contentKey: null,
+    index: 0,
+  });
   const [magnifierState, setMagnifierState] = useState<{
+    contentKey: string | null;
+    index: number;
     isVisible: boolean;
     x: number;
     y: number;
   }>({
+    contentKey: null,
+    index: 0,
     isVisible: false,
     x: 50,
     y: 50,
   });
+  const activeIndex =
+    carouselState.contentKey === contentKey
+      ? Math.min(carouselState.index, Math.max(previewImages.length - 1, 0))
+      : 0;
   const activeImage =
     previewImages.length > 0
       ? previewImages[Math.min(activeIndex, previewImages.length - 1)]
       : undefined;
   const hasCarousel = previewImages.length > 1;
+  const activeMagnifierState =
+    magnifierState.contentKey === contentKey &&
+    magnifierState.index === activeIndex
+      ? magnifierState
+      : {
+          contentKey,
+          index: activeIndex,
+          isVisible: false,
+          x: 50,
+          y: 50,
+        };
 
-  useEffect(() => {
-    setActiveIndex(0);
-  }, [contentKey]);
-
-  useEffect(() => {
-    setMagnifierState({
-      isVisible: false,
-      x: 50,
-      y: 50,
+  function setActiveIndex(index: number) {
+    setCarouselState({
+      contentKey,
+      index,
     });
-  }, [contentKey, activeIndex]);
+  }
 
   function showPreviousImage() {
-    setActiveIndex((currentIndex) =>
-      currentIndex === 0 ? previewImages.length - 1 : currentIndex - 1,
+    setActiveIndex(
+      activeIndex === 0 ? previewImages.length - 1 : activeIndex - 1,
     );
   }
 
   function showNextImage() {
-    setActiveIndex((currentIndex) =>
-      currentIndex === previewImages.length - 1 ? 0 : currentIndex + 1,
+    setActiveIndex(
+      activeIndex === previewImages.length - 1 ? 0 : activeIndex + 1,
     );
   }
 
@@ -70,6 +90,8 @@ export default function PreviewPanel({
     const y = ((event.clientY - bounds.top) / bounds.height) * 100;
 
     setMagnifierState({
+      contentKey,
+      index: activeIndex,
       isVisible: true,
       x: Math.max(0, Math.min(100, x)),
       y: Math.max(0, Math.min(100, y)),
@@ -136,14 +158,14 @@ export default function PreviewPanel({
             </AnimatePresence>
 
             <AnimatePresence>
-              {magnifierState.isVisible && (
+              {activeMagnifierState.isVisible && (
                 <motion.div
                   className="pointer-events-none absolute z-30 hidden overflow-hidden rounded-full border border-foreground/30 bg-background/75 shadow-[0_0_24px_rgb(0_0_0_/_0.18)] backdrop-blur-sm lg:block"
                   style={{
                     width: MAGNIFIER_SIZE,
                     height: MAGNIFIER_SIZE,
-                    left: `calc(${magnifierState.x}% - ${MAGNIFIER_SIZE / 2}px)`,
-                    top: `calc(${magnifierState.y}% - ${MAGNIFIER_SIZE / 2}px)`,
+                    left: `calc(${activeMagnifierState.x}% - ${MAGNIFIER_SIZE / 2}px)`,
+                    top: `calc(${activeMagnifierState.y}% - ${MAGNIFIER_SIZE / 2}px)`,
                   }}
                   initial={{ opacity: 0, scale: 0.92 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -157,7 +179,7 @@ export default function PreviewPanel({
                     aria-hidden="true"
                     style={{
                       transform: `scale(${MAGNIFICATION_SCALE})`,
-                      transformOrigin: `${magnifierState.x}% ${magnifierState.y}%`,
+                      transformOrigin: `${activeMagnifierState.x}% ${activeMagnifierState.y}%`,
                     }}
                   />
                 </motion.div>

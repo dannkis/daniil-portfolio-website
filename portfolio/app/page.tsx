@@ -16,6 +16,7 @@ type ProjectID = (typeof projects)[number]["id"];
 type EducationID = (typeof education)[number]["id"];
 type SkillID = (typeof skills)[number]["id"];
 const PROJECT_CONTROLS_EXIT_DURATION_MS = 100;
+const FOCUS_REGION_TOLERANCE_PX = 28;
 
 export default function Home() {
   const isDesktopLayout = useMediaQuery("(min-width: 64rem)");
@@ -40,7 +41,9 @@ export default function Home() {
   const selectedEducation = isDesktopLayout
     ? education.find((entry) => entry.id === educationFocus.activeID)
     : undefined;
-  const activeSkill = skills.find((skill) => skill.id === skillFocus.activeID);
+  const visibleSkillID = skillFocus.expandedID ?? skillFocus.activeID;
+  const activeSkill = skills.find((skill) => skill.id === visibleSkillID);
+  const selectedSkillID = skillFocus.expandedID;
   const activeFocusedWindows =
     !isDesktopLayout && focusedWindows?.includes("education")
       ? null
@@ -106,11 +109,32 @@ export default function Home() {
       return;
     }
 
+    if (skillFocus.expandedID && skillFocus.expandedID !== skillID) {
+      return;
+    }
+
     skillFocus.preview(skillID);
     if (projectFocus.expandedID) {
       setFocusedWindows(["projects", "skills", "education", "about"]);
       return;
     }
+
+    educationFocus.clear();
+    collapseExpandedProject();
+    projectFocus.clearActive();
+    setFocusedWindows(["projects", "skills", "education", "about"]);
+  }
+
+  function selectSkill(skillID: SkillID) {
+    if (!isDesktopLayout) {
+      return;
+    }
+
+    if (projectFocus.expandedID) {
+      return;
+    }
+
+    skillFocus.expand(skillID);
 
     educationFocus.clear();
     collapseExpandedProject();
@@ -135,31 +159,16 @@ export default function Home() {
       return false;
     }
 
-    const bounds = focusedElements.reduce(
-      (region, element) => {
-        const rect = element.getBoundingClientRect();
+    return focusedElements.some((element) => {
+      const rect = element.getBoundingClientRect();
 
-        return {
-          top: Math.min(region.top, rect.top),
-          right: Math.max(region.right, rect.right),
-          bottom: Math.max(region.bottom, rect.bottom),
-          left: Math.min(region.left, rect.left),
-        };
-      },
-      {
-        top: Number.POSITIVE_INFINITY,
-        right: Number.NEGATIVE_INFINITY,
-        bottom: Number.NEGATIVE_INFINITY,
-        left: Number.POSITIVE_INFINITY,
-      },
-    );
-
-    return (
-      x >= bounds.left &&
-      x <= bounds.right &&
-      y >= bounds.top &&
-      y <= bounds.bottom
-    );
+      return (
+        x >= rect.left - FOCUS_REGION_TOLERANCE_PX &&
+        x <= rect.right + FOCUS_REGION_TOLERANCE_PX &&
+        y >= rect.top - FOCUS_REGION_TOLERANCE_PX &&
+        y <= rect.bottom + FOCUS_REGION_TOLERANCE_PX
+      );
+    });
   }
 
   function handlePointerDown(event: React.PointerEvent<HTMLElement>) {
@@ -310,8 +319,10 @@ export default function Home() {
             ) : (
               <SkillsSection
                 activeSkillID={activeSkill?.id}
+                selectedSkillID={selectedSkillID}
                 stackSkillIDs={activeProject?.skills}
                 onSkillHover={previewSkill}
+                onSkillSelect={selectSkill}
               />
             )}
           </div>
