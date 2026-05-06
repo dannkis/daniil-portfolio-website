@@ -1,27 +1,56 @@
 [
   {
-    "id": "simplydone",
-    "name": "Spaces",
+    "id": "portfolio",
+    "name": "Portfolio",
     "description": "A productivity-focused task management app concept with mobile-first layouts, simple interaction patterns, and a clean visual hierarchy.",
     "image": {
-      "src": "/images/projects/simplydone.png",
-      "alt": "An image showing three different = mobile views of the SimplyDone application."
+      "src": "/images/projects/spaces.png",
+      "alt": "An image showing three different = mobile views of the Spaces application."
     },
     "gallery": [
       {
-        "src": "/images/projects/simplydone.png",
-        "alt": "A gallery preview showing the three core mobile screens of the SimplyDone application."
+        "src": "/images/projects/spaces.png",
+        "alt": "A gallery preview showing the three core mobile screens of the Spaces application."
       },
       {
-        "src": "/images/projects/simplydone.png",
-        "alt": "A closer gallery preview of the SimplyDone task list and mobile navigation."
+        "src": "/images/projects/spaces.png",
+        "alt": "A closer gallery preview of the Spaces task list and mobile navigation."
       },
       {
-        "src": "/images/projects/simplydone.png",
-        "alt": "A gallery preview focusing on the overall mobile interface layout of the SimplyDone application."
+        "src": "/images/projects/spaces.png",
+        "alt": "A gallery preview focusing on the overall mobile interface layout of the Spaces application."
       }
     ],
-    "skills": ["react", "typescript", "figma", "tailwind"],
+    "skills": ["next", "visual-studio-code", "figma", "react", "javascript", "typescript", "tailwind"],
+    "links": {
+      "website": "google.com",
+      "repository": "google.com",
+      "release": "google.com"
+    }
+  },
+  {
+    "id": "spaces",
+    "name": "Spaces",
+    "description": "A productivity-focused task management app concept with mobile-first layouts, simple interaction patterns, and a clean visual hierarchy.",
+    "image": {
+      "src": "/images/projects/spaces.png",
+      "alt": "An image showing three different = mobile views of the Spaces application."
+    },
+    "gallery": [
+      {
+        "src": "/images/projects/spaces.png",
+        "alt": "A gallery preview showing the three core mobile screens of the Spaces application."
+      },
+      {
+        "src": "/images/projects/spaces.png",
+        "alt": "A closer gallery preview of the Spaces task list and mobile navigation."
+      },
+      {
+        "src": "/images/projects/spaces.png",
+        "alt": "A gallery preview focusing on the overall mobile interface layout of the Spaces application."
+      }
+    ],
+    "skills": ["swift", "visual-studio-code", "figma"],
     "links": {
       "website": "google.com",
       "repository": "google.com",
@@ -36,7 +65,22 @@
       "src": "/images/projects/skillfindr.png",
       "alt": ""
     },
-    "skills": ["next", "react", "typescript", "node", "figma"],
+    "skills": ["next", "react", "typescript", "node", "figma", "visual-studio-code"],
+    "links": {
+      "website": "",
+      "repository": "",
+      "release": ""
+    }
+  },
+  {
+    "id": "agronova",
+    "name": "Agronova",
+    "description": "A concept of a weather web app for farmers, offering real-time data, forecasts, and crop-specific recommendations.",
+    "image": {
+      "src": "/images/projects/rotamaker.png",
+      "alt": ""
+    },
+    "skills": ["bootstrap", "react", "figma"],
     "links": {
       "website": "",
       "repository": "",
@@ -51,7 +95,22 @@
       "src": "/images/projects/rotamaker.png",
       "alt": ""
     },
-    "skills": ["c-sharp", "access", "visual-studio", "bootstrap"],
+    "skills": ["c-sharp", "access", "visual-studio"],
+    "links": {
+      "website": "",
+      "repository": "",
+      "release": ""
+    }
+  },
+  {
+    "id": "cryptiq",
+    "name": "CryptiQ",
+    "description": "A concept app representing a secure crypto wallet for managing and transacting cryptocurrencies.",
+    "image": {
+      "src": "/images/projects/rotamaker.png",
+      "alt": ""
+    },
+    "skills": ["bootstrap", "react", "figma"],
     "links": {
       "website": "",
       "repository": "",

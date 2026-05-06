@@ -347,6 +347,9 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <p className="pointer-events-none fixed bottom-1 left-1 z-50 text-xs text-foreground/30 sm:bottom-3 sm:left-4">
+        2026 @ Daniil Zhelyazkov. All rights reserved.
+      </p>
     </main>
   );
 }
