@@ -16,7 +16,7 @@ type ProjectID = (typeof projects)[number]["id"];
 type EducationID = (typeof education)[number]["id"];
 type SkillID = (typeof skills)[number]["id"];
 const PROJECT_CONTROLS_EXIT_DURATION_MS = 100;
-const FOCUS_REGION_TOLERANCE_PX = 28;
+const FOCUS_REGION_TOLERANCE_PX = 100;
 
 export default function Home() {
   const isDesktopLayout = useMediaQuery("(min-width: 64rem)");
@@ -279,7 +279,7 @@ export default function Home() {
                   <PreviewPanel
                     contentKey={activeSkill.id}
                     image={activeSkill.certificateImage}
-                    placeholder="Add a certificateImage for this skill in content/skills.json."
+                    placeholder="no certificate"
                   />
                 </div>
               </>
@@ -312,7 +312,7 @@ export default function Home() {
                     contentKey={selectedEducation.id}
                     image={selectedEducation.certificateImage}
                     images={selectedEducation.certificateImages}
-                    placeholder="no image added"
+                    placeholder="no image"
                   />
                 </div>
               </>

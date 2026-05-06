@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import {
+  HoverMagnifierLens,
+  useHoverMagnifier,
+} from "@/components/HoverMagnifier";
 import type { ImageRef } from "@/lib/content";
 
 interface Props {
@@ -16,8 +20,6 @@ export default function PreviewPanel({
   images,
   placeholder,
 }: Props) {
-  const MAGNIFIER_SIZE = 150;
-  const MAGNIFICATION_SCALE = 5;
   const previewImages =
     images && images.length > 0 ? images : image ? [image] : [];
   const [carouselState, setCarouselState] = useState<{
@@ -26,19 +28,6 @@ export default function PreviewPanel({
   }>({
     contentKey: null,
     index: 0,
-  });
-  const [magnifierState, setMagnifierState] = useState<{
-    contentKey: string | null;
-    index: number;
-    isVisible: boolean;
-    x: number;
-    y: number;
-  }>({
-    contentKey: null,
-    index: 0,
-    isVisible: false,
-    x: 50,
-    y: 50,
   });
   const activeIndex =
     carouselState.contentKey === contentKey
@@ -49,17 +38,9 @@ export default function PreviewPanel({
       ? previewImages[Math.min(activeIndex, previewImages.length - 1)]
       : undefined;
   const hasCarousel = previewImages.length > 1;
-  const activeMagnifierState =
-    magnifierState.contentKey === contentKey &&
-    magnifierState.index === activeIndex
-      ? magnifierState
-      : {
-          contentKey,
-          index: activeIndex,
-          isVisible: false,
-          x: 50,
-          y: 50,
-        };
+  const { magnifierState, magnifierScale, magnifierHandlers } = useHoverMagnifier(
+    `${contentKey}-${activeIndex}`,
+  );
 
   function setActiveIndex(index: number) {
     setCarouselState({
@@ -78,31 +59,6 @@ export default function PreviewPanel({
     setActiveIndex(
       activeIndex === previewImages.length - 1 ? 0 : activeIndex + 1,
     );
-  }
-
-  function showMagnifier(event: React.PointerEvent<HTMLDivElement>) {
-    if (event.pointerType && event.pointerType !== "mouse") {
-      return;
-    }
-
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const x = ((event.clientX - bounds.left) / bounds.width) * 100;
-    const y = ((event.clientY - bounds.top) / bounds.height) * 100;
-
-    setMagnifierState({
-      contentKey,
-      index: activeIndex,
-      isVisible: true,
-      x: Math.max(0, Math.min(100, x)),
-      y: Math.max(0, Math.min(100, y)),
-    });
-  }
-
-  function hideMagnifier() {
-    setMagnifierState((currentState) => ({
-      ...currentState,
-      isVisible: false,
-    }));
   }
 
   return (
@@ -138,53 +94,29 @@ export default function PreviewPanel({
           )}
 
           <div
-            className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-md"
-            onPointerEnter={showMagnifier}
-            onPointerMove={showMagnifier}
-            onPointerLeave={hideMagnifier}
+            className="relative flex h-full w-full items-center justify-center overflow-visible rounded-md"
+            {...magnifierHandlers}
           >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.img
-                key={`${contentKey}-${activeIndex}`}
-                className="max-h-full rounded-md border border-foreground/20 bg-foreground/5 object-contain"
-                src={activeImage.src}
-                alt={activeImage.alt}
-                draggable={false}
-                initial={{ opacity: 0, x: 18 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -18 }}
-                transition={{ duration: 0.18, ease: "easeOut" }}
-              />
-            </AnimatePresence>
-
-            <AnimatePresence>
-              {activeMagnifierState.isVisible && (
-                <motion.div
-                  className="pointer-events-none absolute z-30 hidden overflow-hidden rounded-full border border-foreground/30 bg-background/75 shadow-[0_0_24px_rgb(0_0_0_/_0.18)] backdrop-blur-sm lg:block"
-                  style={{
-                    width: MAGNIFIER_SIZE,
-                    height: MAGNIFIER_SIZE,
-                    left: `calc(${activeMagnifierState.x}% - ${MAGNIFIER_SIZE / 2}px)`,
-                    top: `calc(${activeMagnifierState.y}% - ${MAGNIFIER_SIZE / 2}px)`,
-                  }}
-                  initial={{ opacity: 0, scale: 0.92 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.92 }}
-                  transition={{ duration: 0.12 }}
-                >
-                  <img
-                    className="h-full w-full object-contain"
-                    src={activeImage.src}
-                    alt=""
-                    aria-hidden="true"
-                    style={{
-                      transform: `scale(${MAGNIFICATION_SCALE})`,
-                      transformOrigin: `${activeMagnifierState.x}% ${activeMagnifierState.y}%`,
-                    }}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-md">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.img
+                  key={`${contentKey}-${activeIndex}`}
+                  className="max-h-full rounded-md border border-foreground/20 bg-foreground/5 object-contain"
+                  src={activeImage.src}
+                  alt={activeImage.alt}
+                  draggable={false}
+                  initial={{ opacity: 0, x: 18 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -18 }}
+                  transition={{ duration: 0.18, ease: "easeOut" }}
+                />
+              </AnimatePresence>
+            </div>
+            <HoverMagnifierLens
+              src={activeImage.src}
+              magnifierState={magnifierState}
+              scale={magnifierScale}
+            />
           </div>
 
           {hasCarousel && (

@@ -1,6 +1,10 @@
 "use client";
 import { type SyntheticEvent, useState } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import {
+  HoverMagnifierLens,
+  useHoverMagnifier,
+} from "@/components/HoverMagnifier";
 import { projects, type Project } from "@/lib/content";
 
 type ProjectID = (typeof projects)[number]["id"];
@@ -49,6 +53,9 @@ export default function ProjectsSection({
           Math.max(expandedProjectImages.length - 1, 0),
         )
       : 0;
+  const { magnifierState, magnifierScale, magnifierHandlers } = useHoverMagnifier(
+    `${expandedProjectID ?? "none"}-${currentSlide}`,
+  );
 
   function setSlide(slide: number) {
     setCarouselState({
@@ -271,7 +278,7 @@ export default function ProjectsSection({
               >
                 <div className="relative flex h-full w-full items-center justify-center overflow-visible rounded-md">
                   <motion.div
-                    className="relative overflow-hidden rounded-md"
+                    className="relative overflow-visible rounded-md"
                     layoutId={`project-frame-${expandedProject.id}`}
                     style={getExpandedProjectFrameStyle(expandedProject.id)}
                     transition={{
@@ -280,27 +287,37 @@ export default function ProjectsSection({
                       damping: 28,
                     }}
                   >
-                    <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-md">
-                      <AnimatePresence mode="wait" initial={false}>
-                        <motion.img
-                          key={`${expandedProject.id}-${currentSlide}`}
-                          className={getProjectImageClassName(
-                            expandedProject.id,
-                            true,
-                          )}
-                          src={expandedProjectImages[currentSlide].src}
-                          alt={expandedProjectImages[currentSlide].alt}
-                          draggable={false}
-                          onLoad={updateProjectAspectRatio(
-                            expandedProject.id,
-                            expandedProjectImages[currentSlide].src,
-                          )}
-                          initial={{ opacity: 0, x: 18 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -18 }}
-                          transition={{ duration: 0.18, ease: "easeOut" }}
-                        />
-                      </AnimatePresence>
+                    <div
+                      className="relative flex h-full w-full items-center justify-center overflow-visible rounded-md"
+                      {...magnifierHandlers}
+                    >
+                      <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-md">
+                        <AnimatePresence mode="wait" initial={false}>
+                          <motion.img
+                            key={`${expandedProject.id}-${currentSlide}`}
+                            className={getProjectImageClassName(
+                              expandedProject.id,
+                              true,
+                            )}
+                            src={expandedProjectImages[currentSlide].src}
+                            alt={expandedProjectImages[currentSlide].alt}
+                            draggable={false}
+                            onLoad={updateProjectAspectRatio(
+                              expandedProject.id,
+                              expandedProjectImages[currentSlide].src,
+                            )}
+                            initial={{ opacity: 0, x: 18 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -18 }}
+                            transition={{ duration: 0.18, ease: "easeOut" }}
+                          />
+                        </AnimatePresence>
+                      </div>
+                      <HoverMagnifierLens
+                        src={expandedProjectImages[currentSlide].src}
+                        magnifierState={magnifierState}
+                        scale={magnifierScale}
+                      />
                     </div>
                   </motion.div>
 
