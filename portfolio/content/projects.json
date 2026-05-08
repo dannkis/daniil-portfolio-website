@@ -4,21 +4,17 @@
     "name": "Portfolio",
     "description": "A productivity-focused task management app concept with mobile-first layouts, simple interaction patterns, and a clean visual hierarchy.",
     "image": {
-      "src": "/images/projects/spaces.png",
-      "alt": "An image showing three different = mobile views of the Spaces application."
+      "src": "/images/projects/portfolio.webp",
+      "alt": "A preview of the portfolio website interface and overall layout."
     },
     "gallery": [
       {
-        "src": "/images/projects/spaces.png",
-        "alt": "A gallery preview showing the three core mobile screens of the Spaces application."
+        "src": "/images/projects/portfolio.webp",
+        "alt": "A preview of the portfolio website interface and overall layout."
       },
       {
-        "src": "/images/projects/spaces.png",
-        "alt": "A closer gallery preview of the Spaces task list and mobile navigation."
-      },
-      {
-        "src": "/images/projects/spaces.png",
-        "alt": "A gallery preview focusing on the overall mobile interface layout of the Spaces application."
+        "src": "/images/projects/portfolio-1.webp",
+        "alt": "A second preview of the portfolio website layout and section design."
       }
     ],
     "skills": ["next", "visual-studio-code", "figma", "react", "javascript", "typescript", "tailwind"],
@@ -33,21 +29,17 @@
     "name": "Spaces",
     "description": "A productivity-focused task management app concept with mobile-first layouts, simple interaction patterns, and a clean visual hierarchy.",
     "image": {
-      "src": "/images/projects/spaces.png",
-      "alt": "An image showing three different = mobile views of the Spaces application."
+      "src": "/images/projects/spaces.webp",
+      "alt": "A preview of the Spaces mobile app interface."
     },
     "gallery": [
       {
-        "src": "/images/projects/spaces.png",
-        "alt": "A gallery preview showing the three core mobile screens of the Spaces application."
+        "src": "/images/projects/spaces.webp",
+        "alt": "A preview of the Spaces mobile app interface."
       },
       {
-        "src": "/images/projects/spaces.png",
-        "alt": "A closer gallery preview of the Spaces task list and mobile navigation."
-      },
-      {
-        "src": "/images/projects/spaces.png",
-        "alt": "A gallery preview focusing on the overall mobile interface layout of the Spaces application."
+        "src": "/images/projects/spaces-1.webp",
+        "alt": "A second preview of the Spaces mobile app screens and navigation."
       }
     ],
     "skills": ["swift", "visual-studio-code", "figma"],
@@ -62,9 +54,19 @@
     "name": "SkillFindr (IBM)",
     "description": "A skill discovery and matching concept built around making technical strengths easier to search, compare, and present.",
     "image": {
-      "src": "/images/projects/skillfindr.png",
-      "alt": ""
+      "src": "/images/projects/skillfindr.webp",
+      "alt": "A preview of the SkillFindr IBM concept interface."
     },
+    "gallery": [
+      {
+        "src": "/images/projects/skillfindr.webp",
+        "alt": "A preview of the SkillFindr IBM concept interface."
+      },
+      {
+        "src": "/images/projects/skillfindr-1.webp",
+        "alt": "A second preview of the SkillFindr IBM interface and layout."
+      }
+    ],
     "skills": ["next", "react", "typescript", "node", "figma", "visual-studio-code"],
     "links": {
       "website": "",
@@ -77,9 +79,23 @@
     "name": "Agronova",
     "description": "A concept of a weather web app for farmers, offering real-time data, forecasts, and crop-specific recommendations.",
     "image": {
-      "src": "/images/projects/rotamaker.png",
-      "alt": ""
+      "src": "/images/projects/agronova.webp",
+      "alt": "A preview of the Agronova weather app concept for farmers."
     },
+    "gallery": [
+      {
+        "src": "/images/projects/agronova.webp",
+        "alt": "A preview of the Agronova weather app concept for farmers."
+      },
+      {
+        "src": "/images/projects/agronova-1.webp",
+        "alt": "A second preview of the Agronova interface and forecast layout."
+      },
+      {
+        "src": "/images/projects/agronova-2.webp",
+        "alt": "A third preview of the Agronova app concept and weather data presentation."
+      }
+    ],
     "skills": ["bootstrap", "react", "figma"],
     "links": {
       "website": "",
@@ -92,9 +108,23 @@
     "name": "RotaMaker 4",
     "description": "A rota planning tool focused on clearer scheduling flows, structured data handling, and practical automation for recurring staff planning tasks.",
     "image": {
-      "src": "/images/projects/rotamaker.png",
-      "alt": ""
+      "src": "/images/projects/rotamaker.webp",
+      "alt": "A preview of the RotaMaker 4 rota planning interface."
     },
+    "gallery": [
+      {
+        "src": "/images/projects/rotamaker.webp",
+        "alt": "A preview of the RotaMaker 4 rota planning interface."
+      },
+      {
+        "src": "/images/projects/rotamaker-1.webp",
+        "alt": "A second preview of the RotaMaker 4 scheduling workflow."
+      },
+      {
+        "src": "/images/projects/rotamaker-2.webp",
+        "alt": "A third preview of the RotaMaker 4 rota editor and data layout."
+      }
+    ],
     "skills": ["c-sharp", "access", "visual-studio"],
     "links": {
       "website": "",
@@ -107,9 +137,23 @@
     "name": "CryptiQ",
     "description": "A concept app representing a secure crypto wallet for managing and transacting cryptocurrencies.",
     "image": {
-      "src": "/images/projects/rotamaker.png",
-      "alt": ""
+      "src": "/images/projects/cryptiq.webp",
+      "alt": "A preview of the CryptiQ crypto wallet app concept."
     },
+    "gallery": [
+      {
+        "src": "/images/projects/cryptiq.webp",
+        "alt": "A preview of the CryptiQ crypto wallet app concept."
+      },
+      {
+        "src": "/images/projects/cryptiq-1.webp",
+        "alt": "A second preview of the CryptiQ wallet interface and transaction layout."
+      },
+      {
+        "src": "/images/projects/cryptiq-2.webp",
+        "alt": "A third preview of the CryptiQ app concept and secure wallet screens."
+      }
+    ],
     "skills": ["bootstrap", "react", "figma"],
     "links": {
       "website": "",
