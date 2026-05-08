@@ -58,10 +58,6 @@
     "image": {
       "src": "/images/skills/visual-studio-code.svg",
       "alt": "Icon image of the Visual Studio Code IDE."
-    },
-    "certificateImage": {
-      "src": "/images/certificates/skills/visual-studio-code-certificate.webp",
-      "alt": "Certificate for Visual Studio Code."
     }
   },
   {
@@ -84,10 +80,6 @@
     "image": {
       "src": "/images/skills/access.svg",
       "alt": "Icon image of the Microsoft Access Database."
-    },
-    "certificateImage": {
-      "src": "/images/certificates/skills/access-certificate.webp",
-      "alt": "Certificate for Microsoft Access."
     }
   },
   {
@@ -110,10 +102,6 @@
     "image": {
       "src": "/images/skills/c-plus-plus.svg",
       "alt": "Icon image of the C++ programming language."
-    },
-    "certificateImage": {
-      "src": "/images/certificates/skills/c-plus-plus-certificate.webp",
-      "alt": "Certificate for C++."
     }
   },
   {
@@ -123,10 +111,6 @@
     "image": {
       "src": "/images/skills/node.svg",
       "alt": "Icon image of the Node.js framework."
-    },
-    "certificateImage": {
-      "src": "/images/certificates/skills/nodejs-certificate.webp",
-      "alt": "Certificate for Node.js."
     }
   },
   {
@@ -136,10 +120,6 @@
     "image": {
       "src": "/images/skills/typescript.svg",
       "alt": "Icon image of the TypeScript programming language."
-    },
-    "certificateImage": {
-      "src": "/images/certificates/skills/typescript-certificate.webp",
-      "alt": "Certificate for TypeScript."
     }
   },
   {
@@ -175,10 +155,6 @@
     "image": {
       "src": "/images/skills/bootstrap.svg",
       "alt": "Icon image of the Bootstrap styling library."
-    },
-    "certificateImage": {
-      "src": "/images/certificates/skills/bootstrap-certificate.webp",
-      "alt": "Certificate for Bootstrap."
     }
   },
   {
@@ -188,10 +164,6 @@
     "image": {
       "src": "/images/skills/visual-studio.svg",
       "alt": "Icon image of Microsoft's Visual Studio IDE."
-    },
-    "certificateImage": {
-      "src": "/images/certificates/skills/visual-studio-certificate.webp",
-      "alt": "Certificate for Visual Studio."
     }
   },
   {
@@ -201,10 +173,6 @@
     "image": {
       "src": "/images/skills/tailwind.svg",
       "alt": "Icon image of the Bootstrap styling library."
-    },
-    "certificateImage": {
-      "src": "/images/certificates/skills/tailwind-certificate.webp",
-      "alt": "Certificate for Tailwind CSS."
     }
   }
 ]

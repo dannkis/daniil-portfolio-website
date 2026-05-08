@@ -47,7 +47,7 @@ export default function ContactsSection() {
         <div className="flex aspect-square h-40 sm:h-full sm:max-w-full">
           <img
             className="object-contain select-none"
-            src="/images/profile.png"
+            src="/images/profile.webp"
             alt="Profile picture of me facing to the side, with a nice background in the nature."
           />
         </div>
