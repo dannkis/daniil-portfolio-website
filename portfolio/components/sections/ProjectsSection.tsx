@@ -10,10 +10,9 @@ import { projects, type Project } from "@/lib/content";
 type ProjectID = (typeof projects)[number]["id"];
 
 const PROJECT_FRAME_TRANSITION = {
-  type: "spring",
-  stiffness: 360,
-  damping: 34,
-  mass: 0.85,
+  type: "tween",
+  duration: 0.26,
+  ease: "easeInOut",
 } as const;
 
 interface Props {

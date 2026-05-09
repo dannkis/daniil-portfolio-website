@@ -15,7 +15,7 @@ import { type FocusedWindows, getFocusWindowProps } from "@/lib/focusWindow";
 type ProjectID = (typeof projects)[number]["id"];
 type EducationID = (typeof education)[number]["id"];
 type SkillID = (typeof skills)[number]["id"];
-const PROJECT_COLLAPSE_ANIMATION_MS = 420;
+const PROJECT_COLLAPSE_SETTLE_MS = 360;
 const FOCUS_REGION_TOLERANCE_PX = 100;
 
 export default function Home() {
@@ -49,6 +49,17 @@ export default function Home() {
       ? null
       : focusedWindows;
 
+  function completeProjectClose() {
+    if (collapseProjectTimeoutRef.current !== null) {
+      window.clearTimeout(collapseProjectTimeoutRef.current);
+      collapseProjectTimeoutRef.current = null;
+    }
+
+    setCollapsingProjectID(null);
+    afterProjectCollapseRef.current?.();
+    afterProjectCollapseRef.current = null;
+  }
+
   function cancelProjectClose() {
     if (collapseProjectTimeoutRef.current !== null) {
       window.clearTimeout(collapseProjectTimeoutRef.current);
@@ -78,12 +89,10 @@ export default function Home() {
     afterProjectCollapseRef.current = afterCollapse ?? null;
     setCollapsingProjectID(projectFocus.expandedID);
     projectFocus.collapseExpanded();
-    collapseProjectTimeoutRef.current = window.setTimeout(() => {
-      setCollapsingProjectID(null);
-      collapseProjectTimeoutRef.current = null;
-      afterProjectCollapseRef.current?.();
-      afterProjectCollapseRef.current = null;
-    }, PROJECT_COLLAPSE_ANIMATION_MS);
+    collapseProjectTimeoutRef.current = window.setTimeout(
+      completeProjectClose,
+      PROJECT_COLLAPSE_SETTLE_MS,
+    );
   }
 
   function resetFocusState() {
