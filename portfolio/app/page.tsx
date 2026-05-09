@@ -15,8 +15,8 @@ import { type FocusedWindows, getFocusWindowProps } from "@/lib/focusWindow";
 type ProjectID = (typeof projects)[number]["id"];
 type EducationID = (typeof education)[number]["id"];
 type SkillID = (typeof skills)[number]["id"];
-const PROJECT_UNFOCUS_BEFORE_COLLAPSE_MS = 16;
-const PROJECT_COLLAPSE_SETTLE_MS = 460;
+type ProjectClosePhase = "idle" | "preparing" | "collapsing";
+const PROJECT_COLLAPSE_FALLBACK_MS = 700;
 const FOCUS_REGION_TOLERANCE_PX = 100;
 
 export default function Home() {
@@ -30,7 +30,10 @@ export default function Home() {
   const [closingProjectID, setClosingProjectID] = useState<ProjectID | null>(
     null,
   );
-  const collapseStartTimeoutRef = useRef<number | null>(null);
+  const closingProjectIDRef = useRef<ProjectID | null>(null);
+  const [projectClosePhase, setProjectClosePhase] =
+    useState<ProjectClosePhase>("idle");
+  const projectClosePhaseRef = useRef<ProjectClosePhase>("idle");
   const collapseSettleTimeoutRef = useRef<number | null>(null);
   const activeProject = projects.find(
     (project) => project.id === projectFocus.activeID,
@@ -38,7 +41,6 @@ export default function Home() {
   const expandedProject = projects.find(
     (project) => project.id === projectFocus.expandedID,
   );
-  const isProjectClosing = closingProjectID !== null;
   const selectedEducation = isDesktopLayout
     ? education.find((entry) => entry.id === educationFocus.activeID)
     : undefined;
@@ -51,27 +53,38 @@ export default function Home() {
       : focusedWindows;
 
   function clearProjectCloseTimers() {
-    if (collapseStartTimeoutRef.current !== null) {
-      window.clearTimeout(collapseStartTimeoutRef.current);
-      collapseStartTimeoutRef.current = null;
-    }
-
     if (collapseSettleTimeoutRef.current !== null) {
       window.clearTimeout(collapseSettleTimeoutRef.current);
       collapseSettleTimeoutRef.current = null;
     }
   }
 
-  function completeProjectClose() {
+  function updateProjectClosePhase(phase: ProjectClosePhase) {
+    projectClosePhaseRef.current = phase;
+    setProjectClosePhase(phase);
+  }
+
+  function updateClosingProjectID(projectID: ProjectID | null) {
+    closingProjectIDRef.current = projectID;
+    setClosingProjectID(projectID);
+  }
+
+  function completeProjectClose(projectID?: ProjectID) {
+    if (projectID && closingProjectIDRef.current !== projectID) {
+      return;
+    }
+
     clearProjectCloseTimers();
 
-    setClosingProjectID(null);
+    updateProjectClosePhase("idle");
+    updateClosingProjectID(null);
   }
 
   function cancelProjectClose() {
     clearProjectCloseTimers();
 
-    setClosingProjectID(null);
+    updateProjectClosePhase("idle");
+    updateClosingProjectID(null);
   }
 
   function unfocusAll({ keepExpandedProject = false } = {}) {
@@ -85,11 +98,30 @@ export default function Home() {
     setFocusedWindows(null);
   }
 
-  function closeProject({
-    unfocusBeforeCollapse = false,
-  }: {
-    unfocusBeforeCollapse?: boolean;
-  } = {}) {
+  function startProjectCollapseAnimation() {
+    if (projectClosePhaseRef.current !== "preparing") {
+      return;
+    }
+
+    const projectID = closingProjectIDRef.current;
+
+    if (!projectID) {
+      return;
+    }
+
+    updateProjectClosePhase("collapsing");
+    projectFocus.collapseExpanded();
+    collapseSettleTimeoutRef.current = window.setTimeout(
+      () => completeProjectClose(projectID),
+      PROJECT_COLLAPSE_FALLBACK_MS,
+    );
+  }
+
+  function closeProject({ unfocusBeforeCollapse = false } = {}) {
+    if (projectClosePhaseRef.current !== "idle") {
+      return;
+    }
+
     if (!projectFocus.expandedID) {
       if (unfocusBeforeCollapse) {
         unfocusAll();
@@ -100,27 +132,22 @@ export default function Home() {
 
     clearProjectCloseTimers();
 
-    setClosingProjectID(projectFocus.expandedID);
+    const projectID = projectFocus.expandedID;
 
-    const startCollapseAnimation = () => {
-      collapseStartTimeoutRef.current = null;
-      projectFocus.collapseExpanded();
-      collapseSettleTimeoutRef.current = window.setTimeout(
-        completeProjectClose,
-        PROJECT_COLLAPSE_SETTLE_MS,
-      );
-    };
+    updateClosingProjectID(projectID);
 
     if (unfocusBeforeCollapse) {
+      updateProjectClosePhase("preparing");
       unfocusAll({ keepExpandedProject: true });
-      collapseStartTimeoutRef.current = window.setTimeout(
-        startCollapseAnimation,
-        PROJECT_UNFOCUS_BEFORE_COLLAPSE_MS,
-      );
       return;
     }
 
-    startCollapseAnimation();
+    updateProjectClosePhase("collapsing");
+    projectFocus.collapseExpanded();
+    collapseSettleTimeoutRef.current = window.setTimeout(
+      () => completeProjectClose(projectID),
+      PROJECT_COLLAPSE_FALLBACK_MS,
+    );
   }
 
   function resetFocusState() {
@@ -306,10 +333,12 @@ export default function Home() {
               activeProject={activeProject}
               expandedProject={expandedProject}
               activeSkillID={!activeProject ? activeSkill?.id : null}
-              isProjectCollapsing={isProjectClosing}
+              projectClosePhase={projectClosePhase}
               onProjectHover={previewProject}
               onProjectExpand={expandProject}
               onProjectCollapse={collapseExpandedProject}
+              onProjectCloseTargetReady={startProjectCollapseAnimation}
+              onProjectCollapseComplete={completeProjectClose}
             />
           </div>
         </div>

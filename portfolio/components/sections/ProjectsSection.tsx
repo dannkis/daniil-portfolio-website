@@ -1,5 +1,5 @@
 "use client";
-import { type SyntheticEvent, useState } from "react";
+import { type SyntheticEvent, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import {
   HoverMagnifierLens,
@@ -8,6 +8,7 @@ import {
 import { projects, type Project } from "@/lib/content";
 
 type ProjectID = (typeof projects)[number]["id"];
+type ProjectClosePhase = "idle" | "preparing" | "collapsing";
 
 const PROJECT_FRAME_TRANSITION = {
   type: "spring",
@@ -25,20 +26,24 @@ interface Props {
   activeProject?: Project;
   expandedProject?: Project;
   activeSkillID?: string | null;
-  isProjectCollapsing?: boolean;
+  projectClosePhase?: ProjectClosePhase;
   onProjectHover: (id: ProjectID) => void;
   onProjectExpand: (id: ProjectID) => void;
   onProjectCollapse: () => void;
+  onProjectCloseTargetReady: () => void;
+  onProjectCollapseComplete: (id: ProjectID) => void;
 }
 
 export default function ProjectsSection({
   activeProject,
   expandedProject,
   activeSkillID,
-  isProjectCollapsing = false,
+  projectClosePhase = "idle",
   onProjectHover,
   onProjectExpand,
   onProjectCollapse,
+  onProjectCloseTargetReady,
+  onProjectCollapseComplete,
 }: Props) {
   const [carouselState, setCarouselState] = useState<{
     projectID: ProjectID | null;
@@ -50,6 +55,7 @@ export default function ProjectsSection({
   const [projectAspectRatios, setProjectAspectRatios] = useState<
     Partial<Record<ProjectID, number>>
   >({});
+  const closingTargetRef = useRef<HTMLDivElement | null>(null);
   const expandedProjectImages =
     expandedProject && expandedProject.gallery?.length
       ? expandedProject.gallery
@@ -57,7 +63,11 @@ export default function ProjectsSection({
         ? [expandedProject.image]
         : [];
   const expandedProjectID = expandedProject?.id ?? null;
-  const isSkillProjectHighlightMode = !activeProject && !!activeSkillID;
+  const isProjectClosing = projectClosePhase !== "idle";
+  const isProjectPreparingClose = projectClosePhase === "preparing";
+  const isProjectCollapsing = projectClosePhase === "collapsing";
+  const isSkillProjectHighlightMode =
+    !isProjectClosing && !activeProject && !!activeSkillID;
   const currentSlide =
     carouselState.projectID === expandedProjectID
       ? Math.min(
@@ -67,6 +77,20 @@ export default function ProjectsSection({
       : 0;
   const { magnifierState, magnifierScale, magnifierHandlers } =
     useHoverMagnifier(`${expandedProjectID ?? "none"}-${currentSlide}`);
+
+  useEffect(() => {
+    if (
+      !isProjectPreparingClose ||
+      !expandedProjectID ||
+      !closingTargetRef.current
+    ) {
+      return;
+    }
+
+    const frameID = window.requestAnimationFrame(onProjectCloseTargetReady);
+
+    return () => window.cancelAnimationFrame(frameID);
+  }, [expandedProjectID, isProjectPreparingClose, onProjectCloseTargetReady]);
 
   function setSlide(slide: number) {
     setCarouselState({
@@ -139,7 +163,7 @@ export default function ProjectsSection({
           {activeProject ? activeProject.name : "Projects"}
         </motion.h1>
         <AnimatePresence>
-          {expandedProject && !isProjectCollapsing && (
+          {expandedProject && !isProjectClosing && (
             <motion.button
               className="text-label inline-flex h-6 w-6 items-center justify-center overflow-hidden rounded-sm border border-foreground/20 bg-background/75 text-orange-400 backdrop-blur-sm hover:cursor-pointer"
               type="button"
@@ -159,7 +183,7 @@ export default function ProjectsSection({
         <div className="relative z-10 min-h-72 flex-1 overflow-hidden sm:min-h-80 lg:min-h-0">
           <div
             className={`grid min-h-full grid-cols-1 items-center gap-6 transition-opacity duration-150 sm:grid-cols-3 lg:h-full lg:gap-x-6 lg:gap-y-10 ${
-              expandedProject && !isProjectCollapsing
+              expandedProject && !isProjectClosing
                 ? "pointer-events-none absolute inset-0 opacity-0"
                 : "relative opacity-100"
             }`}
@@ -199,7 +223,7 @@ export default function ProjectsSection({
                 }}
                 whileTap={{ scale: 0.97 }}
               >
-                {expandedProject?.id === project.id && !isProjectCollapsing ? (
+                {expandedProject?.id === project.id && !isProjectClosing ? (
                   <div
                     className="relative w-full overflow-hidden rounded-md opacity-0"
                     style={getProjectFrameStyle(project.id)}
@@ -217,6 +241,12 @@ export default function ProjectsSection({
                   </div>
                 ) : (
                   <motion.div
+                    ref={
+                      isProjectPreparingClose &&
+                      expandedProject?.id === project.id
+                        ? closingTargetRef
+                        : undefined
+                    }
                     className="relative w-full overflow-hidden rounded-md"
                     layoutId={`project-frame-${project.id}`}
                     style={getProjectFrameStyle(project.id)}
@@ -250,7 +280,7 @@ export default function ProjectsSection({
               <motion.div
                 key={expandedProject.id}
                 className={`absolute inset-0 z-20 ${
-                  isProjectCollapsing ? "pointer-events-none" : ""
+                  isProjectClosing ? "pointer-events-none" : ""
                 }`}
                 initial={{ opacity: 0.96 }}
                 animate={{ opacity: 1 }}
@@ -262,6 +292,11 @@ export default function ProjectsSection({
                     className="relative h-full min-h-0 w-full min-w-0 overflow-visible rounded-md"
                     layoutId={`project-frame-${expandedProject.id}`}
                     transition={PROJECT_FRAME_TRANSITION}
+                    onLayoutAnimationComplete={
+                      isProjectCollapsing
+                        ? () => onProjectCollapseComplete(expandedProject.id)
+                        : undefined
+                    }
                   >
                     <div
                       className="relative flex h-full min-h-0 w-full min-w-0 items-center justify-center overflow-visible rounded-md"
@@ -286,7 +321,7 @@ export default function ProjectsSection({
                           />
                         </AnimatePresence>
                       </div>
-                      {!isProjectCollapsing && (
+                      {!isProjectClosing && (
                         <HoverMagnifierLens
                           src={expandedProjectImages[currentSlide].src}
                           magnifierState={magnifierState}
@@ -301,7 +336,7 @@ export default function ProjectsSection({
           </AnimatePresence>
 
           {expandedProject &&
-            !isProjectCollapsing &&
+            !isProjectClosing &&
             expandedProjectImages.length > 1 && (
               <>
                 <motion.button
