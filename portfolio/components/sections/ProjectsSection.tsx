@@ -10,9 +10,15 @@ import { projects, type Project } from "@/lib/content";
 type ProjectID = (typeof projects)[number]["id"];
 
 const PROJECT_FRAME_TRANSITION = {
-  type: "tween",
-  duration: 0.26,
-  ease: "easeInOut",
+  type: "spring",
+  stiffness: 520,
+  damping: 30,
+  mass: 0.8,
+} as const;
+
+const PROJECT_OVERLAY_FADE_TRANSITION = {
+  duration: 0.12,
+  ease: "easeOut",
 } as const;
 
 interface Props {
@@ -133,7 +139,7 @@ export default function ProjectsSection({
           {activeProject ? activeProject.name : "Projects"}
         </motion.h1>
         <AnimatePresence>
-          {expandedProject && (
+          {expandedProject && !isProjectCollapsing && (
             <motion.button
               className="text-label inline-flex h-6 w-6 items-center justify-center overflow-hidden rounded-sm border border-foreground/20 bg-background/75 text-orange-400 backdrop-blur-sm hover:cursor-pointer"
               type="button"
@@ -155,7 +161,7 @@ export default function ProjectsSection({
             className={`grid min-h-full grid-cols-1 items-center gap-6 transition-opacity duration-150 sm:grid-cols-3 lg:h-full lg:gap-x-6 lg:gap-y-10 ${
               expandedProject && !isProjectCollapsing
                 ? "pointer-events-none absolute inset-0 opacity-0"
-                : "relative opacity-100"
+                : `relative opacity-100 ${isProjectCollapsing ? "pointer-events-none" : ""}`
             }`}
           >
             {projects.map((project, i) => (
@@ -249,7 +255,7 @@ export default function ProjectsSection({
                 initial={{ opacity: 0.96 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0.96 }}
-                transition={PROJECT_FRAME_TRANSITION}
+                transition={PROJECT_OVERLAY_FADE_TRANSITION}
               >
                 <div className="relative flex h-full min-h-0 w-full min-w-0 items-center justify-center overflow-hidden rounded-md p-2 sm:p-3 md:p-4">
                   <motion.div
@@ -280,11 +286,13 @@ export default function ProjectsSection({
                           />
                         </AnimatePresence>
                       </div>
-                      <HoverMagnifierLens
-                        src={expandedProjectImages[currentSlide].src}
-                        magnifierState={magnifierState}
-                        scale={magnifierScale}
-                      />
+                      {!isProjectCollapsing && (
+                        <HoverMagnifierLens
+                          src={expandedProjectImages[currentSlide].src}
+                          magnifierState={magnifierState}
+                          scale={magnifierScale}
+                        />
+                      )}
                     </div>
                   </motion.div>
                 </div>

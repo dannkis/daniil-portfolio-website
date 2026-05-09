@@ -15,7 +15,8 @@ import { type FocusedWindows, getFocusWindowProps } from "@/lib/focusWindow";
 type ProjectID = (typeof projects)[number]["id"];
 type EducationID = (typeof education)[number]["id"];
 type SkillID = (typeof skills)[number]["id"];
-const PROJECT_COLLAPSE_SETTLE_MS = 360;
+const PROJECT_UNFOCUS_BEFORE_COLLAPSE_MS = 90;
+const PROJECT_COLLAPSE_SETTLE_MS = 460;
 const FOCUS_REGION_TOLERANCE_PX = 100;
 
 export default function Home() {
@@ -26,18 +27,18 @@ export default function Home() {
   const [focusedWindows, setFocusedWindows] = useState<FocusedWindows | null>(
     null,
   );
-  const [collapsingProjectID, setCollapsingProjectID] =
-    useState<ProjectID | null>(null);
-  const collapseProjectTimeoutRef = useRef<number | null>(null);
-  const afterProjectCollapseRef = useRef<(() => void) | null>(null);
-  const isFocusResetPendingRef = useRef(false);
+  const [closingProjectID, setClosingProjectID] = useState<ProjectID | null>(
+    null,
+  );
+  const collapseStartTimeoutRef = useRef<number | null>(null);
+  const collapseSettleTimeoutRef = useRef<number | null>(null);
   const activeProject = projects.find(
     (project) => project.id === projectFocus.activeID,
   );
   const expandedProject = projects.find(
     (project) => project.id === projectFocus.expandedID,
   );
-  const isProjectCollapsing = collapsingProjectID !== null;
+  const isProjectClosing = closingProjectID !== null;
   const selectedEducation = isDesktopLayout
     ? education.find((entry) => entry.id === educationFocus.activeID)
     : undefined;
@@ -49,65 +50,85 @@ export default function Home() {
       ? null
       : focusedWindows;
 
-  function completeProjectClose() {
-    if (collapseProjectTimeoutRef.current !== null) {
-      window.clearTimeout(collapseProjectTimeoutRef.current);
-      collapseProjectTimeoutRef.current = null;
+  function clearProjectCloseTimers() {
+    if (collapseStartTimeoutRef.current !== null) {
+      window.clearTimeout(collapseStartTimeoutRef.current);
+      collapseStartTimeoutRef.current = null;
     }
 
-    setCollapsingProjectID(null);
-    afterProjectCollapseRef.current?.();
-    afterProjectCollapseRef.current = null;
+    if (collapseSettleTimeoutRef.current !== null) {
+      window.clearTimeout(collapseSettleTimeoutRef.current);
+      collapseSettleTimeoutRef.current = null;
+    }
+  }
+
+  function completeProjectClose() {
+    clearProjectCloseTimers();
+
+    setClosingProjectID(null);
   }
 
   function cancelProjectClose() {
-    if (collapseProjectTimeoutRef.current !== null) {
-      window.clearTimeout(collapseProjectTimeoutRef.current);
-      collapseProjectTimeoutRef.current = null;
-    }
+    clearProjectCloseTimers();
 
-    afterProjectCollapseRef.current = null;
-    isFocusResetPendingRef.current = false;
-    setCollapsingProjectID(null);
+    setClosingProjectID(null);
   }
 
-  function closeProject(afterCollapse?: () => void) {
+  function unfocusAll({ keepExpandedProject = false } = {}) {
+    educationFocus.clear();
+    if (keepExpandedProject) {
+      projectFocus.clearActive();
+    } else {
+      projectFocus.clear();
+    }
+    skillFocus.clear();
+    setFocusedWindows(null);
+  }
+
+  function closeProject({
+    unfocusBeforeCollapse = false,
+  }: {
+    unfocusBeforeCollapse?: boolean;
+  } = {}) {
     if (!projectFocus.expandedID) {
-      if (collapsingProjectID !== null && afterCollapse) {
-        afterProjectCollapseRef.current = afterCollapse;
-        return;
+      if (unfocusBeforeCollapse) {
+        unfocusAll();
       }
 
-      afterCollapse?.();
       return;
     }
 
-    if (collapseProjectTimeoutRef.current !== null) {
-      window.clearTimeout(collapseProjectTimeoutRef.current);
+    clearProjectCloseTimers();
+
+    setClosingProjectID(projectFocus.expandedID);
+
+    const startCollapseAnimation = () => {
+      collapseStartTimeoutRef.current = null;
+      projectFocus.collapseExpanded();
+      collapseSettleTimeoutRef.current = window.setTimeout(
+        completeProjectClose,
+        PROJECT_COLLAPSE_SETTLE_MS,
+      );
+    };
+
+    if (unfocusBeforeCollapse) {
+      unfocusAll({ keepExpandedProject: true });
+      collapseStartTimeoutRef.current = window.setTimeout(
+        startCollapseAnimation,
+        PROJECT_UNFOCUS_BEFORE_COLLAPSE_MS,
+      );
+      return;
     }
 
-    afterProjectCollapseRef.current = afterCollapse ?? null;
-    setCollapsingProjectID(projectFocus.expandedID);
-    projectFocus.collapseExpanded();
-    collapseProjectTimeoutRef.current = window.setTimeout(
-      completeProjectClose,
-      PROJECT_COLLAPSE_SETTLE_MS,
-    );
+    startCollapseAnimation();
   }
 
   function resetFocusState() {
-    educationFocus.clear();
-    projectFocus.clearActive();
-    skillFocus.clear();
-    setFocusedWindows(null);
-    isFocusResetPendingRef.current = false;
+    unfocusAll();
   }
 
   function previewProject(projectID: ProjectID) {
-    if (isFocusResetPendingRef.current) {
-      cancelProjectClose();
-    }
-
+    cancelProjectClose();
     projectFocus.preview(projectID);
     educationFocus.clear();
     skillFocus.clear();
@@ -127,7 +148,7 @@ export default function Home() {
   }
 
   function collapseExpandedProject() {
-    closeProject();
+    closeProject({ unfocusBeforeCollapse: true });
   }
 
   function previewEducation(educationID: EducationID) {
@@ -136,7 +157,7 @@ export default function Home() {
     }
 
     educationFocus.preview(educationID);
-    collapseExpandedProject();
+    closeProject();
     projectFocus.clearActive();
     skillFocus.clear();
     setFocusedWindows(["education", "skills", "about"]);
@@ -158,7 +179,7 @@ export default function Home() {
     }
 
     educationFocus.clear();
-    collapseExpandedProject();
+    closeProject();
     projectFocus.clearActive();
     setFocusedWindows(["projects", "skills", "education", "about"]);
   }
@@ -175,22 +196,17 @@ export default function Home() {
     skillFocus.expand(skillID);
 
     educationFocus.clear();
-    collapseExpandedProject();
+    closeProject();
     projectFocus.clearActive();
     setFocusedWindows(["projects", "skills", "education", "about"]);
   }
 
   function clearFocus() {
     const shouldDeferWindowReset =
-      projectFocus.expandedID !== null || collapsingProjectID !== null;
+      projectFocus.expandedID !== null || closingProjectID !== null;
 
     if (shouldDeferWindowReset) {
-      if (isFocusResetPendingRef.current) {
-        return;
-      }
-
-      isFocusResetPendingRef.current = true;
-      closeProject(resetFocusState);
+      closeProject({ unfocusBeforeCollapse: true });
       return;
     }
 
@@ -291,7 +307,7 @@ export default function Home() {
               activeProject={activeProject}
               expandedProject={expandedProject}
               activeSkillID={!activeProject ? activeSkill?.id : null}
-              isProjectCollapsing={isProjectCollapsing}
+              isProjectCollapsing={isProjectClosing}
               onProjectHover={previewProject}
               onProjectExpand={expandProject}
               onProjectCollapse={collapseExpandedProject}
