@@ -161,7 +161,7 @@ export default function ProjectsSection({
             className={`grid min-h-full grid-cols-1 items-center gap-6 transition-opacity duration-150 sm:grid-cols-3 lg:h-full lg:gap-x-6 lg:gap-y-10 ${
               expandedProject && !isProjectCollapsing
                 ? "pointer-events-none absolute inset-0 opacity-0"
-                : `relative opacity-100 ${isProjectCollapsing ? "pointer-events-none" : ""}`
+                : "relative opacity-100"
             }`}
           >
             {projects.map((project, i) => (
@@ -199,7 +199,7 @@ export default function ProjectsSection({
                 }}
                 whileTap={{ scale: 0.97 }}
               >
-                {expandedProject?.id === project.id ? (
+                {expandedProject?.id === project.id && !isProjectCollapsing ? (
                   <div
                     className="relative w-full overflow-hidden rounded-md opacity-0"
                     style={getProjectFrameStyle(project.id)}

@@ -15,7 +15,7 @@ import { type FocusedWindows, getFocusWindowProps } from "@/lib/focusWindow";
 type ProjectID = (typeof projects)[number]["id"];
 type EducationID = (typeof education)[number]["id"];
 type SkillID = (typeof skills)[number]["id"];
-const PROJECT_UNFOCUS_BEFORE_COLLAPSE_MS = 90;
+const PROJECT_UNFOCUS_BEFORE_COLLAPSE_MS = 16;
 const PROJECT_COLLAPSE_SETTLE_MS = 460;
 const FOCUS_REGION_TOLERANCE_PX = 100;
 
@@ -128,7 +128,6 @@ export default function Home() {
   }
 
   function previewProject(projectID: ProjectID) {
-    cancelProjectClose();
     projectFocus.preview(projectID);
     educationFocus.clear();
     skillFocus.clear();
