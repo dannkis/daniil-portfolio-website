@@ -49,6 +49,7 @@ export default function AboutSection({ project, education, skill }: Props) {
           typeof link.href === "string" && link.href.length > 0,
       )
     : [];
+  const hasProjectLinks = projectLinks.length > 0;
   const contentKey = project
     ? `project-${project.id}`
     : education
@@ -78,19 +79,29 @@ export default function AboutSection({ project, education, skill }: Props) {
             transition={{ type: "spring", stiffness: 300, damping: 26 }}
           >
             <p className="text-sm">{text}</p>
-            {projectLinks.length > 0 && (
+            {project && (
               <div className="flex flex-wrap gap-2">
-                {projectLinks.map((link) => (
-                  <a
-                    key={link.label}
-                    className={`${PROJECT_LINK_BASE_CLASS_NAME} ${PROJECT_LINK_VARIANT_CLASS_NAMES[link.variant]}`}
-                    href={link.href}
-                    target="_blank"
-                    rel="noreferrer"
+                {hasProjectLinks ? (
+                  projectLinks.map((link) => (
+                    <a
+                      key={link.label}
+                      className={`${PROJECT_LINK_BASE_CLASS_NAME} ${PROJECT_LINK_VARIANT_CLASS_NAMES[link.variant]}`}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {link.label}
+                    </a>
+                  ))
+                ) : (
+                  <button
+                    type="button"
+                    className={`${PROJECT_LINK_BASE_CLASS_NAME} ${PROJECT_LINK_VARIANT_CLASS_NAMES.repository} cursor-default border-dashed opacity-75`}
+                    disabled
                   >
-                    {link.label}
-                  </a>
-                ))}
+                    Coming soon
+                  </button>
+                )}
               </div>
             )}
           </motion.div>

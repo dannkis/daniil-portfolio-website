@@ -2,7 +2,7 @@
   {
     "id": "portfolio",
     "name": "Portfolio",
-    "description": "A productivity-focused task management app concept with mobile-first layouts, simple interaction patterns, and a clean visual hierarchy.",
+    "description": "A minimalistic portfolio that I have created, with a good mixture of dynamically adjusted content, animations, various optimisations, accessability-friendly; created using modern frameworks (Next.js, TypeScript, Tailwind, Framer-Motion).",
     "image": {
       "src": "/images/projects/portfolio.webp",
       "alt": "A preview of the portfolio website interface and overall layout."
@@ -17,17 +17,15 @@
         "alt": "A second preview of the portfolio website layout and section design."
       }
     ],
-    "skills": ["next", "visual-studio-code", "figma", "react", "javascript", "typescript", "tailwind"],
+    "skills": ["next", "visual-studio-code", "figma", "react", "javascript", "typescript", "tailwind", "node"],
     "links": {
-      "website": "google.com",
-      "repository": "google.com",
-      "release": "google.com"
+      "repository": "https://github.com/dannkis/daniil-portfolio-website"
     }
   },
   {
     "id": "spaces",
     "name": "Spaces",
-    "description": "A productivity-focused task management app concept with mobile-first layouts, simple interaction patterns, and a clean visual hierarchy.",
+    "description": "A productivity-focused app, aimed towards helping solo-developers manage their projects, while keeping that experience friction-free through simple interaction patterns, and a clean, minimal visual hierarchy.",
     "image": {
       "src": "/images/projects/spaces.webp",
       "alt": "A preview of the Spaces mobile app interface."
@@ -44,15 +42,15 @@
     ],
     "skills": ["swift", "visual-studio-code", "figma"],
     "links": {
-      "website": "google.com",
-      "repository": "google.com",
-      "release": "google.com"
+      "website": "",
+      "repository": "",
+      "release": ""
     }
   },
   {
     "id": "skillfindr",
     "name": "SkillFindr (IBM)",
-    "description": "A skill discovery and matching concept built around making technical strengths easier to search, compare, and present.",
+    "description": "Developed and documented the frontend of an LLM-driven chatbot in direct collaboration with IBM, engineered specifically for deployment on their IBMs SkillsBuild platform.",
     "image": {
       "src": "/images/projects/skillfindr.webp",
       "alt": "A preview of the SkillFindr IBM concept interface."
@@ -70,14 +68,14 @@
     "skills": ["next", "react", "typescript", "node", "figma", "visual-studio-code"],
     "links": {
       "website": "",
-      "repository": "",
+      "repository": "https://github.com/dannkis/SkillFindr4",
       "release": ""
     }
   },
   {
     "id": "agronova",
     "name": "Agronova",
-    "description": "A concept of a weather web app for farmers, offering real-time data, forecasts, and crop-specific recommendations.",
+    "description": "Developed the front-end and API hookes for a concept weather web app for farmers, offering real-time data, forecasts, and crop-specific recommendations.",
     "image": {
       "src": "/images/projects/agronova.webp",
       "alt": "A preview of the Agronova weather app concept for farmers."
@@ -96,10 +94,10 @@
         "alt": "A third preview of the Agronova app concept and weather data presentation."
       }
     ],
-    "skills": ["bootstrap", "react", "figma"],
+    "skills": ["bootstrap", "react", "figma", "node"],
     "links": {
       "website": "",
-      "repository": "",
+      "repository": "https://github.com/dannkis/GUI-Weather-App-Concept",
       "release": ""
     }
   },
@@ -128,14 +126,14 @@
     "skills": ["c-sharp", "access", "visual-studio"],
     "links": {
       "website": "",
-      "repository": "",
-      "release": ""
+      "repository": "https://github.com/dannkis/RotaMaker-4",
+      "release": "https://github.com/dannkis/RotaMaker-4-RELEASE"
     }
   },
   {
     "id": "cryptiq",
     "name": "CryptiQ",
-    "description": "A concept app representing a secure crypto wallet for managing and transacting cryptocurrencies.",
+    "description": "Built the frontend for a secure cryptocurrency wallet concept app designed for intuitive and simple crypto management and transactions.",
     "image": {
       "src": "/images/projects/cryptiq.webp",
       "alt": "A preview of the CryptiQ crypto wallet app concept."
@@ -154,10 +152,10 @@
         "alt": "A third preview of the CryptiQ app concept and secure wallet screens."
       }
     ],
-    "skills": ["bootstrap", "react", "figma"],
+    "skills": ["bootstrap", "react", "figma", "node"],
     "links": {
       "website": "",
-      "repository": "",
+      "repository": "https://github.com/dannkis/Crypto-Wallet-App-Concept",
       "release": ""
     }
   }
