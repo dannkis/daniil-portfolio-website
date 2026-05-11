@@ -16,9 +16,82 @@ type ProjectID = (typeof projects)[number]["id"];
 type EducationID = (typeof education)[number]["id"];
 type SkillID = (typeof skills)[number]["id"];
 type ProjectClosePhase = "idle" | "preparing" | "collapsing";
+type FocusRegionSide = "left" | "right" | "top" | "bottom";
 const PROJECT_COLLAPSE_FALLBACK_MS = 700;
 const FOCUS_REGION_TOLERANCE_PX = 80;
-const FOCUS_REGION_OUTSIDE_TOLERANCE_PX = 20;
+const FOCUS_REGION_OUTSIDE_TOLERANCE_PX = 10;
+
+function rangesOverlap(
+  startA: number,
+  endA: number,
+  startB: number,
+  endB: number,
+) {
+  return (
+    startA <= endB + FOCUS_REGION_TOLERANCE_PX &&
+    endA >= startB - FOCUS_REGION_TOLERANCE_PX
+  );
+}
+
+function rectHasNeighborOnSide(
+  rect: DOMRect,
+  side: FocusRegionSide,
+  rects: DOMRect[],
+) {
+  return rects.some((otherRect) => {
+    if (otherRect === rect) {
+      return false;
+    }
+
+    if (side === "left" || side === "right") {
+      const gap =
+        side === "left"
+          ? rect.left - otherRect.right
+          : otherRect.left - rect.right;
+
+      return (
+        gap >= 0 &&
+        gap <= FOCUS_REGION_TOLERANCE_PX &&
+        rangesOverlap(rect.top, rect.bottom, otherRect.top, otherRect.bottom)
+      );
+    }
+
+    const gap =
+      side === "top"
+        ? rect.top - otherRect.bottom
+        : otherRect.top - rect.bottom;
+
+    return (
+      gap >= 0 &&
+      gap <= FOCUS_REGION_TOLERANCE_PX &&
+      rangesOverlap(rect.left, rect.right, otherRect.left, otherRect.right)
+    );
+  });
+}
+
+function getFocusRegionTolerance(
+  rect: DOMRect,
+  side: FocusRegionSide,
+  rects: DOMRect[],
+) {
+  return rectHasNeighborOnSide(rect, side, rects)
+    ? FOCUS_REGION_TOLERANCE_PX
+    : FOCUS_REGION_OUTSIDE_TOLERANCE_PX;
+}
+
+function pointIsInsideFocusRect(
+  x: number,
+  y: number,
+  rect: DOMRect,
+  rects: DOMRect[],
+) {
+  return (
+    x >= rect.left - getFocusRegionTolerance(rect, "left", rects) &&
+    x <= rect.right + getFocusRegionTolerance(rect, "right", rects) &&
+    y >= rect.top - getFocusRegionTolerance(rect, "top", rects) &&
+    y <= rect.bottom + getFocusRegionTolerance(rect, "bottom", rects)
+  );
+}
 
 export default function Home() {
   const isDesktopLayout = useMediaQuery("(min-width: 64rem)");
@@ -241,93 +314,18 @@ export default function Home() {
   }
 
   function pointerIsInsideFocusedRegion(x: number, y: number) {
-    const focusedElements = Array.from(
+    const focusedRects = Array.from(
       document.querySelectorAll<HTMLElement>(".focus-window-active"),
+      (element) => element.getBoundingClientRect(),
     );
 
-    if (focusedElements.length === 0) {
+    if (focusedRects.length === 0) {
       return false;
     }
 
-    const focusedRects = focusedElements.map((element) =>
-      element.getBoundingClientRect(),
+    return focusedRects.some((rect) =>
+      pointIsInsideFocusRect(x, y, rect, focusedRects),
     );
-
-    function rangesOverlap(
-      startA: number,
-      endA: number,
-      startB: number,
-      endB: number,
-    ) {
-      return (
-        startA <= endB + FOCUS_REGION_TOLERANCE_PX &&
-        endA >= startB - FOCUS_REGION_TOLERANCE_PX
-      );
-    }
-
-    function hasNeighborOnSide(
-      rect: DOMRect,
-      side: "left" | "right" | "top" | "bottom",
-    ) {
-      return focusedRects.some((otherRect) => {
-        if (otherRect === rect) {
-          return false;
-        }
-
-        if (side === "left" || side === "right") {
-          const isNeighbor =
-            side === "left"
-              ? otherRect.right <= rect.left &&
-                rect.left - otherRect.right <= FOCUS_REGION_TOLERANCE_PX
-              : otherRect.left >= rect.right &&
-                otherRect.left - rect.right <= FOCUS_REGION_TOLERANCE_PX;
-
-          return (
-            isNeighbor &&
-            rangesOverlap(
-              rect.top,
-              rect.bottom,
-              otherRect.top,
-              otherRect.bottom,
-            )
-          );
-        }
-
-        const isNeighbor =
-          side === "top"
-            ? otherRect.bottom <= rect.top &&
-              rect.top - otherRect.bottom <= FOCUS_REGION_TOLERANCE_PX
-            : otherRect.top >= rect.bottom &&
-              otherRect.top - rect.bottom <= FOCUS_REGION_TOLERANCE_PX;
-
-        return (
-          isNeighbor &&
-          rangesOverlap(rect.left, rect.right, otherRect.left, otherRect.right)
-        );
-      });
-    }
-
-    return focusedRects.some((rect) => {
-      const leftTolerance = hasNeighborOnSide(rect, "left")
-        ? FOCUS_REGION_TOLERANCE_PX
-        : FOCUS_REGION_OUTSIDE_TOLERANCE_PX;
-      const rightTolerance = hasNeighborOnSide(rect, "right")
-        ? FOCUS_REGION_TOLERANCE_PX
-        : FOCUS_REGION_OUTSIDE_TOLERANCE_PX;
-      const topTolerance = hasNeighborOnSide(rect, "top")
-        ? FOCUS_REGION_TOLERANCE_PX
-        : FOCUS_REGION_OUTSIDE_TOLERANCE_PX;
-      const bottomTolerance = hasNeighborOnSide(rect, "bottom")
-        ? FOCUS_REGION_TOLERANCE_PX
-        : FOCUS_REGION_OUTSIDE_TOLERANCE_PX;
-
-      return (
-        x >= rect.left - leftTolerance &&
-        x <= rect.right + rightTolerance &&
-        y >= rect.top - topTolerance &&
-        y <= rect.bottom + bottomTolerance
-      );
-    });
   }
 
   function handlePointerDown(event: React.PointerEvent<HTMLElement>) {
