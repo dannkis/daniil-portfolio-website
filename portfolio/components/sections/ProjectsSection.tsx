@@ -12,13 +12,13 @@ type ProjectClosePhase = "idle" | "preparing" | "collapsing";
 
 const PROJECT_FRAME_TRANSITION = {
   type: "spring",
-  stiffness: 520,
-  damping: 30,
-  mass: 0.8,
+  stiffness: 460,
+  damping: 32,
+  mass: 0.86,
 } as const;
 
 const PROJECT_OVERLAY_FADE_TRANSITION = {
-  duration: 0.12,
+  duration: 0.16,
   ease: "easeOut",
 } as const;
 
@@ -82,7 +82,29 @@ export default function ProjectsSection({
     if (
       !isProjectPreparingClose ||
       !expandedProjectID ||
-      !closingTargetRef.current
+      currentSlide === 0 ||
+      expandedProjectImages.length <= 1
+    ) {
+      return;
+    }
+
+    setCarouselState({
+      projectID: expandedProjectID,
+      slide: 0,
+    });
+  }, [
+    currentSlide,
+    expandedProjectID,
+    expandedProjectImages.length,
+    isProjectPreparingClose,
+  ]);
+
+  useEffect(() => {
+    if (
+      !isProjectPreparingClose ||
+      !expandedProjectID ||
+      !closingTargetRef.current ||
+      currentSlide !== 0
     ) {
       return;
     }
@@ -90,7 +112,12 @@ export default function ProjectsSection({
     const frameID = window.requestAnimationFrame(onProjectCloseTargetReady);
 
     return () => window.cancelAnimationFrame(frameID);
-  }, [expandedProjectID, isProjectPreparingClose, onProjectCloseTargetReady]);
+  }, [
+    currentSlide,
+    expandedProjectID,
+    isProjectPreparingClose,
+    onProjectCloseTargetReady,
+  ]);
 
   function setSlide(slide: number) {
     setCarouselState({
@@ -317,7 +344,7 @@ export default function ProjectsSection({
                             initial={{ opacity: 0, x: 18 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -18 }}
-                            transition={{ duration: 0.18, ease: "easeOut" }}
+                            transition={{ duration: 0.22, ease: "easeOut" }}
                           />
                         </AnimatePresence>
                       </div>
@@ -346,7 +373,7 @@ export default function ProjectsSection({
                   aria-label="Show previous project image"
                   initial={{ opacity: 0, scale: 0.92 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.08 }}
+                  transition={{ duration: 0.12 }}
                 >
                   ‹
                 </motion.button>
@@ -357,7 +384,7 @@ export default function ProjectsSection({
                   aria-label="Show next project image"
                   initial={{ opacity: 0, scale: 0.92 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.08 }}
+                  transition={{ duration: 0.12 }}
                 >
                   ›
                 </motion.button>
@@ -365,7 +392,7 @@ export default function ProjectsSection({
                   className="absolute bottom-2 left-1/2 z-30 flex -translate-x-1/2 gap-2 rounded-full border border-foreground/15 bg-background/70 px-3 py-2 backdrop-blur-sm sm:bottom-3 md:bottom-4"
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.08 }}
+                  transition={{ duration: 0.12 }}
                 >
                   {expandedProjectImages.map((image, index) => (
                     <button

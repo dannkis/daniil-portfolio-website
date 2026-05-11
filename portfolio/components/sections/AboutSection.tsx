@@ -11,22 +11,38 @@ interface Props {
 type ProjectLink = {
   href: string;
   label: string;
+  variant: "release" | "repository" | "app";
 };
+
+const PROJECT_LINK_BASE_CLASS_NAME =
+  "text-label inline-flex items-center rounded-md border px-3 py-2 transition-colors";
+
+const PROJECT_LINK_VARIANT_CLASS_NAMES: Record<ProjectLink["variant"], string> =
+  {
+    release:
+      "bg-orange-400 text-black hover:border-orange-400/40 hover:text-orange-300",
+    repository:
+      "text-orange-400 hover:border-orange-400/40 hover:text-orange-300",
+    app: "border-foreground hover:border-orange-400/40 hover:text-orange-300",
+  };
 
 export default function AboutSection({ project, education, skill }: Props) {
   const projectLinks = project
     ? [
         {
-          href: project.links?.repository,
-          label: "GitHub Repo",
-        },
-        {
           href: project.links?.release,
           label: "Release",
+          variant: "release",
+        },
+        {
+          href: project.links?.repository,
+          label: "Repo",
+          variant: "repository",
         },
         {
           href: project.links?.website,
           label: "App",
+          variant: "app",
         },
       ].filter(
         (link): link is ProjectLink =>
@@ -45,8 +61,7 @@ export default function AboutSection({ project, education, skill }: Props) {
     : education
       ? education.description
       : skill
-        ? (skill.description ??
-          "No description for this skill in content/skills.json.")
+        ? (skill.description ?? "No description for this skill.")
         : about.text;
 
   return (
@@ -68,7 +83,7 @@ export default function AboutSection({ project, education, skill }: Props) {
                 {projectLinks.map((link) => (
                   <a
                     key={link.label}
-                    className="text-label inline-flex items-center rounded-md border border-foreground/20 px-3 py-2 text-orange-400 transition-colors hover:border-orange-400/40 hover:text-orange-300"
+                    className={`${PROJECT_LINK_BASE_CLASS_NAME} ${PROJECT_LINK_VARIANT_CLASS_NAMES[link.variant]}`}
                     href={link.href}
                     target="_blank"
                     rel="noreferrer"
