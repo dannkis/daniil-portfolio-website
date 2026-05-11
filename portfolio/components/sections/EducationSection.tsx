@@ -82,9 +82,13 @@ export default function EducationSection({
                     damping: 28,
                   }}
                 >
-                  <p className="text-xs text-gray-300">{entry.period}</p>
-                  <p className="text-sm">{entry.name}</p>
-                  <p className="text-xs text-gray-400">{entry.qualification}</p>
+                  <p className="text-gray-300 sm:text-[10px] xl:text-[11px]">
+                    {entry.period}
+                  </p>
+                  <p className="sm:text-[10px] xl:text-[12px]">{entry.name}</p>
+                  <p className="text-gray-400 sm:text-[10px] xl:text-[11px]">
+                    {entry.qualification}
+                  </p>
                 </motion.button>
               );
             })}

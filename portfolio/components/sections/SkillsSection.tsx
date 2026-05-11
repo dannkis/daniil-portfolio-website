@@ -73,7 +73,9 @@ export default function SkillsSection({
                     damping: 24,
                   }}
                 />
-                <p className="text-center text-xs">{skill.name}</p>
+                <p className="text-center text-nowrap sm:text-[8px] xl:text-[11px]">
+                  {skill.name}
+                </p>
               </>
             );
 

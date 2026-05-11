@@ -16,7 +16,7 @@ function ContactItem({
   const content = (
     <>
       <img src={iconSrc} alt={iconAlt} className={iconClassName} />
-      <p className="text-body-compact">{label}</p>
+      <p className="text-xs">{label}</p>
     </>
   );
 
