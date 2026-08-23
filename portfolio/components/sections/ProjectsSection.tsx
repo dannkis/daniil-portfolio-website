@@ -192,7 +192,7 @@ export default function ProjectsSection({
         <AnimatePresence>
           {expandedProject && !isProjectClosing && (
             <motion.button
-              className="text-label inline-flex h-6 w-6 items-center justify-center overflow-hidden rounded-sm border border-foreground/20 bg-background/75 text-orange-400 backdrop-blur-sm hover:cursor-pointer"
+              className="text-label inline-flex h-6 w-6 items-center justify-center overflow-hidden rounded-sm border border-foreground/20 bg-background/75 text-accent backdrop-blur-sm hover:cursor-pointer"
               type="button"
               onClick={onProjectCollapse}
               initial={{ opacity: 0, scale: 0.86 }}
@@ -368,7 +368,7 @@ export default function ProjectsSection({
               <>
                 <motion.button
                   type="button"
-                  className="text-body absolute top-1/2 left-2 z-30 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-foreground/20 bg-background/75 text-orange-400 backdrop-blur-sm hover:cursor-pointer sm:left-3 sm:h-10 sm:w-10 md:left-4"
+                  className="text-body absolute top-1/2 left-2 z-30 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-foreground/20 bg-background/75 text-accent backdrop-blur-sm hover:cursor-pointer sm:left-3 sm:h-10 sm:w-10 md:left-4"
                   onClick={showPreviousSlide}
                   aria-label="Show previous project image"
                   initial={{ opacity: 0, scale: 0.92 }}
@@ -379,7 +379,7 @@ export default function ProjectsSection({
                 </motion.button>
                 <motion.button
                   type="button"
-                  className="text-body absolute top-1/2 right-2 z-30 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-foreground/20 bg-background/75 text-orange-400 backdrop-blur-sm hover:cursor-pointer sm:right-3 sm:h-10 sm:w-10 md:right-4"
+                  className="text-body absolute top-1/2 right-2 z-30 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-foreground/20 bg-background/75 text-accent backdrop-blur-sm hover:cursor-pointer sm:right-3 sm:h-10 sm:w-10 md:right-4"
                   onClick={showNextSlide}
                   aria-label="Show next project image"
                   initial={{ opacity: 0, scale: 0.92 }}
@@ -400,7 +400,7 @@ export default function ProjectsSection({
                       type="button"
                       className={`h-2.5 w-2.5 rounded-full transition-colors hover:cursor-pointer ${
                         currentSlide === index
-                          ? "bg-orange-400"
+                          ? "bg-accent"
                           : "bg-foreground/30"
                       }`}
                       aria-label={`Show project image ${index + 1}`}
