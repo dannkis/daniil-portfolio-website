@@ -20,10 +20,9 @@ const PROJECT_LINK_BASE_CLASS_NAME =
 const PROJECT_LINK_VARIANT_CLASS_NAMES: Record<ProjectLink["variant"], string> =
   {
     release:
-      "bg-orange-400 text-black hover:border-orange-400/40 hover:text-orange-300",
-    repository:
-      "text-orange-400 hover:border-orange-400/40 hover:text-orange-300",
-    app: "border-foreground hover:border-orange-400/40 hover:text-orange-300",
+      "bg-accent text-accent-foreground hover:border-accent/40 hover:bg-accent-hover",
+    repository: "text-accent hover:border-accent/40 hover:text-accent-hover",
+    app: "border-foreground hover:border-accent/40 hover:text-accent-hover",
   };
 
 export default function AboutSection({ project, education, skill }: Props) {

@@ -1,16 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --background: #707070;
+  --background: #d8d5d6;
   --foreground: #171717;
+  --accent: #8b4000;
+  --accent-hover: #6f3400;
+  --accent-foreground: #ffffff;
+  --accent-glow: rgb(139 64 0 / 0.3);
+  --muted-strong: #4a4a4a;
+  --muted: #555555;
   --background-image-url: url("/images/noisy-texture-light.png");
   --cursor-color: var(--foreground);
-  --cursor-accent: #f88a36;
+  --cursor-accent: var(--accent);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted-strong: var(--muted-strong);
+  --color-muted: var(--muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -19,6 +30,12 @@
   :root {
     --background: #0a0a0a;
     --foreground: #d9d9d9;
+    --accent: #f88a36;
+    --accent-hover: #fdba74;
+    --accent-foreground: #171717;
+    --accent-glow: rgb(248 138 54 / 0.35);
+    --muted-strong: #d1d5db;
+    --muted: #9ca3af;
     --background-image-url: url("/images/noisy-texture-dark.png");
   }
 }
@@ -54,7 +71,7 @@ body {
   }
 
   h1 {
-    color: #f88a36;
+    color: var(--accent);
   }
 }
 
@@ -196,5 +213,5 @@ body {
 .focus-window-open .focus-window-active {
   filter: none;
   pointer-events: auto;
-  border-color: #fb923c;
+  border-color: var(--accent);
 }

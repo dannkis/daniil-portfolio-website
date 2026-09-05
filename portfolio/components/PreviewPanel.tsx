@@ -38,9 +38,8 @@ export default function PreviewPanel({
       ? previewImages[Math.min(activeIndex, previewImages.length - 1)]
       : undefined;
   const hasCarousel = previewImages.length > 1;
-  const { magnifierState, magnifierScale, magnifierHandlers } = useHoverMagnifier(
-    `${contentKey}-${activeIndex}`,
-  );
+  const { magnifierState, magnifierScale, magnifierHandlers } =
+    useHoverMagnifier(`${contentKey}-${activeIndex}`);
 
   function setActiveIndex(index: number) {
     setCarouselState({
@@ -76,7 +75,7 @@ export default function PreviewPanel({
             <>
               <button
                 type="button"
-                className="text-body absolute top-1/2 left-0 z-20 inline-flex h-10 w-10 -translate-x-[35%] -translate-y-1/2 items-center justify-center rounded-full border border-foreground/20 bg-background/75 text-orange-400 backdrop-blur-sm hover:cursor-pointer"
+                className="text-body absolute top-1/2 left-0 z-20 inline-flex h-10 w-10 -translate-x-[35%] -translate-y-1/2 items-center justify-center rounded-full border border-foreground/20 bg-background/75 text-accent backdrop-blur-sm hover:cursor-pointer"
                 onClick={showPreviousImage}
                 aria-label="Show previous certificate image"
               >
@@ -84,7 +83,7 @@ export default function PreviewPanel({
               </button>
               <button
                 type="button"
-                className="text-body absolute top-1/2 right-0 z-20 inline-flex h-10 w-10 translate-x-[35%] -translate-y-1/2 items-center justify-center rounded-full border border-foreground/20 bg-background/75 text-orange-400 backdrop-blur-sm hover:cursor-pointer"
+                className="text-body absolute top-1/2 right-0 z-20 inline-flex h-10 w-10 translate-x-[35%] -translate-y-1/2 items-center justify-center rounded-full border border-foreground/20 bg-background/75 text-accent backdrop-blur-sm hover:cursor-pointer"
                 onClick={showNextImage}
                 aria-label="Show next certificate image"
               >
@@ -126,7 +125,7 @@ export default function PreviewPanel({
                   key={`${previewImage.src}-${index}`}
                   type="button"
                   className={`h-2.5 w-2.5 rounded-full transition-colors hover:cursor-pointer ${
-                    activeIndex === index ? "bg-orange-400" : "bg-foreground/30"
+                    activeIndex === index ? "bg-accent" : "bg-foreground/30"
                   }`}
                   aria-label={`Show certificate image ${index + 1}`}
                   onClick={() => setActiveIndex(index)}

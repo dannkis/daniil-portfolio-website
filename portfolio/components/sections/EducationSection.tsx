@@ -44,8 +44,8 @@ export default function EducationSection({
                   animate={{
                     scale: isSelected ? 1.25 : 1,
                     boxShadow: isSelected
-                      ? "0 0 18px rgba(251, 146, 60, 0.35)"
-                      : "0 0 0 rgba(251, 146, 60, 0)",
+                      ? "0 0 18px var(--accent-glow)"
+                      : "0 0 0 transparent",
                   }}
                   whileHover={{ scale: isSelected ? 1.25 : 1.12 }}
                   whileTap={{ scale: 0.95 }}
@@ -82,11 +82,11 @@ export default function EducationSection({
                     damping: 28,
                   }}
                 >
-                  <p className="text-gray-300 sm:text-[10px] xl:text-[11px]">
+                  <p className="text-muted-strong sm:text-[10px] xl:text-[11px]">
                     {entry.period}
                   </p>
                   <p className="sm:text-[10px] xl:text-[12px]">{entry.name}</p>
-                  <p className="text-gray-400 sm:text-[10px] xl:text-[11px]">
+                  <p className="text-muted sm:text-[10px] xl:text-[11px]">
                     {entry.qualification}
                   </p>
                 </motion.button>
