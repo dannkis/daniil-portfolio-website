@@ -209,7 +209,7 @@ export default function ProjectsSection({
       <LayoutGroup id="projects-section">
         <div className="relative z-10 min-h-72 flex-1 overflow-hidden sm:min-h-80 lg:min-h-0">
           <div
-            className={`grid min-h-full grid-cols-1 items-center gap-6 transition-opacity duration-150 sm:grid-cols-3 lg:h-full lg:gap-x-6 lg:gap-y-10 ${
+            className={`grid max-h-full min-h-full grid-cols-1 items-center gap-6 overflow-y-auto transition-opacity duration-150 sm:grid-cols-3 lg:h-full lg:gap-x-6 lg:gap-y-10 ${
               expandedProject && !isProjectClosing
                 ? "pointer-events-none absolute inset-0 opacity-0"
                 : "relative opacity-100"

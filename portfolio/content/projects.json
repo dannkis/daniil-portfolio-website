@@ -1,5 +1,19 @@
 [
   {
+    "id": "codex-meter",
+    "name": "Codex Meter",
+    "description": "Built a native macOS menu bar app in Swift and SwiftUI to track Codex quota usage at a glance. It displays active usage windows, reset countdowns, and configurable automatic refreshes, with smooth native animations. The app connects to the signed-in Codex account locally without requiring an API key.",
+    "image": {
+      "src": "/images/projects/codex-meter.webp",
+      "alt": "Codex Meter app icon with a green and turquoise usage gauge around a terminal prompt."
+    },
+    "skills": ["swift"],
+    "links": {
+      "repository": "https://github.com/dannkis/menu-bar-codex-chatgpt-meter",
+      "release": "https://github.com/dannkis/menu-bar-codex-chatgpt-meter/releases"
+    }
+  },
+  {
     "id": "portfolio",
     "name": "Portfolio",
     "description": "A minimalistic portfolio that I have created, with a good mixture of dynamically adjusted content, animations, various optimisations, accessability-friendly; created using modern frameworks (Next.js, TypeScript, Tailwind, Framer-Motion).",
