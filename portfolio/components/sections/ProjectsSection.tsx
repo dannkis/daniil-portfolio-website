@@ -145,7 +145,7 @@ export default function ProjectsSection({
       if (
         image.naturalWidth === 0 ||
         image.naturalHeight === 0 ||
-        image.currentSrc !== src
+        image.getAttribute("src") !== src
       ) {
         return;
       }
@@ -208,7 +208,8 @@ export default function ProjectsSection({
 
       <LayoutGroup id="projects-section">
         <div className="relative z-10 min-h-72 flex-1 overflow-hidden sm:min-h-80 lg:min-h-0">
-          <div
+          <motion.div
+            layoutScroll
             className={`grid max-h-full min-h-full grid-cols-1 items-center gap-6 overflow-y-auto transition-opacity duration-150 sm:grid-cols-3 lg:h-full lg:gap-x-6 lg:gap-y-10 ${
               expandedProject && !isProjectClosing
                 ? "pointer-events-none absolute inset-0 opacity-0"
@@ -275,11 +276,10 @@ export default function ProjectsSection({
                         : undefined
                     }
                     className="relative w-full overflow-hidden rounded-md"
-                    layoutId={`project-frame-${project.id}`}
                     style={getProjectFrameStyle(project.id)}
-                    transition={PROJECT_FRAME_TRANSITION}
                   >
                     <motion.img
+                      layoutId={`project-image-${project.id}`}
                       className={getProjectImageClassName(project.id)}
                       src={project.image.src}
                       alt={project.image.alt}
@@ -293,6 +293,12 @@ export default function ProjectsSection({
                         type: "spring",
                         stiffness: 300,
                         damping: 24,
+                        layout: PROJECT_FRAME_TRANSITION,
+                      }}
+                      onLayoutAnimationComplete={() => {
+                        if (isProjectCollapsing) {
+                          onProjectCollapseComplete(project.id);
+                        }
                       }}
                     />
                   </motion.div>
@@ -300,7 +306,7 @@ export default function ProjectsSection({
                 <p className="text-xs">{project.name}</p>
               </motion.button>
             ))}
-          </div>
+          </motion.div>
 
           <AnimatePresence initial={false}>
             {expandedProject && (
@@ -315,15 +321,8 @@ export default function ProjectsSection({
                 transition={PROJECT_OVERLAY_FADE_TRANSITION}
               >
                 <div className="relative flex h-full min-h-0 w-full min-w-0 items-center justify-center overflow-hidden rounded-md p-2 sm:p-3 md:p-4">
-                  <motion.div
+                  <div
                     className="relative h-full min-h-0 w-full min-w-0 overflow-visible rounded-md"
-                    layoutId={`project-frame-${expandedProject.id}`}
-                    transition={PROJECT_FRAME_TRANSITION}
-                    onLayoutAnimationComplete={
-                      isProjectCollapsing
-                        ? () => onProjectCollapseComplete(expandedProject.id)
-                        : undefined
-                    }
                   >
                     <div
                       className="relative flex h-full min-h-0 w-full min-w-0 items-center justify-center overflow-visible rounded-md"
@@ -333,18 +332,19 @@ export default function ProjectsSection({
                         <AnimatePresence mode="wait" initial={false}>
                           <motion.img
                             key={`${expandedProject.id}-${currentSlide}`}
-                            className="h-full w-full object-contain"
+                            layoutId={`project-image-${expandedProject.id}`}
+                            className="h-auto max-h-full w-auto max-w-full object-contain"
                             src={expandedProjectImages[currentSlide].src}
                             alt={expandedProjectImages[currentSlide].alt}
                             draggable={false}
-                            onLoad={updateProjectAspectRatio(
-                              expandedProject.id,
-                              expandedProjectImages[currentSlide].src,
-                            )}
                             initial={{ opacity: 0, x: 18 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -18 }}
-                            transition={{ duration: 0.22, ease: "easeOut" }}
+                            transition={{
+                              duration: 0.22,
+                              ease: "easeOut",
+                              layout: PROJECT_FRAME_TRANSITION,
+                            }}
                           />
                         </AnimatePresence>
                       </div>
@@ -356,7 +356,7 @@ export default function ProjectsSection({
                         />
                       )}
                     </div>
-                  </motion.div>
+                  </div>
                 </div>
               </motion.div>
             )}
