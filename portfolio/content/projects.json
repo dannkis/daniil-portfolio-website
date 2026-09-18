@@ -5,7 +5,7 @@
     "description": "Built a native macOS menu bar app in Swift and SwiftUI to track Codex quota usage at a glance. It displays active usage windows, reset countdowns, and configurable automatic refreshes, with smooth native animations. The app connects to the signed-in Codex account locally without requiring an API key.",
     "image": {
       "src": "/images/projects/codex-meter.webp",
-      "alt": "Codex Meter app icon with a green and turquoise usage gauge around a terminal prompt."
+      "alt": "Illustrative macOS desktop preview of Codex Meter closed in the menu bar and open with usage percentages, reset countdowns, and auto-refresh controls."
     },
     "skills": ["swift"],
     "links": {
