@@ -17,6 +17,13 @@ const PROJECT_FRAME_TRANSITION = {
   mass: 0.86,
 } as const;
 
+const PROJECT_CLOSE_TRANSITION = {
+  type: "spring",
+  stiffness: 560,
+  damping: 36,
+  mass: 0.72,
+} as const;
+
 interface Props {
   activeProject?: Project;
   expandedProject?: Project;
@@ -61,6 +68,9 @@ export default function ProjectsSection({
   const isProjectClosing = projectClosePhase !== "idle";
   const isProjectPreparingClose = projectClosePhase === "preparing";
   const isProjectCollapsing = projectClosePhase === "collapsing";
+  const projectLayoutTransition = isProjectClosing
+    ? PROJECT_CLOSE_TRANSITION
+    : PROJECT_FRAME_TRANSITION;
   const isSkillProjectHighlightMode =
     !isProjectClosing && !activeProject && !!activeSkillID;
   const currentSlide =
@@ -289,7 +299,7 @@ export default function ProjectsSection({
                         type: "spring",
                         stiffness: 300,
                         damping: 24,
-                        layout: PROJECT_FRAME_TRANSITION,
+                        layout: projectLayoutTransition,
                       }}
                       onLayoutAnimationComplete={() => {
                         if (isProjectCollapsing) {
@@ -339,7 +349,7 @@ export default function ProjectsSection({
                             transition={{
                               duration: 0.22,
                               ease: "easeOut",
-                              layout: PROJECT_FRAME_TRANSITION,
+                              layout: projectLayoutTransition,
                             }}
                           />
                         </AnimatePresence>
