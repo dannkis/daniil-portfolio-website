@@ -17,11 +17,6 @@ const PROJECT_FRAME_TRANSITION = {
   mass: 0.86,
 } as const;
 
-const PROJECT_OVERLAY_FADE_TRANSITION = {
-  duration: 0.16,
-  ease: "easeOut",
-} as const;
-
 interface Props {
   activeProject?: Project;
   expandedProject?: Project;
@@ -210,7 +205,7 @@ export default function ProjectsSection({
         <div className="relative z-10 min-h-72 flex-1 overflow-hidden sm:min-h-80 lg:min-h-0">
           <motion.div
             layoutScroll
-            className={`grid max-h-full min-h-full grid-cols-1 items-center gap-6 overflow-y-auto transition-opacity duration-150 sm:grid-cols-3 lg:h-full lg:gap-x-6 lg:gap-y-10 ${
+            className={`grid max-h-full min-h-full grid-cols-1 items-center gap-6 overflow-y-auto sm:grid-cols-3 lg:h-full lg:gap-x-6 lg:gap-y-10 ${
               expandedProject && !isProjectClosing
                 ? "pointer-events-none absolute inset-0 opacity-0"
                 : "relative opacity-100"
@@ -275,11 +270,12 @@ export default function ProjectsSection({
                         ? closingTargetRef
                         : undefined
                     }
-                    className="relative w-full overflow-hidden rounded-md"
+                    className={`relative w-full rounded-md ${isProjectClosing ? "overflow-visible" : "overflow-hidden"}`}
                     style={getProjectFrameStyle(project.id)}
                   >
                     <motion.img
                       layoutId={`project-image-${project.id}`}
+                      layoutCrossfade={false}
                       className={getProjectImageClassName(project.id)}
                       src={project.image.src}
                       alt={project.image.alt}
@@ -315,10 +311,9 @@ export default function ProjectsSection({
                 className={`absolute inset-0 z-20 ${
                   isProjectClosing ? "pointer-events-none" : ""
                 }`}
-                initial={{ opacity: 0.96 }}
+                initial={false}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0.96 }}
-                transition={PROJECT_OVERLAY_FADE_TRANSITION}
+                exit={{ opacity: 1 }}
               >
                 <div className="relative flex h-full min-h-0 w-full min-w-0 items-center justify-center overflow-hidden rounded-md p-2 sm:p-3 md:p-4">
                   <div
@@ -333,13 +328,14 @@ export default function ProjectsSection({
                           <motion.img
                             key={`${expandedProject.id}-${currentSlide}`}
                             layoutId={`project-image-${expandedProject.id}`}
+                            layoutCrossfade={false}
                             className="h-auto max-h-full w-auto max-w-full object-contain"
                             src={expandedProjectImages[currentSlide].src}
                             alt={expandedProjectImages[currentSlide].alt}
                             draggable={false}
-                            initial={{ opacity: 0, x: 18 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -18 }}
+                            initial={{ x: 18 }}
+                            animate={{ x: 0 }}
+                            exit={{ x: isProjectClosing ? 0 : -18 }}
                             transition={{
                               duration: 0.22,
                               ease: "easeOut",
