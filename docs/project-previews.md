@@ -6,7 +6,7 @@ Review branch: `codex/private-project-previews`. This is based on the portfolio 
 
 Five entries in `portfolio/content/projects.json` link to static `/projects/<id>/` pages. The existing project carousel also shows their galleries. All repository URLs remain empty, rendered as “Repo · Coming soon”.
 
-The 14 optimised WebP images total approximately 660 KB:
+The 14 optimised WebP images total approximately 600 KB:
 
 - Maciano: two native app captures, standard Electric voice and Dream mode.
 - Keke: three native captures of quick actions, conversation and settings, using a separate temporary home directory with no real chat history.
@@ -37,3 +37,5 @@ Run `npm ci`, `npm run build`, and `npm run lint` from `portfolio`. The site use
 The production build and lint on changed TypeScript/TSX files pass. Full-repository lint has existing `react-hooks/set-state-in-effect` errors in `HoverMagnifier.tsx` and `ProjectsSection.tsx`, plus existing warnings; those files are unchanged here.
 
 Pre-merge review also verified keyboard wraparound, navigation from screenshot 3 to a two-image project, and a 320px layout without horizontal overflow. The gallery is keyed by project ID to reset selection during navigation. Thumbnail containers can shrink on narrow screens. No dependencies or animation controllers were added.
+
+All 30 project showcase images, including the older projects and Codex Meter, use a consistent 16:9 canvas. The five new app compositions were re-rendered for this format; older images were fitted with matching background padding, preserving the complete screen content. Gallery image dimensions and thumbnail frames also use 16:9.

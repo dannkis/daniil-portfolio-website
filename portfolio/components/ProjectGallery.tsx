@@ -35,8 +35,8 @@ export default function ProjectGallery({
           src={images[index].src}
           alt={images[index].alt}
           width={1600}
-          height={1040}
-          className="h-auto w-full"
+          height={900}
+          className="aspect-video w-full object-contain"
         />
       </div>
       <div className="mt-4 flex items-center justify-between gap-5">
@@ -55,8 +55,8 @@ export default function ProjectGallery({
                 src={image.src}
                 alt=""
                 width={160}
-                height={104}
-                className="h-auto w-full"
+                height={90}
+                className="aspect-video w-full object-contain"
                 loading="lazy"
               />
             </button>
