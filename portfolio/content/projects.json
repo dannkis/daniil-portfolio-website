@@ -14,6 +14,142 @@
     }
   },
   {
+    "id": "maciano",
+    "name": "Maciano",
+    "description": "A native macOS instrument that turns 45 keyboard keys into nearly four octaves of polyphonic sound. Built with SwiftUI and AVAudioEngine, with three synth voices, octave controls and an ambient Dream mode that shapes a soundscape as you type.",
+    "image": {
+      "src": "/images/projects/maciano.webp",
+      "alt": "Keyboard instrument with Electric voice and four rows of mapped notes."
+    },
+    "gallery": [
+      {
+        "src": "/images/projects/maciano.webp",
+        "alt": "Keyboard instrument with Electric voice and four rows of mapped notes."
+      },
+      {
+        "src": "/images/projects/maciano-1.webp",
+        "alt": "Dream mode with ambient harmonies and a continuous pad."
+      }
+    ],
+    "skills": ["swift"],
+    "links": {
+      "repository": "",
+      "release": "/projects/maciano/"
+    }
+  },
+  {
+    "id": "keke",
+    "name": "Keke",
+    "description": "A native macOS assistant with a fluid desktop orb and a compact menu bar interface. Combines local models, quick-action routing and an optional ChatGPT / Codex backend, with voice input, configurable action approval and adaptive reasoning.",
+    "image": {
+      "src": "/images/projects/keke.webp",
+      "alt": "Quick actions and suggested commands in a clean demo profile."
+    },
+    "gallery": [
+      {
+        "src": "/images/projects/keke.webp",
+        "alt": "Quick actions and suggested commands in a clean demo profile."
+      },
+      {
+        "src": "/images/projects/keke-1.webp",
+        "alt": "Conversation view with an empty local chat."
+      },
+      {
+        "src": "/images/projects/keke-2.webp",
+        "alt": "Model selection, routing and adaptive reasoning settings."
+      }
+    ],
+    "skills": ["swift"],
+    "links": {
+      "repository": "",
+      "release": "/projects/keke/"
+    }
+  },
+  {
+    "id": "cos",
+    "name": "Consume OS",
+    "description": "A minimal Chromium browser for macOS, branded COS. One window and one tab keep browsing focused, while custom appearances, optional focus intentions and a visual browsing trail make it easy to retrace a session. Built with Electron and JavaScript.",
+    "image": {
+      "src": "/images/projects/cos.webp",
+      "alt": "COS dark start page with search, shortcuts and orbital artwork."
+    },
+    "gallery": [
+      {
+        "src": "/images/projects/cos.webp",
+        "alt": "COS dark start page with search, shortcuts and orbital artwork."
+      },
+      {
+        "src": "/images/projects/cos-1.webp",
+        "alt": "COS light appearance and custom accent colours."
+      },
+      {
+        "src": "/images/projects/cos-2.webp",
+        "alt": "Visual browsing trail with session branches and a page preview."
+      }
+    ],
+    "skills": ["javascript", "node"],
+    "links": {
+      "repository": "",
+      "release": "/projects/cos/"
+    }
+  },
+  {
+    "id": "macflix",
+    "name": "Macflix",
+    "description": "A native macOS home for local movies and series. Built with SwiftUI and bundled libVLC playback, with an adaptive library, season browsing, episode runtimes and Continue Watching. Portable JSON watch history can be shared through iCloud Drive.",
+    "image": {
+      "src": "/images/projects/macflix.webp",
+      "alt": "Macflix library with a staged demo collection and Continue Watching."
+    },
+    "gallery": [
+      {
+        "src": "/images/projects/macflix.webp",
+        "alt": "Macflix library with a staged demo collection and Continue Watching."
+      },
+      {
+        "src": "/images/projects/macflix-1.webp",
+        "alt": "Series details with season navigation, episode runtimes and progress."
+      },
+      {
+        "src": "/images/projects/macflix-2.webp",
+        "alt": "Library folders and playback settings using staged demo paths."
+      }
+    ],
+    "skills": ["swift"],
+    "links": {
+      "repository": "",
+      "release": "/projects/macflix/"
+    }
+  },
+  {
+    "id": "trackstud",
+    "name": "Trackstud",
+    "description": "A local-first macOS study tracker built with SwiftUI. Brings study periods, task lists, daily goals, study statistics, Anki activity and a menu bar focus timer into one workspace, with study data stored in local JSON files.",
+    "image": {
+      "src": "/images/projects/trackstud.webp",
+      "alt": "Today dashboard with built-in sample tasks and daily goals."
+    },
+    "gallery": [
+      {
+        "src": "/images/projects/trackstud.webp",
+        "alt": "Today dashboard with built-in sample tasks and daily goals."
+      },
+      {
+        "src": "/images/projects/trackstud-1.webp",
+        "alt": "Task list with sources, filters and sample study tasks."
+      },
+      {
+        "src": "/images/projects/trackstud-2.webp",
+        "alt": "Focus timer running against an illustrative sample task."
+      }
+    ],
+    "skills": ["swift"],
+    "links": {
+      "repository": "",
+      "release": "/projects/trackstud/"
+    }
+  },
+  {
     "id": "portfolio",
     "name": "Portfolio",
     "description": "A minimalistic portfolio that I have created, with a good mixture of dynamically adjusted content, animations, various optimisations, accessability-friendly; created using modern frameworks (Next.js, TypeScript, Tailwind, Framer-Motion).",
@@ -31,7 +167,16 @@
         "alt": "A second preview of the portfolio website layout and section design."
       }
     ],
-    "skills": ["next", "visual-studio-code", "figma", "react", "javascript", "typescript", "tailwind", "node"],
+    "skills": [
+      "next",
+      "visual-studio-code",
+      "figma",
+      "react",
+      "javascript",
+      "typescript",
+      "tailwind",
+      "node"
+    ],
     "links": {
       "repository": "https://github.com/dannkis/daniil-portfolio-website"
     }
@@ -79,7 +224,14 @@
         "alt": "A second preview of the SkillFindr IBM interface and layout."
       }
     ],
-    "skills": ["next", "react", "typescript", "node", "figma", "visual-studio-code"],
+    "skills": [
+      "next",
+      "react",
+      "typescript",
+      "node",
+      "figma",
+      "visual-studio-code"
+    ],
     "links": {
       "website": "",
       "repository": "https://github.com/dannkis/SkillFindr4",
