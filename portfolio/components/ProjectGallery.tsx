@@ -40,7 +40,7 @@ export default function ProjectGallery({
         />
       </div>
       <div className="mt-4 flex items-center justify-between gap-5">
-        <div className="flex gap-3">
+        <div className="flex min-w-0 gap-3">
           {images.map((image, slide) => (
             <button
               key={image.src}
@@ -48,7 +48,7 @@ export default function ProjectGallery({
               onClick={() => setIndex(slide)}
               aria-label={`Show ${name} screenshot ${slide + 1}`}
               aria-pressed={slide === index}
-              className={`w-20 overflow-hidden rounded-lg border-2 transition-opacity focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:w-28 ${slide === index ? "border-accent opacity-100" : "border-transparent opacity-55 hover:opacity-100"}`}
+              className={`w-20 min-w-0 overflow-hidden rounded-lg border-2 transition-opacity focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:w-28 ${slide === index ? "border-accent opacity-100" : "border-transparent opacity-55 hover:opacity-100"}`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

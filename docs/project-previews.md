@@ -35,3 +35,5 @@ All available builds are development previews without Apple notarisation. Pages 
 Run `npm ci`, `npm run build`, and `npm run lint` from `portfolio`. The site uses static export with trailing-slash routes for static hosting.
 
 The production build and lint on changed TypeScript/TSX files pass. Full-repository lint has existing `react-hooks/set-state-in-effect` errors in `HoverMagnifier.tsx` and `ProjectsSection.tsx`, plus existing warnings; those files are unchanged here.
+
+Pre-merge review also verified keyboard wraparound, navigation from screenshot 3 to a two-image project, and a 320px layout without horizontal overflow. The gallery is keyed by project ID to reset selection during navigation. Thumbnail containers can shrink on narrow screens. No dependencies or animation controllers were added.

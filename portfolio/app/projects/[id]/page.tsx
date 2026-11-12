@@ -63,6 +63,7 @@ export default async function ProjectPage({
       </header>
       <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-12">
         <ProjectGallery
+          key={project.id}
           images={project.gallery ?? [project.image]}
           name={project.name}
         />

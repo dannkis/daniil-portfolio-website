@@ -80,21 +80,17 @@ export default function AboutSection({ project, education, skill }: Props) {
             <p className="text-sm">{text}</p>
             {project && (
               <div className="flex flex-wrap gap-2">
-                {hasProjectLinks
-                  ? projectLinks.map((link) => (
-                      <a
-                        key={link.label}
-                        className={`${PROJECT_LINK_BASE_CLASS_NAME} ${PROJECT_LINK_VARIANT_CLASS_NAMES[link.variant]}`}
-                        href={link.href}
-                        target={
-                          link.href.startsWith("/") ? undefined : "_blank"
-                        }
-                        rel="noreferrer"
-                      >
-                        {link.label}
-                      </a>
-                    ))
-                  : null}
+                {projectLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    className={`${PROJECT_LINK_BASE_CLASS_NAME} ${PROJECT_LINK_VARIANT_CLASS_NAMES[link.variant]}`}
+                    href={link.href}
+                    target={link.href.startsWith("/") ? undefined : "_blank"}
+                    rel="noreferrer"
+                  >
+                    {link.label}
+                  </a>
+                ))}
                 {(!hasProjectLinks || !project.links?.repository) && (
                   <button
                     type="button"
