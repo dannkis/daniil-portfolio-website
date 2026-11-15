@@ -11,7 +11,7 @@ interface Props {
 type ProjectLink = {
   href: string;
   label: string;
-  variant: "release" | "repository" | "app";
+  variant: "download" | "release" | "repository" | "app";
 };
 
 const PROJECT_LINK_BASE_CLASS_NAME =
@@ -19,8 +19,9 @@ const PROJECT_LINK_BASE_CLASS_NAME =
 
 const PROJECT_LINK_VARIANT_CLASS_NAMES: Record<ProjectLink["variant"], string> =
   {
-    release:
+    download:
       "bg-accent text-accent-foreground hover:border-accent/40 hover:bg-accent-hover",
+    release: "text-accent hover:border-accent/40 hover:text-accent-hover",
     repository: "text-accent hover:border-accent/40 hover:text-accent-hover",
     app: "border-foreground hover:border-accent/40 hover:text-accent-hover",
   };
@@ -28,6 +29,11 @@ const PROJECT_LINK_VARIANT_CLASS_NAMES: Record<ProjectLink["variant"], string> =
 export default function AboutSection({ project, education, skill }: Props) {
   const projectLinks = project
     ? [
+        {
+          href: project.links?.download,
+          label: "Download",
+          variant: "download",
+        },
         {
           href: project.links?.release,
           label: "Release",
@@ -85,7 +91,7 @@ export default function AboutSection({ project, education, skill }: Props) {
                     key={link.label}
                     className={`${PROJECT_LINK_BASE_CLASS_NAME} ${PROJECT_LINK_VARIANT_CLASS_NAMES[link.variant]}`}
                     href={link.href}
-                    target={link.href.startsWith("/") ? undefined : "_blank"}
+                    target={link.variant === "download" ? undefined : "_blank"}
                     rel="noreferrer"
                   >
                     {link.label}

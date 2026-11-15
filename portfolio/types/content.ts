@@ -18,6 +18,7 @@ export type AboutContent = {
 };
 
 export type ProjectLinks = {
+  download?: string;
   website?: string;
   repository?: string;
   release?: string;

@@ -102,6 +102,7 @@ function assertProject(value: unknown): asserts value is Project {
       throw new Error("Invalid projects content: links must be an object.");
     }
 
+    assertOptionalString(value.links.download, "links.download", "projects");
     assertOptionalString(value.links.website, "links.website", "projects");
     assertOptionalString(
       value.links.repository,

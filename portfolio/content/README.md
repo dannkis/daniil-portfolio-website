@@ -11,6 +11,7 @@ Rules:
 
 - Every `id` must be unique within its file.
 - Image `src` values should point to files under `public`, starting with `/`.
+- Project links can include `download` (direct installer), `release` (release notes), `repository` and `website`. They appear directly in the morphing About panel; no project subpages are used.
 - Project `skills` values must match skill IDs from `skills.json`.
 - Optional fields can be omitted instead of set to an empty string.
 - Education certificates can be added with `certificateImage` or `certificateImages`.
