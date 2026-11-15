@@ -9,8 +9,7 @@
     },
     "skills": ["swift"],
     "links": {
-      "repository": "https://github.com/dannkis/menu-bar-codex-chatgpt-meter",
-      "release": "https://github.com/dannkis/menu-bar-codex-chatgpt-meter/releases"
+      "repository": ""
     }
   },
   {
@@ -33,8 +32,9 @@
     ],
     "skills": ["swift"],
     "links": {
-      "repository": "",
-      "release": "/projects/maciano/"
+      "download": "https://github.com/dannkis/mac-app-releases/releases/download/maciano-v0.1.0/Maciano-0.1.0-macos-arm64.zip",
+      "release": "https://github.com/dannkis/mac-app-releases/releases/tag/maciano-v0.1.0",
+      "repository": ""
     }
   },
   {
@@ -61,8 +61,7 @@
     ],
     "skills": ["swift"],
     "links": {
-      "repository": "",
-      "release": "/projects/keke/"
+      "repository": ""
     }
   },
   {
@@ -89,8 +88,9 @@
     ],
     "skills": ["javascript", "node"],
     "links": {
-      "repository": "",
-      "release": "/projects/cos/"
+      "download": "https://github.com/dannkis/mac-app-releases/releases/download/cos-v0.2.0/COS-0.2.0-arm64-mac.zip",
+      "release": "https://github.com/dannkis/mac-app-releases/releases/tag/cos-v0.2.0",
+      "repository": ""
     }
   },
   {
@@ -117,8 +117,7 @@
     ],
     "skills": ["swift"],
     "links": {
-      "repository": "",
-      "release": "/projects/macflix/"
+      "repository": ""
     }
   },
   {
@@ -145,8 +144,9 @@
     ],
     "skills": ["swift"],
     "links": {
-      "repository": "",
-      "release": "/projects/trackstud/"
+      "download": "https://github.com/dannkis/mac-app-releases/releases/download/trackstud-v0.10.0/Trackstud-v0.10.0-macOS-arm64.zip",
+      "release": "https://github.com/dannkis/mac-app-releases/releases/tag/trackstud-v0.10.0",
+      "repository": ""
     }
   },
   {
@@ -167,16 +167,7 @@
         "alt": "A second preview of the portfolio website layout and section design."
       }
     ],
-    "skills": [
-      "next",
-      "visual-studio-code",
-      "figma",
-      "react",
-      "javascript",
-      "typescript",
-      "tailwind",
-      "node"
-    ],
+    "skills": ["next", "visual-studio-code", "figma", "react", "javascript", "typescript", "tailwind", "node"],
     "links": {
       "repository": "https://github.com/dannkis/daniil-portfolio-website"
     }
@@ -224,14 +215,7 @@
         "alt": "A second preview of the SkillFindr IBM interface and layout."
       }
     ],
-    "skills": [
-      "next",
-      "react",
-      "typescript",
-      "node",
-      "figma",
-      "visual-studio-code"
-    ],
+    "skills": ["next", "react", "typescript", "node", "figma", "visual-studio-code"],
     "links": {
       "website": "",
       "repository": "https://github.com/dannkis/SkillFindr4",
